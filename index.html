@@ -610,6 +610,58 @@ html[data-layout="grid"][data-desc="none"] .cat:not(.compact) .hd{min-height:28p
 .sug.dk.fi{animation:fadein .28s ease-out}
 .sug-back{display:inline-grid;place-items:center;width:28px;height:28px;margin:-4px 6px -4px -6px;border:0;border-radius:50%;background:none;color:var(--text);font-size:16px;vertical-align:middle}
 @keyframes fadein{from{opacity:0}to{opacity:1}}
+/* ---- v10 ---- */
+html.sh-lock,html.sh-lock body{overflow:hidden;overscroll-behavior:none}
+.sheet,.sh-tiles,.sh-list,.sh-g{overscroll-behavior:contain}
+.shbd{touch-action:none}
+/* ---- v11 ---- */
+.clr{display:flex;align-items:center;justify-content:flex-end;gap:8px;padding:6px 0 2px;color:var(--muted);font-size:13px}
+.clr-b{min-height:36px;padding:0 8px;border:0;background:none;color:var(--muted);font:inherit;font-size:13px;text-decoration:underline;text-underline-offset:3px}
+.clr-b.y{color:var(--text);font-weight:600}
+/* ---- v12: dirección y zonas ---- */
+.addr{display:grid;gap:4px}
+.addr-row{display:flex;gap:8px;align-items:stretch}
+.addr-row input{flex:1;min-width:0}
+.addr-go{flex:none;margin-top:4px;padding:0 16px;border:0;border-radius:var(--r);background:var(--pink);color:var(--on);font:inherit;font-size:14px;font-weight:600}
+.addr-go[aria-busy="true"]{opacity:.6}
+.addr label[for="cunit"]{margin-top:8px}
+.zone-box{margin-top:8px;padding:12px 13px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);font-size:13px;color:var(--text);display:grid;gap:8px}
+.zone-box[hidden]{display:none}
+.zone-box b{font-weight:600}
+.zone-box .zn{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.zone-box.ok{border-color:var(--pink)}
+.zone-box.bad{border-color:#ff8a8a}
+.zone-box .zm{color:var(--muted);font-size:12px}
+.zone-box .zl{display:grid;gap:6px}
+.zone-box .zl button,.zone-box .zb{min-height:44px;padding:8px 12px;border-radius:var(--r);border:1px solid var(--line);background:none;color:var(--text);font:inherit;font-size:13px;text-align:left}
+.zone-box .zb{text-align:center;font-weight:600;border-color:var(--pink)}
+.mapov{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.6);display:grid;align-items:end;justify-items:center}
+.mapov[hidden]{display:none}
+.mappn{width:min(440px,100%);padding:14px 14px calc(14px + env(safe-area-inset-bottom,0px));background:var(--panel);border-radius:18px 18px 0 0;display:grid;gap:10px}
+.mappn h3{font-size:16px;font-weight:600}
+.mappn p{font-size:13px;color:var(--muted)}
+.mapbox{height:min(52dvh,420px);border-radius:12px;overflow:hidden;background:#222}
+.mapbtns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mapbtns button{min-height:48px;border-radius:var(--r);border:1px solid var(--line);background:none;color:var(--text);font:inherit;font-weight:600}
+.mapbtns .go{background:var(--pink);border-color:var(--pink);color:var(--on)}
+.mapbtns .go[disabled]{opacity:.45}
+.pinx{width:22px;height:22px;border-radius:50%;background:var(--pink);border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.45)}
+.addr-row{position:relative}
+.addr-go[hidden]{display:none}
+.addr-sug{position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:6;margin:0;padding:4px;list-style:none;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 12px 28px rgba(0,0,0,.45);display:grid;gap:2px}
+.addr-sug[hidden]{display:none}
+.addr-sug li{display:grid;gap:1px;min-height:48px;padding:8px 10px;border-radius:10px;align-content:center;cursor:pointer;color:var(--text);font-size:14px}
+.addr-sug li small{color:var(--muted);font-size:12px}
+.addr-sug li[aria-selected="true"],.addr-sug li:hover{background:rgba(255,86,167,.14)}
+.addr-sug li.nil{cursor:default;color:var(--muted);font-size:13px;gap:8px}
+.addr-sug li.nil .zb{min-height:40px;border:1px solid var(--pink);border-radius:var(--r);background:none;color:var(--text);font:inherit;font-size:13px;font-weight:600}
+.addr-sug li.nil:hover{background:none}
+.addr-sug .gl{padding:4px 10px;font-size:11px;color:var(--muted);text-align:right;min-height:0;cursor:default}
+.addr-sug .gl:hover{background:none}
+/* ---- v15: modo prueba ---- */
+.tstbar{position:fixed;top:0;left:0;right:0;z-index:95;padding:4px 10px;background:#FF56A7;color:#232323;font-size:12px;font-weight:700;text-align:center;letter-spacing:.02em}
+#tstOut{margin-top:12px}
+#tstOut pre{white-space:pre-wrap;word-break:break-word;font-size:11px;max-height:240px;overflow:auto;margin:0;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -674,9 +726,17 @@ html[data-layout="grid"][data-desc="none"] .cat:not(.compact) .hd{min-height:28p
       <label>Nombre
         <input id="cname" type="text" autocomplete="name" placeholder="Ej: Camila" required>
       </label>
-      <label id="addrWrap">Dirección
-        <input id="caddr" type="text" autocomplete="street-address" placeholder="Calle, número, depto / sector" required>
-      </label>
+      <div id="addrWrap" class="addr">
+        <label for="caddr">Dirección exacta</label>
+        <div class="addr-row">
+          <input id="caddr" type="text" autocomplete="off" enterkeyhint="search" placeholder="Calle y número, ej: Av. Arturo Prat 1234" aria-describedby="zoneBox" required>
+          <button type="button" class="addr-go" id="addrGo">Buscar</button>
+          <ul class="addr-sug" id="addrSug" role="listbox" aria-label="Sugerencias de dirección" hidden></ul>
+        </div>
+        <label for="cunit">Casa, depto o referencia (opcional)</label>
+        <input id="cunit" type="text" autocomplete="off" placeholder="Ej: Depto 504, casa 12, portón negro">
+        <div class="zone-box" id="zoneBox" role="status" aria-live="polite" hidden></div>
+      </div>
       <div>
         <button class="note-toggle" id="noteToggle" type="button" aria-expanded="false" aria-controls="noteWrap">Agregar nota <span aria-hidden="true">+</span></button>
         <div class="note-wrap" id="noteWrap" hidden>
@@ -714,6 +774,11 @@ const CONFIG = {
 
   /* Delivery: si dejas el rango vacío, la carta dice "Por confirmar" (el equipo informa el valor por WhatsApp). */
   delivery: { min:0, max:0 },
+  /* Google Places (sugerencias de dirección mientras se escribe).
+     1) En Google Cloud crea una clave y activa "Maps JavaScript API" y "Places API (New)".
+     2) Restringe la clave a tu sitio (HTTP referrers: streetflags.cl/* y *.netlify.app/*) y a esas dos APIs.
+     3) Pégala aquí. Si queda vacía, la carta usa OpenStreetMap con botón Buscar. */
+  googleKey: "",
   transferencia: { titular:"", rut:"", banco:"", tipoCuenta:"", numeroCuenta:"", email:"" },
 
   /* --- Imagen y tipografía: deja los archivos junto a este HTML (sin carpetas) --- */
@@ -730,58 +795,269 @@ const CONFIG = {
 /* ---- Piezas reutilizables ---- */
 const SALSAS_TODAS = ["s-honey","s-street","s-chipotle","s-chick","s-bbq","s-cheddar","s-ranch","s-alioli"];
 const SIDE = { label:"Elige tu acompañamiento", sub:"Incluido en tu hamburguesa", short:"Acompañamiento", lab:"con ", msg:"", preselect:true,
-  list:["Papas Fritas","Mac & Cheese"], notes:["Clásicas y crocantes","Cremoso cheddar Street"] };
-const EXTRAS_ALL = ["e-bacon","e-cheddar","e-jalapeno","e-smash","e-chicken","e-fries","e-crispy-onion","e-onion","e-lettuce","e-tomato","e-pickle","e-slaw"];
-const EXTRAS_BURGER  = { label:"Agrega extras", all:EXTRAS_ALL, ids:["e-bacon","e-cheddar","e-jalapeno","e-smash"], top:["e-bacon","e-cheddar"] };
-const EXTRAS_CHICKEN = { label:"Agrega extras", all:EXTRAS_ALL, ids:["e-bacon","e-cheddar","e-jalapeno","e-crispy-onion"], top:["e-bacon","e-cheddar"] };
+  list:["Papas Fritas","Mac & Cheese"], notes:["Clásicas","Cremoso"] };
+const EXTRAS_COMUN = ["e-bacon","e-cheddar","e-jalapeno","e-fries","e-crispy-onion","e-onion","e-lettuce","e-tomato","e-pickle","e-slaw"];
+const EXTRAS_ALL = ["e-notmeat","e-smash"].concat(EXTRAS_COMUN);
+const EXTRAS_ALL_CH = ["e-notchicken","e-chicken"].concat(EXTRAS_COMUN);
+const EXTRAS_BURGER  = { label:"Agrega extras", all:EXTRAS_ALL, ids:["e-bacon","e-cheddar","e-smash","e-notmeat"], top:["e-bacon","e-cheddar"] };
+const EXTRAS_CHICKEN = { label:"Agrega extras", all:EXTRAS_ALL_CH, ids:["e-bacon","e-cheddar","e-chicken","e-notchicken"], top:["e-bacon","e-cheddar"] };
 const salsas = ids => ({ label:"Agrega salsas", ids, all:SALSAS_TODAS, max:15, multi:true });
 const SAUCE_PICK = list => ({ label:"Elige tu salsa", sub:"Incluida con tu pedido", short:"Salsa", list });
 const NOMBRES_SALSAS = ["Honey Mustard","Street Sauce","Sweet Chipotle","Chick Fil A","Salsa BBQ","Salsa Cheddar","Jalapeño Ranch","Alioli"];
 const burger = (id, name, price, desc, sauceIds) => ({ id, name, price, desc, pick:SIDE, pickInSheet:true, extras:EXTRAS_BURGER, sauces:salsas(sauceIds) });
 
+/* ---- Zonas de delivery (Iquique) ----
+   Zonas automáticas (se detectan por la dirección): son franjas entre calles reales, de norte a sur.
+   Cada corte es una línea de la calle (puntos [latitud, longitud] de OpenStreetMap, de oeste a este).
+   Un punto al norte de un corte cae en la zona de arriba; sobre el corte exacto se cobra la tarifa menor.
+   Los cortes se prolongan en línea recta hasta la costa y el cerro donde la calle termina. */
+const ZONAS_DELIVERY = [
+  { id:"centro",             nombre:"Centro hasta Tadeo",       precio:3000, limites:"Centro hasta Av. Tadeo Haenke" },
+  { id:"tadeo_chipana",      nombre:"Tadeo hasta Chipana",      precio:3000, limites:"Av. Tadeo Haenke hasta Av. Ramón Pérez Opazo" },
+  { id:"chipana_proyectada", nombre:"Chipana hasta Proyectada", precio:3500, limites:"Av. Ramón Pérez Opazo hasta Av. Proyectada" },
+  { id:"bajo_molle",         nombre:"Sur y Bajo Molle",         precio:4000, limites:"Av. Proyectada hacia el sur hasta Condominio La Portada" },
+  { id:"zofri_inostroza",    nombre:"Zofri y Jorge Inostroza",  precio:3000, limites:"Sectores Zofri y población Jorge Inostroza" }
+];
+/* Límites exteriores (PROVISORIOS, confirmar): norte = sobre Zofri, sur = ~300 m después de la calle más al sur de La Portada,
+   este = borde del cerro (más allá ya es Alto Hospicio). Fuera de estos límites: "fuera de cobertura". */
+const DELIVERY_GEO = {
+  norte: -20.2000, sur: -20.2956, este: -70.1180,
+  orden: ["tadeo","opazo","proyectada"],            /* de norte a sur */
+  zonas: ["centro","tadeo_chipana","chipana_proyectada","bajo_molle"],
+  cortes: {
+    tadeo: [
+    [-20.236498,-70.146960],
+    [-20.236519,-70.146896],
+    [-20.236598,-70.146641],
+    [-20.236774,-70.146114],
+    [-20.236866,-70.145823],
+    [-20.237080,-70.145151],
+    [-20.237106,-70.145091],
+    [-20.237154,-70.145019],
+    [-20.237192,-70.144975],
+    [-20.237233,-70.144937],
+    [-20.237743,-70.144433],
+    [-20.237794,-70.144383],
+    [-20.238005,-70.144174],
+    [-20.238116,-70.144074],
+    [-20.238147,-70.144046],
+    [-20.238197,-70.143966],
+    [-20.238215,-70.143919],
+    [-20.238220,-70.143907],
+    [-20.238279,-70.143763],
+    [-20.238361,-70.143545],
+    [-20.238420,-70.143334],
+    [-20.238481,-70.143160],
+    [-20.238583,-70.142843],
+    [-20.238604,-70.142777],
+    [-20.238630,-70.142709],
+    [-20.239045,-70.141421],
+    [-20.239061,-70.141368],
+    [-20.239374,-70.140396],
+    [-20.239404,-70.140303],
+    [-20.239421,-70.140249],
+    [-20.239427,-70.140231],
+    [-20.239593,-70.139728],
+    [-20.239745,-70.139257],
+    [-20.239761,-70.139206],
+    [-20.239880,-70.138845],
+    [-20.239944,-70.138650],
+    [-20.239962,-70.138598],
+    [-20.240141,-70.138063],
+    [-20.240315,-70.137543],
+    [-20.240346,-70.137449],
+    [-20.240362,-70.137402],
+    [-20.240371,-70.137376],
+    [-20.240537,-70.136896],
+    [-20.240734,-70.136321],
+    [-20.240807,-70.136111],
+    [-20.240833,-70.136034],
+    [-20.241136,-70.135149],
+    [-20.241222,-70.134890],
+    [-20.241336,-70.134540],
+    [-20.241365,-70.134435],
+    [-20.241391,-70.134329],
+    [-20.241409,-70.134240],
+    [-20.241424,-70.134133],
+    [-20.241422,-70.134051],
+    [-20.241419,-70.134018],
+    [-20.241416,-70.133969],
+    [-20.241407,-70.133889],
+    [-20.241394,-70.133809],
+    [-20.241347,-70.133562],
+    [-20.241308,-70.133369],
+    [-20.241286,-70.133270],
+    [-20.241257,-70.133173],
+    [-20.241229,-70.133090],
+    [-20.241192,-70.133005],
+    [-20.241157,-70.132933],
+    [-20.241118,-70.132863],
+    [-20.241059,-70.132774],
+    [-20.240995,-70.132690],
+    [-20.240731,-70.132383],
+    [-20.240602,-70.132239],
+    [-20.240231,-70.131817],
+    [-20.240153,-70.131730],
+    [-20.240106,-70.131675],
+    [-20.240053,-70.131612],
+    [-20.239777,-70.131289],
+    [-20.239446,-70.130902],
+    [-20.239102,-70.130500],
+    [-20.238758,-70.130097],
+    [-20.238404,-70.129682],
+    [-20.238392,-70.129659],
+    [-20.238309,-70.129181],
+    [-20.238275,-70.129043],
+    [-20.238202,-70.128818],
+    [-20.238184,-70.128765],
+    [-20.238157,-70.128675],
+    [-20.238142,-70.128626],
+    [-20.238135,-70.128602],
+    [-20.237959,-70.128014],
+    [-20.237895,-70.127789],
+    [-20.237880,-70.127647],
+    [-20.237876,-70.127497],
+    [-20.237886,-70.127396],
+    [-20.237904,-70.127188],
+    [-20.237938,-70.127162],
+    [-20.237965,-70.127152]
+  ],
+    opazo: [
+    [-20.255552,-70.134102],
+    [-20.255556,-70.134047],
+    [-20.255553,-70.133992],
+    [-20.255544,-70.133942],
+    [-20.255530,-70.133894],
+    [-20.255498,-70.133830],
+    [-20.255352,-70.133538],
+    [-20.254992,-70.132820],
+    [-20.254962,-70.132760],
+    [-20.254926,-70.132688],
+    [-20.254723,-70.132276],
+    [-20.254517,-70.131861],
+    [-20.254312,-70.131443],
+    [-20.254283,-70.131386],
+    [-20.254234,-70.131288],
+    [-20.254207,-70.131233],
+    [-20.254186,-70.131190],
+    [-20.253948,-70.130710],
+    [-20.253778,-70.130366],
+    [-20.253610,-70.130027],
+    [-20.253449,-70.129703],
+    [-20.253412,-70.129628],
+    [-20.253377,-70.129557],
+    [-20.253048,-70.128898],
+    [-20.252858,-70.128518],
+    [-20.252823,-70.128448],
+    [-20.252779,-70.128360],
+    [-20.252497,-70.127794],
+    [-20.252384,-70.127567],
+    [-20.252334,-70.127466],
+    [-20.252168,-70.127134],
+    [-20.252019,-70.126834],
+    [-20.251993,-70.126782],
+    [-20.251954,-70.126703],
+    [-20.251927,-70.126649],
+    [-20.251917,-70.126627],
+    [-20.251743,-70.126274],
+    [-20.251568,-70.125917],
+    [-20.251545,-70.125869],
+    [-20.251518,-70.125817],
+    [-20.251462,-70.125705],
+    [-20.251156,-70.125102],
+    [-20.250957,-70.124713],
+    [-20.250774,-70.124356],
+    [-20.250639,-70.124184],
+    [-20.250574,-70.124111],
+    [-20.250550,-70.124084],
+    [-20.250344,-70.123926],
+    [-20.250195,-70.123848],
+    [-20.250092,-70.123807],
+    [-20.249813,-70.123751]
+  ],
+    proyectada: [
+    [-20.274838,-70.130088],
+    [-20.274856,-70.130088],
+    [-20.274873,-70.130084],
+    [-20.274889,-70.130076],
+    [-20.274902,-70.130063],
+    [-20.274912,-70.130044],
+    [-20.274917,-70.130023],
+    [-20.274915,-70.130002],
+    [-20.274821,-70.129659],
+    [-20.274639,-70.129002],
+    [-20.274378,-70.128059],
+    [-20.274373,-70.128034],
+    [-20.274368,-70.128004],
+    [-20.274365,-70.127973],
+    [-20.274366,-70.127942],
+    [-20.274369,-70.127789],
+    [-20.274386,-70.126786],
+    [-20.274391,-70.126734],
+    [-20.274662,-70.126781],
+    [-20.274715,-70.126790],
+    [-20.274748,-70.126692],
+    [-20.274769,-70.126626],
+    [-20.274775,-70.126609],
+    [-20.274786,-70.126574],
+    [-20.274861,-70.126345],
+    [-20.274908,-70.126205],
+    [-20.275027,-70.125843],
+    [-20.275045,-70.125787],
+    [-20.275064,-70.125729],
+    [-20.275188,-70.125351],
+    [-20.275297,-70.125023],
+    [-20.275309,-70.124984],
+    [-20.275326,-70.124934],
+    [-20.275429,-70.124619],
+    [-20.275534,-70.124302],
+    [-20.275551,-70.124248]
+  ]
+  }
+};
 const MENU = [
   { id:"hamburguesas", name:"Hamburguesas", note:"Todas incluyen Papas Fritas o Mac & Cheese.", items:[
-    { ...burger("crunchy-one","The Crunchy One",9490,"Hamburguesa Smash de Carne con Queso Cheddar Americano, Tocino Crocante Ahumado, Onion Crunch y Salsa Alioli.",["s-alioli","s-chick","s-ranch","s-bbq"]), badge:"Burger del Mes" },
-    burger("cheese-burger","Cheese Burger",7990,"Hamburguesa Smash de Carne con Doble Queso Cheddar Americano, Cebolla Brunoise, Mostaza y Ketchup.",["s-chick","s-street","s-bbq","s-cheddar"]),
-    burger("honey-mustang","Honey Mustang Burger",8490,"Hamburguesa Smash de Carne con Queso Cheddar Americano, Cebolla Caramelizada, Pepinillos Americanos y Salsa Honey Mustard.",["s-honey","s-chick","s-ranch","s-bbq"]),
-    burger("tercio-libra","Tercio de Libra Burger",8990,"Hamburguesa Smash de Carne con Queso Cheddar Americano, Tocino Crocante Ahumado, Pepinillos Americanos, Cebolla Brunoise y Salsa Chick Fil A.",["s-chick","s-ranch","s-street","s-cheddar"]),
-    burger("fantastic","Fantastic Burger",8990,"Hamburguesa Smash de Carne con Queso Cheddar Americano, Lechuga Fresca, Tomate, Cebolla Caramelizada, Pepinillos Americanos y Salsa Street.",["s-street","s-chick","s-ranch","s-bbq"]),
-    burger("bacon-master","Bacon Master Burger",8990,"Hamburguesa Smash de Carne con Queso Cheddar Americano, Tocino Crocante Ahumado, Pepinillos Americanos y Salsa BBQ Americana.",["s-bbq","s-chick","s-ranch","s-cheddar"]),
-    burger("lord-rings","The Lord of the Rings Burger",10490,"Hamburguesa Smash de Carne con Queso Cheddar Americano, Tomate Fresco, Lechuga, Tocino Crocante Ahumado, Jalapeños Americanos, Aros de Cebolla Frita y Salsa Chick Fil A.",["s-chick","s-ranch","s-bbq","s-cheddar"]),
-    burger("onion-crunchy","Onion Crunchy",10490,"Doble Hamburguesa Smash de Carne con Queso Cheddar Americano, Tocino Crocante Ahumado, Onion Crunch y Salsa Chick Fil A.",["s-chick","s-ranch","s-bbq","s-cheddar"])
+    { ...burger("crunchy-one","The Crunchy One",6990,"Hamburguesa Smash de Carne con Queso Cheddar, Tocino, Onion Crunch y Salsa Alioli.",["s-alioli","s-chick","s-ranch","s-bbq"]), badge:"Burger del Mes" },
+    burger("cheese-burger","Cheese Burger",7990,"Hamburguesa Smash de Carne con Doble Queso Cheddar, Cebolla Brunoise, Mostaza y Ketchup.",["s-chick","s-street","s-bbq","s-cheddar"]),
+    burger("honey-mustang","Honey Mustang Burger",8490,"Hamburguesa Smash de Carne con Queso Cheddar, Cebolla Caramelizada, Pepinillos y Salsa Honey Mustard.",["s-honey","s-chick","s-ranch","s-bbq"]),
+    burger("tercio-libra","Tercio de Libra Burger",8990,"Hamburguesa Smash de Carne con Queso Cheddar, Tocino, Pepinillos, Cebolla Brunoise y Salsa Chick Fil A.",["s-chick","s-ranch","s-street","s-cheddar"]),
+    burger("fantastic","Fantastic Burger",8990,"Hamburguesa Smash de Carne con Queso Cheddar, Lechuga, Tomate, Cebolla Caramelizada, Pepinillos y Salsa Street.",["s-street","s-chick","s-ranch","s-bbq"]),
+    burger("bacon-master","Bacon Master Burger",8990,"Hamburguesa Smash de Carne con Queso Cheddar, Tocino, Pepinillos y Salsa BBQ.",["s-bbq","s-chick","s-ranch","s-cheddar"]),
+    burger("lord-rings","The Lord of the Rings Burger",10490,"Hamburguesa Smash de Carne con Queso Cheddar, Tomate, Lechuga, Tocino, Jalapeños, Aros de Cebolla y Salsa Chick Fil A.",["s-chick","s-ranch","s-bbq","s-cheddar"]),
+    burger("onion-crunchy","Onion Crunchy",10490,"Doble Hamburguesa Smash de Carne con Queso Cheddar, Tocino, Onion Crunch y Salsa Chick Fil A.",["s-chick","s-ranch","s-bbq","s-cheddar"])
   ]},
-  { id:"chicken", name:"Chicken Sandwich", note:"Sándwiches de pollo frito. Todos incluyen Papas Fritas o Mac & Cheese.", items:[
-    { id:"slaw-chicken", name:"Slaw Chicken", price:8490, desc:"Sándwich de Pollo Frito con Queso Cheddar Americano, Pepinillos, Cole Slaw y Salsa Sweet Chipotle.", extras:EXTRAS_CHICKEN, sauces:salsas(["s-chick","s-ranch","s-chipotle","s-cheddar"]) },
-    { id:"classic-chicken", name:"Classic Chicken", price:8490, desc:"Sándwich de Pollo Frito con Tomate Fresco, Lechuga, Queso Cheddar Americano, Tocino Crocante Ahumado, Jalapeños Americanos y Salsa de Jalapeño.", extras:EXTRAS_CHICKEN, sauces:salsas(["s-chick","s-ranch","s-chipotle","s-cheddar"]) },
-    { id:"crispy-chicken", name:"Crispy Chicken", price:9490, desc:"Sándwich de Pollo Frito con Queso Cheddar Americano, Tocino Crocante, Cebolla Crispy y Salsa Chick Fil A.", extras:EXTRAS_CHICKEN, sauces:salsas(["s-chick","s-ranch","s-chipotle","s-cheddar"]) },
-    { id:"notorius-big", name:"The Notorius Big", price:9490, desc:"Sándwich de Pollo Frito con Queso Cheddar Americano, Tocino Crocante, Aros de Cebolla Frita, Jalapeños Americanos y Salsa de Jalapeño.", extras:EXTRAS_CHICKEN, sauces:salsas(["s-chick","s-ranch","s-chipotle","s-cheddar"]) },
-    { id:"avocado-chicken", name:"Avocado Chicken", price:9490, desc:"Sándwich de Pollo Frito con Queso Cheddar, Cebolla Brunoise, Tomate Picado, Palta, Jalapeños y Salsa Alioli.", extras:EXTRAS_CHICKEN, sauces:salsas(["s-chick","s-ranch","s-chipotle","s-cheddar"]) }
+  { id:"chicken", name:"Chicken Sandwich", nav:"Chicken", note:"Sándwiches de pollo frito. Todos incluyen Papas Fritas o Mac & Cheese.", items:[
+    { id:"slaw-chicken", name:"Slaw Chicken", price:8490, desc:"Pollo Frito, Queso Cheddar, Pepinillos, Cole Slaw y Salsa Sweet Chipotle.", extras:EXTRAS_CHICKEN, sauces:salsas(["s-chick","s-ranch","s-chipotle","s-cheddar"]) },
+    { id:"classic-chicken", name:"Classic Chicken", price:8490, desc:"Pollo Frito, Tomate, Lechuga, Queso Cheddar, Tocino, Jalapeños y Salsa de Jalapeño.", extras:EXTRAS_CHICKEN, sauces:salsas(["s-chick","s-ranch","s-chipotle","s-cheddar"]) },
+    { id:"crispy-chicken", name:"Crispy Chicken", price:9490, desc:"Pollo Frito, Queso Cheddar, Tocino, Cebolla Crispy y Salsa Chick Fil A.", extras:EXTRAS_CHICKEN, sauces:salsas(["s-chick","s-ranch","s-chipotle","s-cheddar"]) },
+    { id:"notorius-big", name:"The Notorius Big", price:9490, desc:"Pollo Frito, Queso Cheddar, Tocino, Aros de Cebolla, Jalapeños y Salsa de Jalapeño.", extras:EXTRAS_CHICKEN, sauces:salsas(["s-chick","s-ranch","s-chipotle","s-cheddar"]) },
+    { id:"avocado-chicken", name:"Avocado Chicken", price:9490, desc:"Pollo Frito, Queso Cheddar, Cebolla Brunoise, Tomate, Palta, Jalapeños y Salsa Alioli.", extras:EXTRAS_CHICKEN, sauces:salsas(["s-chick","s-ranch","s-chipotle","s-cheddar"]) }
   ]},
-  { id:"manosos", name:"Niños", note:"Todos incluyen Papas Fritas o Mac & Cheese.", items:[
-    { id:"picky-chicken", name:"Picky Chicken", price:5990, desc:"Sándwich de Pollo Frito con Queso Cheddar Americano.", extras:EXTRAS_BURGER, sauces:salsas(["s-chick","s-street","s-ranch","s-bbq"]) },
-    burger("picky-meat","Picky Meat",5990,"Hamburguesa Smash de Carne con Queso Cheddar Americano.",["s-chick","s-street","s-ranch","s-bbq"])
+  { id:"manosos", name:"Niños", note:"Todos incluyen Papas Fritas.", items:[
+    { id:"picky-chicken", name:"Picky Chicken", price:5990, desc:"Pollo Frito y Queso Cheddar. Incluye Papas Fritas.", extras:EXTRAS_CHICKEN, sauces:{ ...salsas(["s-chick","s-street","s-ranch","s-bbq"]) }, sauceMsg:"Tus papas quedan mejor con una salsa" },
+    { id:"picky-meat", name:"Picky Meat", price:5990, desc:"Hamburguesa Smash de Carne con Queso Cheddar. Incluye Papas Fritas.", extras:EXTRAS_BURGER, sauces:salsas(["s-chick","s-street","s-ranch","s-bbq"]), sauceMsg:"Tus papas quedan mejor con una salsa" }
   ]},
   { id:"papas", name:"Papas Fritas", note:"Para compartir.", items:[
-    { id:"chicken-fries", name:"Chicken Fries", price:7990, desc:"Papas Fritas con Pollo Frito, Salsa Cheddar, Tocino Crocante, Cebollín Fresco y Salsa Sweet Chipotle. Para 2 a 3 personas.", sauces:salsas(["s-chick","s-street","s-ranch","s-bbq"]) },
-    { id:"meat-fries", name:"Meat Fries", price:8490, desc:"Papas Fritas con Carne Picada, Queso Cheddar, Pico de Gallo, Cebollín Fresco, Jalapeños y Salsa de Jalapeños. Para 2 a 3 personas.", sauces:salsas(["s-chick","s-street","s-ranch","s-bbq"]) },
+    { id:"chicken-fries", name:"Chicken Fries", price:7990, desc:"Papas Fritas con Pollo Frito, Salsa Cheddar, Tocino, Cebollín y Salsa Sweet Chipotle. Para 2 a 3 personas.", sauces:salsas(["s-chick","s-street","s-ranch","s-bbq"]) },
+    { id:"meat-fries", name:"Meat Fries", price:8490, desc:"Papas Fritas con Carne Picada, Queso Cheddar, Pico de Gallo, Cebollín, Jalapeños y Salsa de Jalapeños. Para 2 a 3 personas.", sauces:salsas(["s-chick","s-street","s-ranch","s-bbq"]) },
     { id:"chorri-street", name:"Chorri Street", price:7990, desc:"Papas Fritas, Vienesas Bañadas en Salsa BBQ, Onion Crunch y Cebollín. Para 2 a 3 personas.", sauces:salsas(["s-chick","s-street","s-ranch","s-bbq"]) },
-    { id:"fries-corn", name:"Fries Corn", price:8990, desc:"Papas Fritas, Carne Picada, Choclo, Palta y Salsa Street. Para 2 a 3 personas.", sauces:salsas(["s-chick","s-street","s-ranch","s-bbq"]) }
-  ]},
-  { id:"boxes", name:"Boxes", items:[
-    { id:"flaggy-box", name:"Flaggy Box", price:9990, desc:"Chicken Pop, 6 Empanadas de Queso y 6 Aros de Cebolla. Para 2 personas." },
-    { id:"street-box", name:"Street Box", price:22990, desc:"Crispy Chicken, Tercio de Libra, Papas Fritas con Salsa Cheddar y Tocino, 4 Aros de Cebolla y 4 Empanadas. Para 2 a 3 personas." }
+    { id:"fries-corn", name:"Corn Fries", price:8990, desc:"Papas Fritas, Carne Picada, Choclo, Palta y Salsa Street. Para 2 a 3 personas.", sauces:salsas(["s-chick","s-street","s-ranch","s-bbq"]) }
   ]},
   { id:"sides", name:"Sides", items:[
-    { id:"mac-cheese", name:"Mac & Cheese", price:5490, desc:"Macarrones con Salsa de Queso Cheddar, Tocino Crocante y Cebolla Crispy." },
-    { id:"chicken-pop", name:"Chicken Pop", price:6490, desc:"Pollo Frito Acompañado de Cremoso Mac & Cheese." },
+    { id:"mac-cheese", name:"Mac & Cheese", price:5490, desc:"Macarrones con Salsa de Queso Cheddar, Tocino y Cebolla Crispy." },
+    { id:"chicken-pop", name:"Chicken Pop", price:6490, desc:"Pollo Frito Acompañado de Mac & Cheese." },
     { id:"pop-corn-8", name:"Pop Corn", price:3990, desc:"Pop Corn de Pollo con Salsa a Elección.", pick:SAUCE_PICK(NOMBRES_SALSAS), pickInSheet:true },
     { id:"empanadas", name:"Empanadas de Queso", desc:"Empanadas de Queso Fritas.", options:[{label:"8 un",price:3490},{label:"16 un",price:4990}] },
     { id:"aros-8", name:"Aros de Cebolla (8 un)", price:5490, desc:"8 Aros de Cebolla Fritos con Salsa a Elección.", pick:SAUCE_PICK(NOMBRES_SALSAS), pickInSheet:true },
     { id:"bubba-6", name:"Bubba Gump Shrimps (6 un)", price:5490, desc:"6 Camarones Apanados con Salsa a Elección.", pick:SAUCE_PICK(NOMBRES_SALSAS), pickInSheet:true }
   ]},
+  { id:"boxes", name:"Boxes", items:[
+    { id:"flaggy-box", name:"Flaggy Box", price:9990, desc:"Chicken Pop, 6 Empanadas de Queso y 6 Aros de Cebolla. Para 2 personas." },
+    { id:"street-box", name:"Street Box", price:22990, desc:"Crispy Chicken, Tercio de Libra, Papas Fritas con Salsa Cheddar y Tocino, 4 Aros de Cebolla y 4 Empanadas. Para 2 a 3 personas." }
+  ]},
   { id:"ensaladas", name:"Ensaladas", items:[
-    { id:"chicken-salad", name:"Chicken Salad", price:7490, desc:"Pollo Crispy, Lechuga Fresca, Repollo Blanco y Morado, Zanahoria Rallada, Crutones y Queso Parmesano. Incluye salsa César casera." },
-    { id:"shrimp-salad", name:"Shrimp Salad", price:8490, desc:"Camarones Ecuatorianos Apanados, Lechuga Fresca, Repollo Blanco y Morado, Zanahoria Rallada, Crutones y Queso Parmesano." }
+    { id:"chicken-salad", name:"Chicken Salad", price:7490, desc:"Pollo Crispy, Lechuga, Repollo Blanco y Morado, Zanahoria Rallada, Crutones y Queso Parmesano. Incluye salsa César casera." },
+    { id:"shrimp-salad", name:"Shrimp Salad", price:8490, desc:"Camarones Ecuatorianos Apanados, Lechuga, Repollo Blanco y Morado, Zanahoria Rallada, Crutones y Queso Parmesano." }
   ]},
   { id:"salsas", name:"Salsas", note:"El complemento Street Flags.", items:[
     { id:"s-honey", name:"Honey Mustard", price:1290, desc:"Mayonesa, Miel y Mostaza." },
@@ -794,31 +1070,33 @@ const MENU = [
     { id:"s-alioli", name:"Alioli", price:1290, desc:"Mayonesa, Ajo y Miel." }
   ]},
   { id:"bebidas", name:"Bebidas", compact:true, items:[
-    { id:"drink-350", name:"Bebida 350 ml", desc:"Coca-Cola, Sprite, Fanta, Jugo o Agua.", price:1990, drinkChoice:{ label:"Elige tu bebida", list:["Coca-Cola Original","Coca-Cola Zero","Sprite","Fanta","Jugo de Naranja","Jugo de Durazno","Agua sin gas","Agua con gas"], suffix:"" } },
+    { id:"drink-350", name:"Bebida 350 ml", desc:"Coca-Cola, Sprite, Fanta, Jugo o Agua.", price:2000, drinkChoice:{ label:"Elige tu bebida", list:["Coca-Cola Original","Coca-Cola Zero","Sprite","Fanta","Jugo de Naranja","Jugo de Durazno","Agua sin gas","Agua con gas"], suffix:"" } },
     { id:"drink-225", name:"Bebida 225 ml", desc:"Coca-Cola, Sprite, Fanta, Jugo o Agua.", price:1690, drinkChoice:{ label:"Elige tu bebida", list:["Coca-Cola Original","Coca-Cola Zero","Sprite","Fanta","Jugo de Naranja","Jugo de Durazno","Agua sin gas","Agua con gas"], suffix:"" } },
     { id:"refill", name:"Bebida Refill", desc:"Solo para consumo en el local.", price:2990, localOnly:true }
   ]},
   { id:"extras", name:"Extras", compact:true, items:[
+    { id:"e-notmeat", name:"Cambio a Not Meat", price:1990 },
+    { id:"e-notchicken", name:"Cambio a Not Chicken", price:1990 },
     { id:"e-smash", name:"Smash Burger", price:1990 },
     { id:"e-chicken", name:"Pollo Crispy", price:1990 },
     { id:"e-fries", name:"Papas Fritas", price:1990 },
     { id:"e-cheddar", name:"Queso Cheddar", price:1290 },
     { id:"e-lettuce", name:"Lechuga", price:690 },
     { id:"e-tomato", name:"Tomate", price:690 },
-    { id:"e-jalapeno", name:"Jalapeños Americanos", price:990 },
-    { id:"e-pickle", name:"Pepinillos Americanos", price:990 },
+    { id:"e-jalapeno", name:"Jalapeños", price:990 },
+    { id:"e-pickle", name:"Pepinillos", price:990 },
     { id:"e-slaw", name:"Cole Slaw", price:1490 },
-    { id:"e-bacon", name:"Tocino Americano", price:1990 },
+    { id:"e-bacon", name:"Tocino", price:1990 },
     { id:"e-crispy-onion", name:"Cebolla Crispy", price:1290 },
     { id:"e-onion", name:"Onion Crunch", price:1290 }
   ]}
 ];
 
 /* Acompañamiento obligatorio también en chicken y mañosos */
-["chicken","manosos"].forEach(cid => MENU.find(c => c.id === cid).items.forEach(i => { if (!i.pick){ i.pick = SIDE; i.pickInSheet = true; } })); /*SIDE_EN*/
+["chicken"].forEach(cid => MENU.find(c => c.id === cid).items.forEach(i => { if (!i.pick){ i.pick = SIDE; i.pickInSheet = true; } })); /*SIDE_EN*/
 
 /* Fotos en .jpg (las demás usan la extensión de CONFIG) */
-["crunchy-one","bacon-master","cheese-burger","fantastic","honey-mustang","picky-meat","tercio-libra","avocado-chicken","classic-chicken","notorius-big","picky-chicken","slaw-chicken","s-bbq","s-cheddar","s-ranch","s-chick","s-chipotle","s-street","s-honey","s-alioli","chorri-street","chicken-pop","pop-corn-8","onion-crunchy","chicken-salad","shrimp-salad"].forEach(id => MENU.forEach(c => c.items.forEach(i => { if (i.id === id) i.foto = id + ".jpg"; })));
+["crunchy-one","bacon-master","cheese-burger","fantastic","honey-mustang","picky-meat","tercio-libra","avocado-chicken","classic-chicken","notorius-big","picky-chicken","slaw-chicken","s-bbq","s-cheddar","s-ranch","s-chick","s-chipotle","s-street","s-honey","s-alioli","chorri-street","chicken-pop","bubba-6","mac-cheese","flaggy-box","meat-fries","chicken-fries","lord-rings","crispy-chicken","aros-8","fries-corn","empanadas","street-box","pop-corn-8","onion-crunchy","chicken-salad","shrimp-salad"].forEach(id => MENU.forEach(c => c.items.forEach(i => { if (i.id === id) i.foto = id + ".jpg"; })));
 
 
 /* =====================================================================
@@ -1118,7 +1396,7 @@ function setOffer(id, k){
 }
 function pop(el){ if (!el) return; el.classList.remove("pop"); void el.offsetWidth; el.classList.add("pop"); }
 
-$("#nav").innerHTML = MENU.map(c => `<li><a href="#${c.id}">${esc(c.name)}</a></li>`).join("");
+$("#nav").innerHTML = MENU.map(c => `<li><a href="#${c.id}">${esc(c.nav || c.name)}</a></li>`).join("");
 $("#menu").innerHTML = MENU.map((c, ci) => `<section class="cat${c.compact ? " compact" : ""}" id="${c.id}" aria-labelledby="h-${c.id}">
   <h2 id="h-${c.id}">${esc(c.name)}</h2>
   ${c.note ? `<p class="note">${esc(c.note)}</p>` : ""}
@@ -1405,7 +1683,7 @@ function renderCart(){
         <span aria-label="Cantidad">${l.qty}</span>
         <button type="button" data-inc="${esc(l.k)}" aria-label="Agregar uno de ${esc(l.it.name)}">+</button>
       </div>
-    </div>`; }).join("") + panelSuggest(ls) : `<p class="empty">Aún no agregas productos.</p>`;
+    </div>`; }).join("") + panelSuggest(ls) + `<div class="clr"><button type="button" class="clr-b" data-clr="ask">Vaciar pedido</button></div>` : `<p class="empty">Aún no agregas productos.</p>`;
   $("#total").textContent = fmt(sum);
   syncTipo();
   $("#send").disabled = count === 0;
@@ -1528,6 +1806,12 @@ document.addEventListener("click", e => {
   if (card){ const cid = card.dataset.id; if (curSug && curSug.it && curSug.it.id !== cid) hideSuggest(); if (curOffer && curOffer.id !== cid) hideOffer(); }
   if (t.classList.contains("zoom")) return openLb(t);
   if (t.hasAttribute("data-sgx")) return hideSuggest();
+  if (t.dataset.clr){
+    const box = t.closest(".clr");
+    if (t.dataset.clr === "ask"){ box.innerHTML = `<span>¿Vaciar todo?</span><button type="button" class="clr-b y" data-clr="yes">Sí, vaciar</button><button type="button" class="clr-b" data-clr="no">No</button>`; const n = box.querySelector("[data-clr=no]"); if (n) n.focus({preventScroll:true}); return; }
+    if (t.dataset.clr === "no"){ box.innerHTML = `<button type="button" class="clr-b" data-clr="ask">Vaciar pedido</button>`; return; }
+    cart = {}; save(); hideSuggest(); hideOffer(); track("cart_cleared", {}); renderCart(); $("#live").textContent = "Pedido vaciado"; return;
+  }
   if (t.dataset.dkg !== undefined){ drinkOpen = t.dataset.dkg || null; const el = t.closest(".sug.dk"); if (el){ el.outerHTML = drinkBlock(); const n = document.querySelector(".sug.dk"); if (n){ n.classList.add("fi"); const f = n.querySelector("button"); if (f) f.focus({preventScroll:true}); } } return; }
   if (t.dataset.sugd !== undefined){ track("upsell_click", {product_id:"drink-350",product_name:"Bebida 350 ml",location:"checkout"}); add("drink-350", true, 0, +t.dataset.sugd); return; }
   if (t.dataset.sug){
@@ -1611,7 +1895,7 @@ function showCheckoutStep(n, animate=true){
   el.classList.remove("in");
   if (animate){ void el.offsetWidth; el.classList.add("in"); }
   drawer.scrollTop = 0;
-  if (n === 2) syncTipo();
+  if (n === 2) (typeof renderZone === "function" ? renderZone() : syncTipo());
 }
 $("#nextCheckout").addEventListener("click", () => {
   if (!totals().count) return;
@@ -1679,7 +1963,7 @@ const sauceMsg = it => {
   return "Con una salsa, todo queda mejor";
 };
 const norm = t => (t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
-const EXTRA_KW = {"e-bacon":"bacon tocino","e-smash":"smash burger hamburguesa carne","e-chicken":"pollo crispy chicken","e-fries":"papas fritas","e-cheddar":"queso cheddar","e-lettuce":"lechuga","e-tomato":"tomate","e-jalapeno":"jalapeno jalapenos picante","e-pickle":"pepinillo pepinillos pickles","e-slaw":"cole slaw repollo ensalada","e-crispy-onion":"cebolla crispy","e-onion":"onion crunch cebolla"};
+const EXTRA_KW = {"e-bacon":"bacon tocino","e-smash":"smash burger hamburguesa carne","e-chicken":"pollo crispy chicken","e-fries":"papas fritas","e-cheddar":"queso cheddar","e-lettuce":"lechuga","e-tomato":"tomate","e-jalapeno":"jalapeno jalapenos picante","e-pickle":"pepinillo pepinillos pickles","e-slaw":"cole slaw repollo ensalada","e-crispy-onion":"cebolla crispy","e-onion":"onion crunch cebolla","e-notmeat":"not meat notmeat vegano vegetariano cambio carne","e-notchicken":"not chicken notchicken vegano vegetariano cambio pollo"};
 function extraRows(it, g, ids, tops){
   const full = !!(g.max && grpSel(g) >= g.max);
   return ids.map(id => {
@@ -1808,6 +2092,16 @@ function openSheet(id){
 }
 function closeSheet(){ shCtx = null; $("#sheet").hidden = true; $("#shbd").hidden = true; if (shFrom && shFrom.focus) shFrom.focus(); }
 $("#shbd").addEventListener("click", closeSheet);
+const _shEl = $("#sheet");
+new MutationObserver(() => document.documentElement.classList.toggle("sh-lock", !_shEl.hidden)).observe(_shEl, { attributes:true, attributeFilter:["hidden"] });
+document.addEventListener("touchmove", e => {
+  if (!shCtx || _shEl.hidden) return;
+  if (!_shEl.contains(e.target)){ e.preventDefault(); return; }
+  for (let n = e.target; n && n !== _shEl.parentNode; n = n.parentNode){
+    if (n.nodeType === 1 && n.scrollHeight > n.clientHeight + 1 && /(auto|scroll)/.test(getComputedStyle(n).overflowY)) return;
+  }
+  e.preventDefault();
+}, { passive:false });
 
 document.addEventListener("input", e => {
   const inp = e.target.closest && e.target.closest("[data-sh-q]"); if (!inp || !shCtx) return;
@@ -1838,9 +2132,11 @@ try {
   const p = JSON.parse(localStorage.getItem(PROFILE)) || {};
   if (p.name) $("#cname").value = p.name;
   if (p.addr) $("#caddr").value = p.addr;
+  if (p.unit) $("#cunit").value = p.unit;
+  window.__savedGeo = (p.lat != null && p.lon != null) ? { lat:p.lat, lon:p.lon, label:p.label || "" } : null;
 } catch(e){}
 function saveProfile(){
-  try { localStorage.setItem(PROFILE, JSON.stringify({ name: $("#cname").value.trim(), addr: $("#caddr").value.trim() })); } catch(e){}
+  try { localStorage.setItem(PROFILE, JSON.stringify({ name: $("#cname").value.trim(), addr: $("#caddr").value.trim(), unit: $("#cunit").value.trim(), lat: DEL.lat, lon: DEL.lon, label: DEL.label })); } catch(e){}
 }
 $("#cname").addEventListener("change", saveProfile);
 $("#caddr").addEventListener("change", saveProfile);
@@ -1870,9 +2166,10 @@ function syncPay(){
   const t = document.getElementById("payT"); if (!t) return;
   const r = document.querySelector('input[name="tipo"]:checked');
   const delivery = !r || r.value === "delivery", sum = totals().sum;
-  t.innerHTML = delivery
+  const fee = (delivery && typeof feeNow === "function") ? feeNow() : 0;
+  t.innerHTML = (delivery && !fee)
     ? `Cuando te confirmemos el delivery, transfiere <b>${fmt(sum)}</b> + delivery a:`
-    : `Transfiere <b>${fmt(sum)}</b> a:`;
+    : `Transfiere <b>${fmt(sum + fee)}</b> a:`;
 }
 function syncTipo(){
   const choice = tipo(), d = choice !== "retiro", sum = totals().sum;
@@ -1887,15 +2184,16 @@ function syncTipo(){
   dn.textContent = "";
   dn.hidden = true;
   const summary = $("#step2Summary");
-  if (summary) summary.textContent = d ? "Subtotal " + fmt(sum) + " · Entrega: Delivery" : "Total " + fmt(sum) + " · Retiro en local";
+  const fee = (typeof feeNow === "function") ? feeNow() : 0;
+  if (summary) summary.textContent = d ? (fee ? "Subtotal " + fmt(sum) + " · Delivery " + fmt(fee) + " · Total " + fmt(sum + fee) : "Subtotal " + fmt(sum) + " · Delivery") : "Total " + fmt(sum) + " · Retiro en local";
+  if (typeof DEL !== "undefined" && wrap) wrap.style.display = d ? "" : "none";
   const os = $("#orderStep");
-  if (os) os.textContent = d
-    ? "Confirmaremos tu pedido y el valor del delivery por WhatsApp."
-    : "Confirmaremos tu pedido por WhatsApp.";
+  if (os) os.textContent = "Confirmaremos tu pedido por WhatsApp. El pago es solo por transferencia.";
   $("#steps").innerHTML = "";
   syncPay();
 }
 document.querySelectorAll('input[name="tipo"]').forEach(r => r.addEventListener("change", () => {
+  if (typeof renderZone === "function") renderZone();
   const er = $("#deliveryErr"), seg = $("#deliverySelector");
   if (er) er.textContent = "";
   if (seg) seg.classList.remove("shake");
@@ -1904,15 +2202,218 @@ document.querySelectorAll('input[name="tipo"]').forEach(r => r.addEventListener(
 }));
 syncTipo();
 
+/* ---------- Zonas de delivery ---------- */
+const ZONAS = typeof ZONAS_DELIVERY !== "undefined" ? ZONAS_DELIVERY : [];
+const zonasListas = () => typeof DELIVERY_GEO !== "undefined" && ZONAS.length > 0;
+
+/* latitud de un corte en una longitud dada (interpola; fuera de sus extremos se prolonga en línea recta horizontal) */
+const _cut = {};
+function cutLat(name, lng){
+  const L = _cut[name] || (_cut[name] = DELIVERY_GEO.cortes[name].slice().sort((p, q) => p[1] - q[1]));
+  if (lng <= L[0][1]) return L[0][0];
+  if (lng >= L[L.length - 1][1]) return L[L.length - 1][0];
+  for (let i = 1; i < L.length; i++) if (lng <= L[i][1]){ const a = L[i - 1], b = L[i], d = b[1] - a[1]; return d ? a[0] + (b[0] - a[0]) * (lng - a[1]) / d : Math.max(a[0], b[0]); }
+  return L[L.length - 1][0];
+}
+/* zona de un punto: franjas de norte a sur. Sobre el corte exacto cae la zona de arriba (la de tarifa menor). */
+function zoneAt(lat, lng){
+  const g = DELIVERY_GEO; if (lat > g.norte || lat < g.sur || lng > g.este) return null;
+  let k = 0; for (; k < g.orden.length; k++) if (lat >= cutLat(g.orden[k], lng)) break;
+  const id = g.zonas[k]; return ZONAS.find(z => z.id === id) || null;
+}
+var DEL = { st:"idle", zone:null, lat:null, lon:null, label:"", opts:[] };
+function feeNow(){ return (DEL && DEL.st === "ok" && DEL.zone) ? DEL.zone.precio : 0; }
+const MAPA = { css:"https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css", js:"https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js", centro:[-20.2307, -70.1357] };
+
+function setDel(p){ Object.assign(DEL, p); renderZone(); }
+function renderZone(){
+  const box = $("#zoneBox"), go = $("#addrGo");
+  go.setAttribute("aria-busy", DEL.st === "searching"); go.textContent = DEL.st === "searching" ? "Buscando…" : "Buscar";
+  const showMap = `<button type="button" class="zb" data-zmap>Marcar mi ubicación en el mapa</button>`;
+  let h = "", cls = "";
+  if (tipo() === "retiro" || DEL.st === "idle"){ box.hidden = true; box.className = "zone-box"; box.innerHTML = ""; syncTipo(); return; }
+  if (DEL.st === "searching") h = `<span class="zm">Buscando tu dirección…</span>`;
+  else if (DEL.st === "choose") h = `<span>¿Cuál es tu dirección?</span><div class="zl">${DEL.opts.map((o, i) => `<button type="button" data-zpick="${i}">${esc(o.label)}</button>`).join("")}</div>${zonasListas() ? showMap : ""}`;
+  else if (DEL.st === "notfound"){ cls = "bad"; h = `<span><b>No encontramos esa dirección.</b> Escríbela con calle y número, o márcala en el mapa.</span>${showMap}`; }
+  else if (DEL.st === "error"){ cls = "bad"; h = `<span><b>No pudimos buscar la dirección.</b> Revisa tu conexión e inténtalo de nuevo${zonasListas() ? ", o márcala en el mapa" : ""}.</span>${zonasListas() ? showMap : ""}`; }
+  else if (DEL.st === "pin") h = `<span><b>Encontramos la calle.</b> Marca tu casa en el mapa para calcular el delivery.</span>${showMap}`;
+  else if (DEL.st === "out"){ cls = "bad"; h = `<span><b>Dirección fuera de cobertura.</b> Hacemos delivery solo en Iquique.</span><button type="button" class="zb" data-zretiro>Cambiar a retiro en local</button>`; }
+  else if (DEL.st === "unconf") h = `<span>${esc(DEL.label)}</span><span class="zm">El valor del delivery te lo confirmamos por WhatsApp.</span>`;
+  else if (DEL.st === "ok"){ cls = "ok"; h = `<div class="zn"><span><b>${esc(DEL.zone.nombre)}</b></span><b>Delivery ${fmt(DEL.zone.precio)}</b></div><span class="zm">${esc(DEL.label)}</span>`; }
+  box.className = "zone-box " + cls; box.innerHTML = h; box.hidden = false;
+  syncTipo();
+}
+function resolveDel(){
+  if (!zonasListas()) return setDel({ st:"unconf" });
+  const z = zoneAt(DEL.lat, DEL.lon);
+  setDel(z ? { st:"ok", zone:z } : { st:"out", zone:null });
+}
+const isIquique = r => { const a = r.address || {}, c = norm(a.city || a.town || a.village || a.municipality || ""); if (c) return c === "iquique"; const n = norm(r.display_name || ""); return n.indexOf("iquique") >= 0 && n.indexOf("hospicio") < 0; };
+const geoLabel = r => { const a = r.address || {}, road = a.road || a.pedestrian || a.footway || "", num = a.house_number ? " " + a.house_number : "", sub = a.suburb || a.neighbourhood || a.quarter || ""; const dn = (r.display_name || "").split(",").map(x => x.trim()); return (road ? road + num : dn[0]) + (sub ? ", " + sub : (dn[1] && dn[1] !== road ? ", " + dn[1] : "")); };
+let geoSeq = 0;
+async function buscarDireccion(){
+  if (typeof useGoogle === "function" && useGoogle()){ $("#err").textContent = "Elige tu dirección de la lista de sugerencias."; return; }
+  const q = $("#caddr").value.trim();
+  if (q.length < 5){ setDel({ st:"idle", zone:null, lat:null, lon:null }); $("#err").textContent = "Escribe calle y número."; $("#caddr").focus(); return; }
+  $("#err").textContent = ""; const my = ++geoSeq; setDel({ st:"searching", zone:null });
+  try {
+    const url = "https://nominatim.openstreetmap.org/search?" + new URLSearchParams({ q: q + ", Iquique, Chile", format:"jsonv2", addressdetails:"1", limit:"6", countrycodes:"cl", "accept-language":"es", viewbox:"-70.30,-20.10,-69.95,-20.45" });
+    const res = await fetch(url); if (!res.ok) throw new Error("http"); const js = await res.json(); if (my !== geoSeq) return;
+    const iq = [], seen = {};
+    js.filter(isIquique).forEach(r => { const k = (+r.lat).toFixed(4) + "," + (+r.lon).toFixed(4); if (!seen[k]){ seen[k] = 1; iq.push({ lat:+r.lat, lon:+r.lon, num:!!(r.address && r.address.house_number), label:geoLabel(r) }); } });
+    if (!iq.length) return setDel({ st: js.length ? "out" : "notfound", opts:[] });
+    if (iq.length === 1) return pickGeo(iq[0]);
+    setDel({ st:"choose", opts:iq });
+  } catch(e){ if (my === geoSeq) setDel({ st:"error" }); }
+}
+function pickGeo(o){
+  DEL.lat = o.lat; DEL.lon = o.lon; DEL.label = o.label; DEL.opts = [];
+  if (zonasListas() && !o.num) return setDel({ st:"pin", zone:null });
+  resolveDel(); saveProfile();
+}
+/* mapa para marcar la ubicación */
+let mapOv = null, mapObj = null, mapMk = null, mapPt = null;
+const loadLeaflet = () => new Promise((ok, no) => {
+  if (window.L) return ok();
+  const l = document.createElement("link"); l.rel = "stylesheet"; l.href = MAPA.css; document.head.appendChild(l);
+  const sc = document.createElement("script"); sc.src = MAPA.js; sc.onload = () => ok(); sc.onerror = () => no(new Error("leaflet")); document.head.appendChild(sc);
+});
+async function abrirMapa(){
+  if (!mapOv){
+    mapOv = document.createElement("div"); mapOv.className = "mapov"; mapOv.hidden = true;
+    mapOv.innerHTML = `<div class="mappn" role="dialog" aria-modal="true" aria-label="Marcar ubicación"><h3>Marca tu ubicación</h3><p>Toca el mapa o arrastra el punto hasta tu casa.</p><div class="mapbox" id="mapbox"></div><div class="mapbtns"><button type="button" data-mcancel>Cancelar</button><button type="button" class="go" data-mok disabled>Usar esta ubicación</button></div></div>`;
+    document.body.appendChild(mapOv);
+    mapOv.addEventListener("click", e => {
+      if (e.target === mapOv || e.target.closest("[data-mcancel]")){ mapOv.hidden = true; return; }
+      if (e.target.closest("[data-mok]") && mapPt){ DEL.lat = mapPt[0]; DEL.lon = mapPt[1]; DEL.label = "Ubicación marcada en el mapa"; mapOv.hidden = true; resolveDel(); saveProfile(); }
+    });
+  }
+  mapOv.hidden = false;
+  try { await loadLeaflet(); } catch(e){ mapOv.hidden = true; setDel({ st:"error" }); return; }
+  const start = DEL.lat != null ? [DEL.lat, DEL.lon] : MAPA.centro, ok = mapOv.querySelector("[data-mok]");
+  mapPt = DEL.lat != null ? start : null; ok.disabled = !mapPt;
+  if (!mapObj){
+    mapObj = L.map("mapbox", { zoomControl:true, attributionControl:true }).setView(start, DEL.lat != null ? 17 : 13);
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom:19, attribution:"© OpenStreetMap" }).addTo(mapObj);
+    ZONAS.forEach(z => { if (z.poligono && z.poligono.length >= 3) L.polygon(z.poligono, { color:"#FF56A7", weight:1.5, fillOpacity:.06, interactive:false }).addTo(mapObj); });
+    const put = ll => { mapPt = [ll.lat, ll.lng]; if (!mapMk){ mapMk = L.marker(ll, { draggable:true, icon:L.divIcon({ className:"", html:'<div class="pinx"></div>', iconSize:[22,22], iconAnchor:[11,11] }) }).addTo(mapObj); mapMk.on("dragend", () => put(mapMk.getLatLng())); } else mapMk.setLatLng(ll); ok.disabled = false; };
+    mapObj.on("click", e => put(e.latlng)); mapObj._put = put;
+  } else mapObj.setView(start, DEL.lat != null ? 17 : 13);
+  setTimeout(() => { mapObj.invalidateSize(); if (DEL.lat != null) mapObj._put({ lat:DEL.lat, lng:DEL.lon }); }, 60);
+}
+$("#addrGo").addEventListener("click", buscarDireccion);
+if (window.__savedGeo && $("#caddr").value){ DEL.lat = window.__savedGeo.lat; DEL.lon = window.__savedGeo.lon; DEL.label = window.__savedGeo.label || $("#caddr").value; if (zonasListas()) resolveDel(); else DEL.st = "unconf"; }
+$("#caddr").addEventListener("keydown", e => { if (e.key === "Enter"){ e.preventDefault(); e.target.blur(); buscarDireccion(); } });
+$("#caddr").addEventListener("input", () => { if (DEL.st !== "idle"){ geoSeq++; setDel({ st:"idle", zone:null, lat:null, lon:null, label:"", opts:[] }); } });
+
+/* ---------- Google Places: sugerencias mientras se escribe ---------- */
+const GKEY = (CONFIG.googleKey || "").trim();
+let gReady = null, gTok = null, gTimer = 0, gSeq = 0, gSug = [], gAct = -1, gFailed = false;
+const useGoogle = () => !!GKEY && !gFailed;
+function applyProvider(){ $("#addrGo").hidden = useGoogle(); $("#caddr").setAttribute("enterkeyhint", useGoogle() ? "done" : "search"); }
+function loadGoogle(){
+  if (gReady) return gReady;
+  gReady = new Promise((ok, no) => {
+    window.gm_authFailure = () => { gFailed = true; closeSug(); applyProvider(); setDel({ st:"error" }); };
+    const sc = document.createElement("script");
+    sc.src = "https://maps.googleapis.com/maps/api/js?key=" + encodeURIComponent(GKEY) + "&loading=async&v=weekly&language=es&region=CL";
+    sc.async = true; sc.onerror = () => no(new Error("google"));
+    sc.onload = () => google.maps.importLibrary("places").then(ok, no);
+    document.head.appendChild(sc);
+  });
+  gReady.catch(() => { gFailed = true; closeSug(); applyProvider(); });
+  return gReady;
+}
+const sugBoxEl = () => $("#addrSug");
+function closeSug(){ gSug = []; gAct = -1; const b = sugBoxEl(); b.hidden = true; b.innerHTML = ""; $("#caddr").removeAttribute("aria-activedescendant"); }
+function renderSug(empty){
+  const b = sugBoxEl();
+  if (empty){ b.innerHTML = `<li class="nil">No encontramos esa dirección.${zonasListas() ? ` <button type="button" class="zb" data-zmap>Marcar en el mapa</button>` : ""}</li>`; b.hidden = false; return; }
+  b.innerHTML = gSug.map((sg, i) => { const p = sg.placePrediction, m = (p.mainText && p.mainText.text) || p.text.text, sec = (p.secondaryText && p.secondaryText.text) || ""; return `<li role="option" id="gs${i}" data-gi="${i}" aria-selected="${i === gAct}">${esc(m)}${sec ? `<small>${esc(sec)}</small>` : ""}</li>`; }).join("") + `<li class="gl" aria-hidden="true">Google</li>`;
+  b.hidden = !gSug.length;
+}
+async function googleSuggest(q){
+  if (q.length < 3){ closeSug(); return; }
+  const my = ++gSeq;
+  try {
+    const lib = await loadGoogle(); if (my !== gSeq) return;
+    if (!gTok) gTok = new lib.AutocompleteSessionToken();
+    const r = await lib.AutocompleteSuggestion.fetchAutocompleteSuggestions({ input:q, sessionToken:gTok, includedRegionCodes:["cl"], language:"es", region:"cl", locationRestriction:{ north:-20.15, south:-20.42, east:-70.04, west:-70.26 } });
+    if (my !== gSeq) return;
+    gSug = (r.suggestions || []).filter(x => x.placePrediction).slice(0, 5); gAct = -1;
+    gSug.length ? renderSug() : renderSug(true);
+  } catch(e){ if (my === gSeq){ gFailed = true; closeSug(); applyProvider(); setDel({ st:"error" }); } }
+}
+async function googlePick(i){
+  const sg = gSug[i]; if (!sg) return;
+  const pr = sg.placePrediction; closeSug(); geoSeq++;
+  $("#caddr").value = pr.text.text.replace(/, Chile$/, "").replace(/, Tarapacá$/, "");
+  setDel({ st:"searching", zone:null });
+  try {
+    const pl = pr.toPlace(); await pl.fetchFields({ fields:["location", "formattedAddress", "addressComponents"] }); gTok = null;
+    const comps = pl.addressComponents || [], has = t => comps.find(c => (c.types || []).indexOf(t) >= 0);
+    const loc = pl.location, city = norm((has("locality") || {}).longText || (has("administrative_area_level_3") || {}).longText || "");
+    const label = ((pr.mainText && pr.mainText.text) || "") + ((pr.secondaryText && pr.secondaryText.text) ? ", " + pr.secondaryText.text.replace(/, Chile$/, "") : "");
+    DEL.lat = loc.lat(); DEL.lon = loc.lng(); DEL.label = label; DEL.opts = [];
+    if (city && city !== "iquique") return setDel({ st:"out", zone:null });
+    if (zonasListas() && !has("street_number")) return setDel({ st:"pin", zone:null });
+    resolveDel(); saveProfile();
+  } catch(e){ setDel({ st:"error" }); }
+}
+const sugBox2 = $("#addrSug");
+sugBox2.addEventListener("pointerdown", e => e.preventDefault());
+sugBox2.addEventListener("click", e => { if (e.target.closest("[data-zmap]")){ closeSug(); abrirMapa(); return; } const li = e.target.closest("[data-gi]"); if (li) googlePick(+li.dataset.gi); });
+document.addEventListener("click", e => { if (!e.target.closest(".addr-row")) closeSug(); });
+$("#caddr").addEventListener("input", () => { if (!useGoogle()) return; clearTimeout(gTimer); const q = $("#caddr").value.trim(); gTimer = setTimeout(() => googleSuggest(q), 230); });
+$("#caddr").addEventListener("focus", () => { if (useGoogle()) loadGoogle().catch(() => {}); });
+$("#caddr").addEventListener("keydown", e => {
+  if (!useGoogle() || sugBoxEl().hidden || !gSug.length){ return; }
+  if (e.key === "ArrowDown" || e.key === "ArrowUp"){ e.preventDefault(); gAct = (gAct + (e.key === "ArrowDown" ? 1 : -1) + gSug.length) % gSug.length; renderSug(); $("#caddr").setAttribute("aria-activedescendant", "gs" + gAct); }
+  else if (e.key === "Enter"){ e.preventDefault(); e.stopImmediatePropagation(); googlePick(gAct >= 0 ? gAct : 0); }
+  else if (e.key === "Escape"){ closeSug(); }
+}, true);
+applyProvider();
+$("#cunit").addEventListener("change", saveProfile);
+$("#zoneBox").addEventListener("click", e => {
+  const p = e.target.closest("[data-zpick]"); if (p){ pickGeo(DEL.opts[+p.dataset.zpick]); return; }
+  if (e.target.closest("[data-zmap]")){ abrirMapa(); return; }
+  if (e.target.closest("[data-zretiro]")){ const r = document.querySelector('input[name="tipo"][value="retiro"]'); if (r){ r.checked = true; r.dispatchEvent(new Event("change", { bubbles:true })); } }
+});
+
+/* ---------- Modo prueba (Toteat) ---------- */
+const PRUEBA = (() => {
+  try {
+    const u = new URL(location.href), k = u.searchParams.get("prueba"), sim = u.searchParams.get("simular");
+    if (k){ sessionStorage.setItem("sf_prueba", k); sessionStorage.setItem("sf_simular", sim ? "1" : ""); u.searchParams.delete("prueba"); u.searchParams.delete("simular"); history.replaceState(null, "", u.pathname + (u.search || "") + u.hash); }
+    return { key: sessionStorage.getItem("sf_prueba") || "", sim: !!sessionStorage.getItem("sf_simular") };
+  } catch(e){ return { key: "", sim: false }; }
+})();
+if (PRUEBA.key){ const bar = document.createElement("div"); bar.className = "tstbar"; bar.textContent = PRUEBA.sim ? "MODO PRUEBA · SIMULACIÓN (no se envía nada)" : "MODO PRUEBA · el pedido se envía a Toteat"; document.body.appendChild(bar); }
+async function enviarPrueba(body){
+  let box = $("#tstOut"); if (!box){ box = document.createElement("div"); box.id = "tstOut"; box.className = "zone-box"; box.setAttribute("role", "status"); $("#send").insertAdjacentElement("afterend", box); }
+  const send = $("#send"); box.className = "zone-box"; box.innerHTML = '<span class="zm">Enviando…</span>'; send.disabled = true;
+  try {
+    const r = await fetch("/.netlify/functions/pedido", { method:"POST", headers:{ "content-type":"application/json" }, body: JSON.stringify(body) });
+    const j = await r.json().catch(() => ({ ok:false, error:"Respuesta no válida (" + r.status + ")" }));
+    if (j.simulacion) box.innerHTML = "<b>Simulación (no se envió nada)</b><pre>" + esc(JSON.stringify(j.payload, null, 1)) + "</pre>";
+    else if (j.ok){ box.className = "zone-box ok"; box.innerHTML = "<b>Pedido enviado a Toteat ✓</b><span class=\"zm\">Referencia " + esc(j.ref) + ". Revisa que salga la comanda en el local.</span>"; }
+    else { box.className = "zone-box bad"; box.innerHTML = "<b>Toteat no recibió el pedido</b><pre>" + esc(JSON.stringify(j.toteat || j.error || j, null, 1).slice(0, 900)) + "</pre>"; }
+  } catch(e){ box.className = "zone-box bad"; box.innerHTML = "<b>No se pudo enviar.</b> Revisa tu conexión."; }
+  finally { send.disabled = false; }
+}
+
 $("#send").addEventListener("click", () => {
   const { sum, ls } = totals(); if (!ls.length) return;
   const name = $("#cname").value.trim(), addr = $("#caddr").value.trim(), note = $("#cnote").value.trim();
   const delivery = tipo() === "delivery", err = $("#err");
   if (!name){ err.textContent = "Escribe tu nombre."; $("#cname").focus(); return; }
   if (delivery && addr.length < 5){ err.textContent = "Escribe tu dirección para el delivery."; $("#caddr").focus(); return; }
+  if (delivery && DEL.st === "out"){ err.textContent = "Esa dirección está fuera de cobertura. Elige retiro en local."; return; }
+  if (delivery && DEL.st !== "ok" && DEL.st !== "unconf"){ err.textContent = DEL.st === "pin" ? "Marca tu casa en el mapa para calcular el delivery." : (useGoogle() ? "Elige tu dirección de la lista de sugerencias." : "Toca Buscar para calcular tu delivery."); if (DEL.st === "idle") (useGoogle() ? $("#caddr") : $("#addrGo")).focus(); return; }
   err.textContent = "";
+  const unit = $("#cunit").value.trim(), fee = delivery ? feeNow() : 0;
   track("whatsapp_click", {fulfillment:delivery ? "delivery" : "retiro", order_total:sum, cart_items:ls.reduce((a,l)=>a+l.qty,0), product_ids:ls.map(l=>l.it.id)});
-  try { localStorage.setItem(PROFILE, JSON.stringify({ name, addr })); } catch(e){}
+  saveProfile();
 
   const orderLine = l => {
     const bits = [l.it.name];
@@ -1929,13 +2430,24 @@ $("#send").addEventListener("click", () => {
     "",
     ...ls.map(orderLine),
     "",
-    (delivery ? "Subtotal: " : "Total: ") + fmt(sum),
+    "Subtotal: " + fmt(sum),
+    delivery && fee ? "Delivery (" + DEL.zone.nombre + "): " + fmt(fee) : null,
+    delivery && !fee ? "Delivery: se confirma por WhatsApp" : null,
+    "*Total: " + fmt(sum + fee) + (delivery && !fee ? " + delivery" : "") + "*",
+    "Pago: transferencia",
+    "",
     "Nombre: " + name,
-    delivery ? "Dirección: " + addr : null,
-    delivery ? "Delivery: se confirma por WhatsApp" : null,
+    delivery ? "Dirección: " + addr + (unit ? ", " + unit : "") : null,
+    delivery && DEL.lat != null ? "Ubicación: https://www.google.com/maps?q=" + DEL.lat.toFixed(6) + "," + DEL.lon.toFixed(6) : null,
     note ? "Nota: " + note : null
   ].filter(x => x !== null).join("\n");
   const waUrl = "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(txt);
+  if (PRUEBA.key){
+    enviarPrueba({ k: PRUEBA.key, simular: PRUEBA.sim, prueba: true, tipo: delivery ? "delivery" : "retiro", fee,
+      cliente: { nombre: name, direccion: addr, detalle: unit, lat: delivery ? DEL.lat : null, lon: delivery ? DEL.lon : null, nota: note },
+      lineas: ls.map(l => ({ id: l.it.id, name: orderLine(l).replace(/^\d+x /, "").replace(/ \$[\d.]+$/, ""), qty: l.qty, price: l.price })) });
+    return;
+  }
   const fallback = $("#waFallback"); fallback.href = waUrl; fallback.hidden = false;
   window.open(waUrl, "_blank", "noopener");
 });
