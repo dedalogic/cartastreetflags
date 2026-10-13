@@ -63,10 +63,9 @@ exports.handler = async (event) => {
   // Variantes de formato: se prueban en orden hasta que Toteat acepte una (un pedido fallido no crea nada).
   const variantes = [
     ["completo", mk(true), payload],
-    ["numerico-sin-extras", mk(false), { ...payload, orderId: undefined, orderReference: Number(ref), document: { deliveryDate: hora, comment: comentario, payments: [], line: lineasT } }],
     ["minimo-comentario-simple", mk(false), { restaurantId: payload.restaurantId, localNumber: payload.localNumber, orderReference: Number(ref), status: "new", type: payload.type, channel: "webstore", vendorName: "SFWeb", comment: "PRUEBA NO PREPARAR", document: { deliveryDate: hora, comment: "PRUEBA", payments: [], line: lineasT, customer: {}, dispatcher: {} }, operationDate: hora, modifiedDate: hora }],
-    ["ids-texto", mk(false), { restaurantId: String(payload.restaurantId), localNumber: String(payload.localNumber), orderReference: ref, status: "new", type: payload.type, channel: "webstore", vendorName: "SFWeb", comment: "PRUEBA NO PREPARAR", document: { deliveryDate: hora, comment: "PRUEBA", payments: [], line: lineasT, customer: {}, dispatcher: {} }, operationDate: hora, modifiedDate: hora }],
-    ["tipo-delivery", mk(false), { restaurantId: payload.restaurantId, localNumber: payload.localNumber, orderReference: Number(ref), status: "new", type: "delivery", channel: "webstore", vendorName: "SFWeb", comment: "PRUEBA NO PREPARAR", document: { deliveryDate: hora, comment: "PRUEBA", payments: [], line: lineasT, customer: { name: clean(c.nombre, 60) || "Prueba" }, dispatcher: {} }, operationDate: hora, modifiedDate: hora }]
+    ["solo-producto-error", mk(false), { restaurantId: payload.restaurantId, localNumber: payload.localNumber, orderReference: Number(ref), status: "new", type: payload.type, channel: "webstore", vendorName: "SFWeb", comment: "PRUEBA NO PREPARAR", document: { deliveryDate: hora, comment: "PRUEBA", payments: [], line: [{ productCode: "TOTEATDVYERROR", quantity: 1 }], customer: {}, dispatcher: {} }, operationDate: hora, modifiedDate: hora }],
+    ["sin-lineas", mk(false), { restaurantId: payload.restaurantId, localNumber: payload.localNumber, orderReference: Number(ref), status: "new", type: payload.type, channel: "webstore", vendorName: "SFWeb", comment: "PRUEBA NO PREPARAR", document: { deliveryDate: hora, comment: "PRUEBA", payments: [], line: [], customer: {}, dispatcher: {} }, operationDate: hora, modifiedDate: hora }]
   ];
   const intentos = [];
   for (let n = 0; n < variantes.length; n++) {
