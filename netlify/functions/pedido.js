@@ -25,18 +25,19 @@ exports.handler = async (event) => {
     const qty = Number(l.qty), price = Number(l.price);
     if (!Number.isInteger(qty) || qty < 1 || qty > 20 || !Number.isFinite(price) || price < 0 || price > 200000) return json(400, { ok: false, error: "Línea inválida: " + clean(l.name, 40) });
     const id = clean(l.id, 60);
-    lineas.push({ productCode: (typeof CODIGOS[id] === "object" ? CODIGOS[id][String(price)] : CODIGOS[id]) || id, quantity: qty, name: clean(l.name, 120), price });
+    const code = (typeof CODIGOS[id] === "object" ? CODIGOS[id][String(price)] : CODIGOS[id]) || "TOTEATDVYERROR";
+    lineas.push({ productCode: code, quantity: qty, name: clean(l.name, 120) + (code === "TOTEATDVYERROR" ? " [SIN CODIGO]" : ""), price });
   }
   const delivery = b.tipo === "delivery";
   const fee = delivery ? Number(b.fee) || 0 : 0;
   if (fee < 0 || fee > 20000) return json(400, { ok: false, error: "Delivery inválido." });
   if (fee > 0) lineas.push({ productCode: e.TOTEAT_DELIVERY_CODE || "TOTEATDVYCOST", quantity: 1, name: "Costo Delivery", price: fee });
 
-  const ref = "SF" + Date.now().toString(36).toUpperCase();
+  const ref = String(Date.now());
   const c = b.cliente || {};
   const total = lineas.reduce((a, l) => a + l.quantity * l.price, 0);
   const comentario = [
-    b.prueba ? "*** PRUEBA - NO PREPARAR ***" : "", "Pedido web " + ref, delivery ? "DELIVERY" : "RETIRO EN LOCAL",
+    b.prueba ? "*** PRUEBA - NO PREPARAR ***" : "", "Pedido web SF" + ref, delivery ? "DELIVERY" : "RETIRO EN LOCAL",
     "Cliente: " + clean(c.nombre, 80),
     delivery ? "Direccion: " + clean(c.direccion, 160) + (c.detalle ? ", " + clean(c.detalle, 80) : "") : "",
     delivery && Number.isFinite(c.lat) && Number.isFinite(c.lon) ? "Mapa: https://www.google.com/maps?q=" + c.lat.toFixed(6) + "," + c.lon.toFixed(6) : "",
@@ -46,10 +47,10 @@ exports.handler = async (event) => {
 
   const hora = ahora();
   const payload = {
-    restaurantId: Number(e.TOTEAT_XIR), localNumber: Number(e.TOTEAT_XIL), orderReference: ref,
+    restaurantId: Number(e.TOTEAT_XIR), localNumber: Number(e.TOTEAT_XIL), orderId: 0, orderReference: ref,
     status: "new", type: delivery ? "delivery" : "takeaway", channel: "webstore", vendorName: "Street Flags Carta Web",
     comment: comentario,
-    document: { deliveryDate: hora, comment: comentario, payments: [], line: lineas },
+    document: { deliveryDate: hora, comment: comentario, payments: [], line: lineas.map(l => ({ productCode: l.productCode, quantity: l.quantity })), customer: {}, dispatcher: {} },
     operationDate: hora, modifiedDate: hora
   };
   if (b.simular) return json(200, { ok: true, simulacion: true, ref, payload });
