@@ -54,14 +54,16 @@ exports.handler = async (event) => {
   };
   if (b.simular) return json(200, { ok: true, simulacion: true, ref, payload });
 
-  const url = e.TOTEAT_BASE_URL.replace(/\/+$/, "") + "/orders?" + new URLSearchParams({ xir: e.TOTEAT_XIR, xil: e.TOTEAT_XIL, xiu: e.TOTEAT_XIU, xapitoken: e.TOTEAT_TOKEN, orderDetail: "true" });
+  const V = { xir: String(e.TOTEAT_XIR).trim(), xil: String(e.TOTEAT_XIL).trim(), xiu: String(e.TOTEAT_XIU).trim(), tok: String(e.TOTEAT_TOKEN).trim() };
+  const diag = { xir: V.xir, xil: V.xil, xiu: V.xiu, largoToken: V.tok.length, host: e.TOTEAT_BASE_URL.replace(/^https?:\/\//, "").split("/")[0] };
+  const url = e.TOTEAT_BASE_URL.replace(/\/+$/, "") + "/orders?" + new URLSearchParams({ xir: V.xir, xil: V.xil, xiu: V.xiu, xapitoken: V.tok, orderDetail: "true" });
   const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 9000);
   try {
     const r = await fetch(url, { method: "POST", headers: { "content-type": "application/json; charset=utf-8" }, body: JSON.stringify(payload), signal: ctl.signal });
     const raw = await r.text(); let j; try { j = JSON.parse(raw); } catch (_) { j = { raw: raw.slice(0, 500) }; }
     const ok = r.ok && j.ok !== false;
     console.log("pedido", ref, r.status, ok ? "OK" : JSON.stringify(j).slice(0, 500));
-    return json(ok ? 200 : 502, { ok, ref, status: r.status, toteat: j });
+    return json(ok ? 200 : 502, { ok, ref, status: r.status, toteat: ok ? j : { respuesta: j, enviado_con: diag } });
   } catch (err) {
     return json(502, { ok: false, ref, error: err && err.name === "AbortError" ? "Toteat no respondió a tiempo." : "No se pudo conectar con Toteat." });
   } finally { clearTimeout(t); }
