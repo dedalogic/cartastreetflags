@@ -64,14 +64,16 @@ exports.handler = async (event) => {
   const variantes = [
     ["completo", mk(true), payload],
     ["numerico-sin-extras", mk(false), { ...payload, orderId: undefined, orderReference: Number(ref), document: { deliveryDate: hora, comment: comentario, payments: [], line: lineasT } }],
-    ["minimo", mk(false), { restaurantId: payload.restaurantId, localNumber: payload.localNumber, orderReference: Number(ref), status: "new", type: payload.type, channel: "webstore", vendorName: "SFWeb", comment: comentario.slice(0, 250), document: { deliveryDate: hora, comment: "", payments: [], line: lineasT, customer: {}, dispatcher: {} }, operationDate: hora, modifiedDate: hora }]
+    ["minimo-comentario-simple", mk(false), { restaurantId: payload.restaurantId, localNumber: payload.localNumber, orderReference: Number(ref), status: "new", type: payload.type, channel: "webstore", vendorName: "SFWeb", comment: "PRUEBA NO PREPARAR", document: { deliveryDate: hora, comment: "PRUEBA", payments: [], line: lineasT, customer: {}, dispatcher: {} }, operationDate: hora, modifiedDate: hora }],
+    ["ids-texto", mk(false), { restaurantId: String(payload.restaurantId), localNumber: String(payload.localNumber), orderReference: ref, status: "new", type: payload.type, channel: "webstore", vendorName: "SFWeb", comment: "PRUEBA NO PREPARAR", document: { deliveryDate: hora, comment: "PRUEBA", payments: [], line: lineasT, customer: {}, dispatcher: {} }, operationDate: hora, modifiedDate: hora }],
+    ["tipo-delivery", mk(false), { restaurantId: payload.restaurantId, localNumber: payload.localNumber, orderReference: Number(ref), status: "new", type: "delivery", channel: "webstore", vendorName: "SFWeb", comment: "PRUEBA NO PREPARAR", document: { deliveryDate: hora, comment: "PRUEBA", payments: [], line: lineasT, customer: { name: clean(c.nombre, 60) || "Prueba" }, dispatcher: {} }, operationDate: hora, modifiedDate: hora }]
   ];
   const intentos = [];
   for (let n = 0; n < variantes.length; n++) {
     const [nombre, url, body] = variantes[n];
-    const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 3000);
+    const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 2000);
     try {
-      if (n) await new Promise(r => setTimeout(r, 1100)); // límite de Toteat: 1 pedido por segundo
+      if (n) await new Promise(r => setTimeout(r, 1050)); // límite de Toteat: 1 pedido por segundo
       const r = await fetch(url, { method: "POST", headers: { "content-type": "application/json; charset=utf-8" }, body: JSON.stringify(body), signal: ctl.signal });
       const raw = await r.text(); let j; try { j = JSON.parse(raw); } catch (_) { j = { raw: raw.slice(0, 300) }; }
       const ok = r.ok && j.ok !== false;
