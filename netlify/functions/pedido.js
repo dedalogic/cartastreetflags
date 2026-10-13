@@ -63,9 +63,11 @@ exports.handler = async (event) => {
   // Variantes de formato: se prueban en orden hasta que Toteat acepte una (un pedido fallido no crea nada).
   const variantes = [
     ["completo", mk(true), payload],
-    ["minimo-comentario-simple", mk(false), { restaurantId: payload.restaurantId, localNumber: payload.localNumber, orderReference: Number(ref), status: "new", type: payload.type, channel: "webstore", vendorName: "SFWeb", comment: "PRUEBA NO PREPARAR", document: { deliveryDate: hora, comment: "PRUEBA", payments: [], line: lineasT, customer: {}, dispatcher: {} }, operationDate: hora, modifiedDate: hora }],
-    ["solo-producto-error", mk(false), { restaurantId: payload.restaurantId, localNumber: payload.localNumber, orderReference: Number(ref), status: "new", type: payload.type, channel: "webstore", vendorName: "SFWeb", comment: "PRUEBA NO PREPARAR", document: { deliveryDate: hora, comment: "PRUEBA", payments: [], line: [{ productCode: "TOTEATDVYERROR", quantity: 1 }], customer: {}, dispatcher: {} }, operationDate: hora, modifiedDate: hora }],
-    ["sin-lineas", mk(false), { restaurantId: payload.restaurantId, localNumber: payload.localNumber, orderReference: Number(ref), status: "new", type: payload.type, channel: "webstore", vendorName: "SFWeb", comment: "PRUEBA NO PREPARAR", document: { deliveryDate: hora, comment: "PRUEBA", payments: [], line: [], customer: {}, dispatcher: {} }, operationDate: hora, modifiedDate: hora }]
+    ["con-precio-y-nombre", mk(false), { restaurantId: payload.restaurantId, localNumber: payload.localNumber, orderReference: Number(ref), status: "new", type: payload.type, channel: "webstore", vendorName: "SFWeb", comment: "PRUEBA NO PREPARAR", document: { deliveryDate: hora, comment: "PRUEBA", payments: [], line: lineasT.map((l, i) => ({ productCode: l.productCode, quantity: l.quantity, price: lineas[i].price, name: lineas[i].name })), customer: {}, dispatcher: {} }, operationDate: hora, modifiedDate: hora }],
+    ["cantidad-texto", mk(false), { restaurantId: payload.restaurantId, localNumber: payload.localNumber, orderReference: Number(ref), status: "new", type: payload.type, channel: "webstore", vendorName: "SFWeb", comment: "PRUEBA NO PREPARAR", document: { deliveryDate: hora, comment: "PRUEBA", payments: [], line: lineasT.map(l => ({ productCode: l.productCode, quantity: String(l.quantity) })), customer: {}, dispatcher: {} }, operationDate: hora, modifiedDate: hora }],
+    ["productId", mk(false), { restaurantId: payload.restaurantId, localNumber: payload.localNumber, orderReference: Number(ref), status: "new", type: payload.type, channel: "webstore", vendorName: "SFWeb", comment: "PRUEBA NO PREPARAR", document: { deliveryDate: hora, comment: "PRUEBA", payments: [], line: lineasT.map(l => ({ productId: l.productCode, quantity: l.quantity })), customer: {}, dispatcher: {} }, operationDate: hora, modifiedDate: hora }],
+    ["code-qty", mk(false), { restaurantId: payload.restaurantId, localNumber: payload.localNumber, orderReference: Number(ref), status: "new", type: payload.type, channel: "webstore", vendorName: "SFWeb", comment: "PRUEBA NO PREPARAR", document: { deliveryDate: hora, comment: "PRUEBA", payments: [], line: lineasT.map(l => ({ code: l.productCode, qty: l.quantity })), customer: {}, dispatcher: {} }, operationDate: hora, modifiedDate: hora }],
+    ["id-quantity", mk(false), { restaurantId: payload.restaurantId, localNumber: payload.localNumber, orderReference: Number(ref), status: "new", type: payload.type, channel: "webstore", vendorName: "SFWeb", comment: "PRUEBA NO PREPARAR", document: { deliveryDate: hora, comment: "PRUEBA", payments: [], line: lineasT.map(l => ({ id: l.productCode, quantity: l.quantity, extras: [] })), customer: {}, dispatcher: {} }, operationDate: hora, modifiedDate: hora }]
   ];
   const intentos = [];
   for (let n = 0; n < variantes.length; n++) {
@@ -78,11 +80,11 @@ exports.handler = async (event) => {
       const ok = r.ok && j.ok !== false;
       console.log("pedido", ref, nombre, r.status, ok ? "OK" : JSON.stringify(j).slice(0, 300));
       if (ok) return json(200, { ok: true, ref, variante: nombre, status: r.status, toteat: j });
-      intentos.push({ variante: nombre, status: r.status, respuesta: j });
+      intentos.push(nombre + ": " + String((j.msg && j.msg.texto) || j.raw || "?") + " / " + String((j.errors && j.errors[0]) || "").slice(0, 60));
       if (j && j.msg && /authoriz/i.test(String(j.msg.texto))) break; // credenciales mal: no sirve reintentar
     } catch (err) {
-      intentos.push({ variante: nombre, error: err && err.name === "AbortError" ? "sin respuesta a tiempo" : "sin conexión" });
+      intentos.push(nombre + ": " + (err && err.name === "AbortError" ? "sin respuesta a tiempo" : "sin conexión"));
     } finally { clearTimeout(t); }
   }
-  return json(502, { ok: false, ref, toteat: { intentos, enviado_con: diag, payload_base: payload } });
+  return json(502, { ok: false, ref, toteat: { intentos } });
 };
