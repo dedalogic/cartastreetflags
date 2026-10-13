@@ -46,28 +46,32 @@ exports.handler = async (event) => {
   ].filter(Boolean).join(" | ").slice(0, 900);
 
   const hora = ahora();
-  const payload = {
-    restaurantId: Number(e.TOTEAT_XIR), localNumber: Number(e.TOTEAT_XIL), orderId: 0, orderReference: ref,
+  const r2 = n => Math.round(n * 100) / 100;
+  const lineasT = lineas.map((l, i) => { // formato de línea según la documentación de Toteat (IVA 19% incluido en el precio)
+    const despues = l.price * l.quantity, antes = r2(despues / 1.19);
+    return { lineNumber: i + 1, quantity: l.quantity, comment: "", amountBeforeTax: antes, tax: [{ name: "IVA", value: r2(despues - antes) }], amountAfterTax: despues, productCode: l.productCode, productName: l.name, category: "Carta web", discount: 0 };
+  });
+  const pago = [{ id: Number(ref), ref: Number(ref.slice(-6)), amount: total, amountPaid: total, tip: 0, commission: [], paymentType: 9001, operationDate: hora, discount: [], pending: true }];
+  const cliente = { name: clean(c.nombre, 80) || "Cliente web" };
+  if (delivery) cliente.delivery = { address: clean(c.direccion, 160) + (c.detalle ? ", " + clean(c.detalle, 80) : ""), city: "Iquique", country: "Chile" };
+  const armar = (pagos, refv) => ({
+    restaurantId: Number(e.TOTEAT_XIR), localNumber: Number(e.TOTEAT_XIL), orderId: 0, orderReference: refv,
     status: "new", type: delivery ? "delivery" : "takeaway", channel: "webstore", vendorName: "Street Flags Carta Web",
     comment: comentario,
-    document: { deliveryDate: hora, comment: comentario, payments: [], line: lineas.map(l => ({ productCode: l.productCode, quantity: l.quantity })), customer: {}, dispatcher: {} },
+    document: { deliveryDate: hora, comment: comentario, payments: pagos, line: lineasT, customer: cliente, dispatcher: {} },
     operationDate: hora, modifiedDate: hora
-  };
+  });
+  const payload = armar(pago, ref);
   if (b.simular) return json(200, { ok: true, simulacion: true, ref, payload });
 
   const V = { xir: String(e.TOTEAT_XIR).trim(), xil: String(e.TOTEAT_XIL).trim(), xiu: String(e.TOTEAT_XIU).trim(), tok: String(e.TOTEAT_TOKEN).trim() };
   const diag = { xir: V.xir, xil: V.xil, xiu: V.xiu, largoToken: V.tok.length, host: e.TOTEAT_BASE_URL.replace(/^https?:\/\//, "").split("/")[0] };
   const base = e.TOTEAT_BASE_URL.trim().replace(/\/+$/, "");
   const mk = (detail) => base + "/orders?" + new URLSearchParams(Object.assign({ xir: V.xir, xil: V.xil, xiu: V.xiu, xapitoken: V.tok }, detail ? { orderDetail: "true" } : {}));
-  const lineasT = payload.document.line;
-  // Variantes de formato: se prueban en orden hasta que Toteat acepte una (un pedido fallido no crea nada).
   const variantes = [
-    ["completo", mk(true), payload],
-    ["con-precio-y-nombre", mk(false), { restaurantId: payload.restaurantId, localNumber: payload.localNumber, orderReference: Number(ref), status: "new", type: payload.type, channel: "webstore", vendorName: "SFWeb", comment: "PRUEBA NO PREPARAR", document: { deliveryDate: hora, comment: "PRUEBA", payments: [], line: lineasT.map((l, i) => ({ productCode: l.productCode, quantity: l.quantity, price: lineas[i].price, name: lineas[i].name })), customer: {}, dispatcher: {} }, operationDate: hora, modifiedDate: hora }],
-    ["cantidad-texto", mk(false), { restaurantId: payload.restaurantId, localNumber: payload.localNumber, orderReference: Number(ref), status: "new", type: payload.type, channel: "webstore", vendorName: "SFWeb", comment: "PRUEBA NO PREPARAR", document: { deliveryDate: hora, comment: "PRUEBA", payments: [], line: lineasT.map(l => ({ productCode: l.productCode, quantity: String(l.quantity) })), customer: {}, dispatcher: {} }, operationDate: hora, modifiedDate: hora }],
-    ["productId", mk(false), { restaurantId: payload.restaurantId, localNumber: payload.localNumber, orderReference: Number(ref), status: "new", type: payload.type, channel: "webstore", vendorName: "SFWeb", comment: "PRUEBA NO PREPARAR", document: { deliveryDate: hora, comment: "PRUEBA", payments: [], line: lineasT.map(l => ({ productId: l.productCode, quantity: l.quantity })), customer: {}, dispatcher: {} }, operationDate: hora, modifiedDate: hora }],
-    ["code-qty", mk(false), { restaurantId: payload.restaurantId, localNumber: payload.localNumber, orderReference: Number(ref), status: "new", type: payload.type, channel: "webstore", vendorName: "SFWeb", comment: "PRUEBA NO PREPARAR", document: { deliveryDate: hora, comment: "PRUEBA", payments: [], line: lineasT.map(l => ({ code: l.productCode, qty: l.quantity })), customer: {}, dispatcher: {} }, operationDate: hora, modifiedDate: hora }],
-    ["id-quantity", mk(false), { restaurantId: payload.restaurantId, localNumber: payload.localNumber, orderReference: Number(ref), status: "new", type: payload.type, channel: "webstore", vendorName: "SFWeb", comment: "PRUEBA NO PREPARAR", document: { deliveryDate: hora, comment: "PRUEBA", payments: [], line: lineasT.map(l => ({ id: l.productCode, quantity: l.quantity, extras: [] })), customer: {}, dispatcher: {} }, operationDate: hora, modifiedDate: hora }]
+    ["con-pago-pendiente", mk(true), payload],
+    ["sin-pago", mk(true), armar([], ref)],
+    ["ref-numerico-sin-pago", mk(false), armar([], Number(ref))]
   ];
   const intentos = [];
   for (let n = 0; n < variantes.length; n++) {
