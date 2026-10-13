@@ -13,7 +13,7 @@ exports.handler = async (event) => {
   if (event.httpMethod !== "POST") return json(405, { ok: false, error: "Solo POST." });
   const e = process.env;
   let b; try { b = JSON.parse(event.body || "{}"); } catch (_) { return json(400, { ok: false, error: "JSON inválido." }); }
-  if (!e.PRUEBA_KEY || b.k !== e.PRUEBA_KEY) return json(401, { ok: false, error: "No autorizado." });
+  if (!e.PRUEBA_KEY || b.k !== e.PRUEBA_KEY) return json(401, { ok: false, error: "No autorizado. Clave en Netlify: " + (e.PRUEBA_KEY ? e.PRUEBA_KEY.length + " caracteres" : "NO EXISTE (variable vacía o sin deploy)") + ". Clave recibida: " + String(b.k || "").length + " caracteres." });
   const falta = ["TOTEAT_BASE_URL", "TOTEAT_XIR", "TOTEAT_XIL", "TOTEAT_XIU", "TOTEAT_TOKEN"].filter(k => !e[k]);
   if (falta.length) return json(500, { ok: false, error: "Faltan variables en Netlify: " + falta.join(", ") });
 
