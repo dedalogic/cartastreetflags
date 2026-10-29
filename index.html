@@ -691,14 +691,14 @@ html.home-open .home{display:block}
   .home.nopc .hm-m{width:calc(100vh * .5628)}
 }
 @media (prefers-reduced-motion:reduce){.home *,.home{transition:none!important}}
-.pop{position:fixed;inset:0;z-index:180;display:grid;place-items:center;padding:20px;background:rgba(35,35,35,.4);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);animation:popbg .3s ease both}
-.pop[hidden]{display:none}
+.bpop{position:fixed;inset:0;z-index:180;display:grid;place-items:center;padding:20px;background:rgba(35,35,35,.4);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);animation:popbg .3s ease both}
+.bpop[hidden]{display:none}
 .pop-box{position:relative;width:min(88vw,460px,calc((100vh - 40px) * .8));animation:popin .45s cubic-bezier(.2,1.2,.4,1) both}
 .pop-box img{display:block;width:100%;height:auto;cursor:pointer;filter:drop-shadow(0 24px 40px rgba(0,0,0,.45))}
 .pop-x{position:absolute;top:10px;right:10px;z-index:2;width:40px;height:40px;border-radius:50%;border:0;background:rgba(35,35,35,.6);color:#fff;font-size:26px;line-height:1;cursor:pointer;display:grid;place-items:center;padding:0 0 3px}
 @keyframes popbg{from{opacity:0}to{opacity:1}}
 @keyframes popin{from{opacity:0;transform:translateY(24px) scale(.92)}to{opacity:1;transform:none}}
-@media (prefers-reduced-motion:reduce){.pop,.pop-box{animation:none}}
+@media (prefers-reduced-motion:reduce){.bpop,.pop-box{animation:none}}
 html[data-modo="local"] .online-note{display:none}
 html[data-modo="local"] #cartbtn,html[data-modo="local"] #dock,html[data-modo="local"] .offer,html[data-modo="local"] .tog,html[data-modo="local"] .tag{display:none!important}
 html[data-modo="local"] .add{pointer-events:none;background:transparent;box-shadow:inset 0 0 0 2px #FF56A7;color:#fff}
@@ -831,6 +831,100 @@ html[data-cards][data-layout] .cat:not(.compact) .item:has(.fmt):not(:has(.pick)
 #chicken .item .stp{background:#33BFE4;color:#fff}
 #chicken .item .stp button{color:#fff}
 html[data-tema="claro"] #chicken .item .add,html[data-tema="claro"] #chicken .item .stp,html[data-tema="claro"] #chicken .item .stp button,html[data-tema="claro"][data-modo="local"] #chicken .item .add{color:#FFF8EE}
+/* ---- v24 ---- */
+html[data-cards][data-layout] #combos .desc,html[data-cards][data-layout] #combos .desc.ing-d{font-size:13.5px!important}
+@media(min-width:760px){html[data-cards][data-layout] #combos .desc,html[data-cards][data-layout] #combos .desc.ing-d{font-size:14.5px!important}}
+html[data-cards]{--ph:clamp(104px,30vw,124px)}
+html[data-cards] .item,html[data-cards][data-layout] .cat:not(.compact) .item{grid-template-columns:var(--ph) minmax(0,1fr);gap:6px 14px;padding:14px}
+html[data-cards][data-layout] .cat:not(.compact) .media{border-radius:14px}
+html[data-cards][data-layout] .cat:not(.compact) .row2{align-self:end;margin-top:8px}
+@media(min-width:760px){
+html[data-cards]{--ph:150px}
+html[data-cards][data-layout] .cat:not(.compact) .list,html[data-cards][data-layout] #combos .list{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+html[data-cards][data-layout] .cat:not(.compact) .hd h3{font-size:21px}
+html[data-cards][data-layout] .cat:not(.compact) .desc{font-size:14.5px}
+html[data-cards] .item,html[data-cards][data-layout] .cat:not(.compact) .item{padding:16px;gap:8px 18px}
+}
+@media(min-width:1060px){
+html[data-cards][data-layout] .cat:not(.compact) .list,html[data-cards][data-layout] #combos .list{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+}
+/* ---- v25 ---- */
+html[data-tema="claro"] .hero{background:linear-gradient(180deg,#F0E6D6 0%,#F6EFE4 100%);padding-bottom:22px;position:relative}
+html[data-tema="claro"] .herobg{background:#232323}
+html[data-tema="claro"] .hero .sl{margin-bottom:0}
+html[data-tema="claro"] .hero .top{padding-bottom:22px}
+html[data-tema="claro"] .nav{background:#232323;border-bottom:3px solid var(--pink);padding-top:6px}
+html[data-tema="claro"] .nav a{color:#fff;border-color:rgba(255,255,255,.28);background:transparent}
+html[data-tema="claro"] .nav a:hover{border-color:#fff;color:#fff}
+html[data-tema="claro"] .nav a[aria-current="true"]{background:var(--pink);border-color:var(--pink);color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.25)}
+html[data-tema="claro"] .cartbtn{background:#81E6F8;border-color:#81E6F8;color:#232323}
+html[data-tema="claro"] main{padding-top:6px}
+html[data-tema="claro"] .cat{padding-bottom:44px}
+html[data-tema="claro"] .cat:nth-child(even){background:#F3EDE3;box-shadow:0 0 0 100vmax #F3EDE3;clip-path:inset(0 -100vmax)}
+/* ---- v26 ---- */
+@font-face{font-family:"Bluetea";src:url("Bluetea.ttf") format("truetype");font-display:swap}
+.online-label{font-family:"Bluetea",var(--display);font-weight:400;font-size:clamp(17px,4.6vw,21px);line-height:1;letter-spacing:.02em;margin-top:10px;text-transform:lowercase}
+.online-label .p{color:var(--pink)}
+.online-label .b{color:#1FB5DA}
+.online-label .acc{position:relative;display:inline-block}
+.online-label .acc::after{content:"'";position:absolute;left:.14em;top:-.22em;font-size:.9em;transform:rotate(28deg)}
+html[data-tema="claro"] .sl-track{box-shadow:0 14px 28px -10px rgba(35,35,35,.45),0 3px 8px rgba(35,35,35,.18)}
+html[data-tema="claro"] .nav{box-shadow:0 10px 22px -8px rgba(35,35,35,.4)}
+html[data-tema="claro"] .cartbtn{box-shadow:0 3px 8px rgba(0,0,0,.35)}
+.totop{position:fixed;right:14px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;flex-direction:column;align-items:center;gap:0;padding:0;border:0;background:none;cursor:pointer;opacity:0;transform:translateY(24px) scale(.9);pointer-events:none;transition:opacity .25s ease,transform .25s ease;-webkit-tap-highlight-color:transparent}
+.totop.show{opacity:1;transform:none;pointer-events:auto}
+.totop .tt-l{order:0;font:400 20px/1 "Bluetea",var(--display);color:var(--pink);-webkit-text-stroke:4px #fff;paint-order:stroke fill;text-shadow:1px 2px 0 rgba(35,35,35,.9);margin-bottom:2px}
+.totop .tt-a{order:1;width:30px;height:30px;padding:4px;border-radius:50%;background:var(--pink);border:2.5px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.3);margin-bottom:-12px;position:relative;z-index:2;animation:ttb 1.1s ease-in-out infinite}
+.totop .tt-f{order:2;display:block;width:60px;height:60px;border-radius:50%;background:#fff;border:3px solid #232323;box-shadow:0 5px 14px rgba(35,35,35,.4);overflow:hidden}
+.totop .tt-f img{display:block;width:100%;height:100%;object-fit:cover}
+@keyframes ttb{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@media(prefers-reduced-motion:reduce){.totop .tt-a{animation:none}}
+html[data-modo="local"] .totop{bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+/* ---- v27 ---- */
+html[data-cards]{--ph:clamp(120px,34vw,136px)}
+html[data-cards][data-layout] .cat:not(.compact) .list{align-items:start}
+html[data-cards][data-layout] .cat:not(.compact) .media img{width:100%;height:100%;object-fit:cover}
+html[data-cards][data-layout] .cat:not(.compact) .row2{align-self:end;margin-top:10px}
+html[data-cards][data-layout] .cat:not(.compact) .hd{min-width:0}
+html[data-cards][data-layout] .cat:not(.compact) .desc{overflow-wrap:anywhere}
+@media(min-width:760px){
+html[data-cards]{--ph:176px}
+html[data-cards][data-layout] .cat:not(.compact) .list,html[data-cards][data-layout] #combos .list{grid-template-columns:minmax(0,1fr);gap:16px}
+}
+@media(min-width:1040px){
+html[data-cards][data-layout] .cat:not(.compact) .list,html[data-cards][data-layout] #combos .list{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+}
+#chicken h2{color:#33BFE4}
+html[data-tema="claro"] .cartbtn::before{background:linear-gradient(to left,#232323,rgba(35,35,35,0))}
+/* ---- v28 ---- */
+html[data-cards] .cat:not(.compact) .item:not(.nopic){min-height:calc(var(--ph) + 28px)}
+@media(min-width:760px){html[data-cards] .cat:not(.compact) .item:not(.nopic){min-height:calc(var(--ph) + 32px)}}
+html[data-cards][data-layout] .cat:not(.compact) .media{position:relative;align-self:stretch;height:auto;aspect-ratio:auto;min-height:0;box-shadow:0 12px 22px -10px rgba(35,35,35,.45),0 3px 7px rgba(35,35,35,.18)}
+html[data-cards][data-layout] .cat:not(.compact) .media .zoom{position:absolute;inset:0;width:100%;height:100%}
+html[data-cards][data-layout] .cat:not(.compact) .media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+html[data-tema="claro"] .item:has(.badge) .media{box-shadow:0 0 0 2px var(--pink),0 12px 22px -10px rgba(35,35,35,.45),0 3px 7px rgba(35,35,35,.18)}
+html[data-cards] .cat:not(.compact) .add{box-shadow:0 8px 14px -6px rgba(35,35,35,.45),0 2px 5px rgba(35,35,35,.2)}
+html[data-cards] .cat:not(.compact) .stp{box-shadow:0 8px 14px -6px rgba(35,35,35,.45),0 2px 5px rgba(35,35,35,.2)}
+html[data-cards][data-layout] .cat:not(.compact) .row2{align-self:end}
+html[data-cards][data-layout] .cat:not(.compact) .item:has(.fmt):not(:has(.pick)) .row2{flex-direction:row;flex-wrap:wrap;align-items:center;gap:10px;grid-row:2 / span 2}
+html[data-cards][data-layout] .cat:not(.compact) .item:has(.fmt):not(:has(.pick)) .fmt{display:inline-flex;width:auto;gap:2px;padding:3px;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+html[data-cards] .cat:not(.compact) .fmt button{min-height:32px;min-width:58px;padding:0 12px;border:0;border-radius:9px;background:transparent;color:var(--muted);font-size:13px;font-weight:700}
+html[data-cards] .cat:not(.compact) .fmt button[aria-pressed="true"]{background:var(--pink);color:var(--onpink);box-shadow:0 3px 6px -1px rgba(35,35,35,.35)}
+#papas h2,#chicken h2{color:#33BFE4}
+#papas .item .add,html[data-modo="local"] #papas .item .add,html[data-tema="claro"][data-modo="local"] #papas .item .add,#papas .item .stp{background:#33BFE4;color:#fff;box-shadow:0 8px 14px -6px rgba(35,35,35,.45),0 2px 5px rgba(35,35,35,.2)}
+#papas .item .stp button{color:#fff}
+html[data-tema="claro"] #papas .item .add,html[data-tema="claro"] #papas .item .stp,html[data-tema="claro"] #papas .item .stp button,html[data-tema="claro"][data-modo="local"] #papas .item .add{color:#FFF8EE}
+html[data-cards] #chicken .item .add,html[data-cards] #chicken .item .stp{box-shadow:0 8px 14px -6px rgba(35,35,35,.45),0 2px 5px rgba(35,35,35,.2)}
+/* ---- v29 ---- */
+html[data-modo="local"] #chicken .fmt{display:none}
+html[data-cards] #chicken .cat:not(.compact) .fmt button{min-width:0;padding:0 10px}
+/* ---- v30 ---- */
+#salsas .media,html[data-tema="claro"] #salsas .media,html[data-cards][data-layout] #salsas.cat:not(.compact) .media{background:none!important;box-shadow:none!important;border-radius:0;overflow:visible!important}
+#salsas .media img,html[data-cards][data-layout] #salsas.cat:not(.compact) .media img{object-fit:contain;filter:drop-shadow(0 6px 6px rgba(35,35,35,.28))}
+#salsas .media .zoom{overflow:visible}
+.pd.sauce .pd-ph{aspect-ratio:auto;height:min(44dvh,300px);padding:26px 0 16px}
+.pd.sauce .pd-ph img{object-fit:contain;filter:drop-shadow(0 8px 8px rgba(35,35,35,.3))}
+.pd.sauce .pd-ph::after{display:none}
 </style>
 </head>
 <body>
@@ -848,18 +942,18 @@ html[data-tema="claro"] #chicken .item .add,html[data-tema="claro"] #chicken .it
     <button type="button" class="hm-half onl" data-modo="online" aria-label="Carta online, delivery o retiro"></button>
   </div>
 </section>
-<div id="pop" class="pop" hidden role="dialog" aria-modal="true" aria-label="Novedad: bebida mini">
+<div id="pop" class="bpop" hidden role="dialog" aria-modal="true" aria-label="Novedad: bebida mini">
   <div class="pop-box"><button type="button" class="pop-x" id="popX" aria-label="Cerrar">&times;</button><img id="popImg" alt="Bebida mini $990 con tu burger"></div>
 </div>
-<header class="top">
+<div class="herobg"><div class="hero"><header class="top">
   <h1 class="brand" id="brand">STREET FLAGS</h1>
-  <p class="online-label"><span class="p">MENÚ</span> <span class="b" id="modoLbl">ONLINE</span></p>
+  <p class="online-label"><span class="p">men<span class="acc">u</span></span> <span class="b" id="modoLbl">ONLINE</span></p>
 </header>
 
 <section class="sl" id="slider" aria-roledescription="carrusel" aria-label="Novedades" hidden>
   <div class="sl-track" id="slTrack"></div>
   <div class="sl-dots" id="slDots" aria-hidden="true"></div>
-</section>
+</section></div></div>
 
 <nav class="nav" aria-label="Categorías de la carta">
   <div class="nav-in">
@@ -1013,9 +1107,9 @@ const burger = (id, name, price, desc, sauceIds) => ({ id, name, price, desc, pi
 /* Novedades (slider de arriba). Para usar tus gráficas sube slide-1.jpg, slide-2.jpg, slide-3.jpg (proporción 3:1, ej. 1500×500 px).
    Si el archivo no existe se muestra un diseño automático. "go" = producto o categoría al que lleva al tocarlo. */
 const SLIDES = [
-  { img:"slide-1.jpg", go:"hamburguesas",  fb:{ art:"banner-bebida.jpg", t1:"¿Y LA BEBIDA?", t2:"+$990", sub:"con tu burger", c:["w","p","w"], k:1.55, bg:"#63CEFD" } },
+  { img:"slide-1.jpg", go:"street-classic", fb:{ foto:"street-classic.jpg", t1:"PRUEBA LO NUEVO", t2:"STREET CLASSIC", c:["w","p"], bg:"#63CEFD" } },
   { img:"slide-2.jpg", go:"combo-picky", fb:{ foto:"banner-combo-picky.jpg", t1:"NUEVO", t2:"COMBO PICKY", c:["p","w"], bg:"#45C8FD" } },
-  { img:"slide-3.jpg", go:"crunchy-one", fb:{ foto:"banner-burger.jpg", t1:"BURGER DEL MES", t2:"$6.990", sub:"THE CRUNCHY ONE", c:["w","p","w"], k:1.35, k1:.68, bg:"#6FC9FB" } }
+  { img:"slide-3.jpg", go:"crunchy-one", fb:{ foto:"banner-burger.jpg", t1:"BURGER DEL MES", t2:"$9.490", sub:"THE CRUNCHY ONE", c:["w","p","w"], k:1.35, k1:.68, bg:"#6FC9FB" } }
 ];
 
 /* ---- Zonas de delivery (Iquique) ----
@@ -1043,45 +1137,45 @@ const DELIVERY_GEO = {
 const MINI = ["Coca-Cola Original","Coca-Cola Zero","Sprite","Sprite Zero","Fanta","Fanta Zero"];
 const MENU = [
   { id:"combos", name:"Combos", note:"Ideales para compartir.", items:[
-    { id:"combo-picky", name:"Combo Picky", price:18200, desc:"2 Picky a elección (Meat o Chicken), 2 porciones de Papas Fritas, 12 Pop Corn y 2 bebidas mini.", bundleChoices:[{ label:"Elige tu Picky 1", short:"Picky 1", list:["Picky Meat","Picky Chicken"] }, { label:"Elige tu Picky 2", short:"Picky 2", list:["Picky Meat","Picky Chicken"] }, { label:"Elige tu bebida mini 1", short:"Bebida 1", list:MINI }, { label:"Elige tu bebida mini 2", short:"Bebida 2", list:MINI }] },
-    { id:"combo-familiar", name:"Combo Familiar", price:27900, desc:"3 Picky a elección (Meat o Chicken), 1 bebida mini, 6 Empanadas de Queso, 12 Pop Corn y 3 porciones de Papas Fritas con Salsa Cheddar y Tocino de topping.", bundleChoices:[{ label:"Elige tu Picky 1", short:"Picky 1", list:["Picky Meat","Picky Chicken"] }, { label:"Elige tu Picky 2", short:"Picky 2", list:["Picky Meat","Picky Chicken"] }, { label:"Elige tu Picky 3", short:"Picky 3", list:["Picky Meat","Picky Chicken"] }, { label:"Elige tu bebida mini", short:"Bebida", list:MINI }] }
+    { id:"combo-picky", name:"Combo Picky", price:14990, desc:"2 Picky a elección (Meat o Chicken), 2 porciones de Papas Fritas, 12 Pop Corn y 2 bebidas mini.", bundleChoices:[{ label:"Elige tu Picky 1", short:"Picky 1", list:["Picky Meat","Picky Chicken"] }, { label:"Elige tu Picky 2", short:"Picky 2", list:["Picky Meat","Picky Chicken"] }, { label:"Elige tu bebida mini 1", short:"Bebida 1", list:MINI }, { label:"Elige tu bebida mini 2", short:"Bebida 2", list:MINI }] },
+    { id:"combo-familiar", name:"Combo Familiar", price:21990, desc:"3 Picky a elección (Meat o Chicken), 6 Empanadas de Queso, 12 Pop Corn, 3 porciones de Papas Fritas con Salsa Cheddar y Tocino de topping y 3 bebidas mini.", bundleChoices:[{ label:"Elige tu Picky 1", short:"Picky 1", list:["Picky Meat","Picky Chicken"] }, { label:"Elige tu Picky 2", short:"Picky 2", list:["Picky Meat","Picky Chicken"] }, { label:"Elige tu Picky 3", short:"Picky 3", list:["Picky Meat","Picky Chicken"] }, { label:"Elige tu bebida mini 1", short:"Bebida 1", list:MINI }, { label:"Elige tu bebida mini 2", short:"Bebida 2", list:MINI }, { label:"Elige tu bebida mini 3", short:"Bebida 3", list:MINI }] }
   ]},
-  { id:"hamburguesas", name:"Hamburguesas", note:"Todas incluyen Papas Fritas o Mac & Cheese.", items:[
-    { ...burger("crunchy-one","The Crunchy One",6990,"Hamburguesa de carne con Queso Cheddar y Cebolla Blanca.",["s-alioli","s-chick","s-ranch","s-bbq"]), badge:"Burger del Mes" },
-    burger("honey-mustang","Honey Mustang Burger",8990,"Hamburguesa de carne con Queso Cheddar, Salsa Honey Mustang, Cebolla Blanca y Pepinillo.",["s-honey","s-chick","s-ranch","s-bbq"]),
-    burger("tercio-libra","Tercio de Libra Burger",9490,"Hamburguesa de carne con Queso Cheddar, Tocino, Salsa Street, Cebolla Blanca y Pepinillo.",["s-street","s-chick","s-ranch","s-cheddar"]),
-    burger("fantastic","Fantastic Burger",9490,"Hamburguesa de carne con Queso Cheddar, Lechuga, Tomate, Cebolla Blanca, Pepinillo y Salsa Street.",["s-street","s-chick","s-ranch","s-bbq"]),
-    burger("bacon-master","Bacon Master Burger",9490,"Hamburguesa de carne con Queso Cheddar, Tocino, Salsa BBQ y Pepinillo.",["s-bbq","s-chick","s-ranch","s-cheddar"]),
-    burger("street-classic","Street Classic Deluxe",9990,"Hamburguesa de carne con Queso Cheddar, Lechuga, Tomate, Pepinillo, Cebolla Blanca y Salsa Street.",["s-street","s-chick","s-ranch","s-bbq"]),
-    burger("cheddar-melt","Cheddar Melt Smash",8990,"Hamburguesa de carne con Queso Cheddar, Salsa Cheddar, Cebolla en Brunoise y Pepinillo.",["s-cheddar","s-chick","s-street","s-bbq"]),
-    burger("smoky-crunch","Smoky Crunch",8990,"Hamburguesa de carne con Queso Cheddar, Cebolla Crispy, Lechuga, Tomate, Alioli y Salsa BBQ.",["s-bbq","s-alioli","s-chick","s-ranch"]),
-    burger("big-mick","Big Mick",12990,"Hamburguesa de doble carne con doble Queso Cheddar, doble Pepinillo, doble Tomate, doble Lechuga, Tocino y Salsa Street, en pan y medio.",["s-street","s-chick","s-bbq","s-cheddar"]),
-    { id:"picky-meat", name:"Picky Meat", price:5990, desc:"Hamburguesa Smash de Carne con Queso Cheddar. Incluye Papas Fritas.", extras:EXTRAS_BURGER, sauces:salsas(["s-chick","s-street","s-ranch","s-bbq"]), sauceMsg:"Tus papas quedan mejor con una salsa", noSide:true }
+  { id:"hamburguesas", name:"Hamburguesas", note:"Todas incluyen Papas Fritas o Mac & Cheese (Picky solo con Papas Fritas).", items:[
+    { ...burger("crunchy-one","The Crunchy One",9490,"Carne, Queso Cheddar y Cebolla Blanca.",["s-alioli","s-chick","s-ranch","s-bbq"]), badge:"Burger del Mes" },
+    burger("honey-mustang","Honey Mustang Burger",8990,"Carne, Queso Cheddar, Salsa Honey Mustang, Cebolla Blanca y Pepinillo.",["s-honey","s-chick","s-ranch","s-bbq"]),
+    burger("tercio-libra","Tercio de Libra Burger",9490,"Carne, Queso Cheddar, Tocino, Salsa Street, Cebolla Blanca y Pepinillo.",["s-street","s-chick","s-ranch","s-cheddar"]),
+    burger("fantastic","Fantastic Burger",9490,"Carne, Queso Cheddar, Lechuga, Tomate, Cebolla Blanca, Pepinillo y Salsa Street.",["s-street","s-chick","s-ranch","s-bbq"]),
+    burger("bacon-master","Bacon Master Burger",9490,"Carne, Queso Cheddar, Tocino, Salsa BBQ y Pepinillo.",["s-bbq","s-chick","s-ranch","s-cheddar"]),
+    burger("street-classic","Street Classic Deluxe",9990,"Carne, Queso Cheddar, Lechuga, Tomate, Pepinillo, Cebolla Blanca y Salsa Street.",["s-street","s-chick","s-ranch","s-bbq"]),
+    burger("cheddar-melt","Cheddar Melt Smash",8990,"Carne, Queso Cheddar, Salsa Cheddar, Cebolla en Brunoise y Pepinillo.",["s-cheddar","s-chick","s-street","s-bbq"]),
+    burger("smoky-crunch","Smoky Crunch",8990,"Carne, Queso Cheddar, Cebolla Crispy, Lechuga, Tomate, Alioli y Salsa BBQ.",["s-bbq","s-alioli","s-chick","s-ranch"]),
+    burger("big-mick","Big Mick",12990,"Doble Carne, Doble Queso Cheddar, Triple Pan.",["s-street","s-chick","s-bbq","s-cheddar"]),
+    { id:"picky-meat", name:"Picky Meat", price:6990, desc:"Carne y Queso Cheddar. Incluye Papas Fritas.", extras:EXTRAS_BURGER, sauces:salsas(["s-chick","s-street","s-ranch","s-bbq"]), sauceMsg:"Tus papas quedan mejor con una salsa", noSide:true }
   ]},
-  { id:"chicken", name:"Chicken Sandwich", nav:"Chicken", note:"Sándwiches de pollo frito. Todos incluyen Papas Fritas o Mac & Cheese.", items:[
-    { id:"slaw-chicken", name:"Slaw Chicken", price:8990, desc:"Pollo Apanado con Queso Cheddar, Cole Slaw, Salsa Sweet Chipotle y Pepinillo.", extras:EXTRAS_CHICKEN, sauces:salsas(["s-chick","s-ranch","s-chipotle","s-cheddar"]) },
-    { id:"classic-chicken", name:"Classic Chicken", price:8990, desc:"Pollo Apanado con Queso Cheddar, Salsa BBQ y Pepinillo.", extras:EXTRAS_CHICKEN, sauces:salsas(["s-bbq","s-chick","s-ranch","s-cheddar"]) },
-    { id:"crispy-chicken", name:"Crispy Chicken", price:9990, desc:"Pollo Apanado con Queso Cheddar, Cebolla Blanca, Ketchup y Mostaza.", extras:EXTRAS_CHICKEN, sauces:salsas(["s-chick","s-ranch","s-chipotle","s-cheddar"]) },
-    { id:"avocado-chicken", name:"Avocado Chicken", price:9990, desc:"Pollo Apanado con Queso Cheddar, Cebolla Blanca y Salsa Alioli.", extras:EXTRAS_CHICKEN, sauces:salsas(["s-chick","s-ranch","s-chipotle","s-cheddar"]) },
-    { id:"red-onion-chicken", name:"Red Onion Chicken", price:8990, desc:"Pollo Apanado con Queso Cheddar, Cebolla Morada en Brunoise, Salsa Honey Mustang y Pepinillo.", extras:EXTRAS_CHICKEN, sauces:salsas(["s-honey","s-chick","s-ranch","s-chipotle"]) },
-    { id:"bbq-bacon-chicken", name:"BBQ Bacon Chicken", price:8990, desc:"Pollo Apanado con Queso Cheddar, Tocino, Cebolla Crispy y Salsa BBQ.", extras:EXTRAS_CHICKEN, sauces:salsas(["s-bbq","s-chick","s-ranch","s-cheddar"]) },
-    { id:"cesar-chicken", name:"César Chicken", price:8990, desc:"Pollo Apanado con Queso Cheddar, Lechuga, Tomate, Salsa César y Queso Parmesano rallado.", extras:EXTRAS_CHICKEN, sauces:salsas(["s-chick","s-ranch","s-chipotle","s-cheddar"]) },
-    { id:"picky-chicken", name:"Picky Chicken", price:5990, desc:"Pollo Frito y Queso Cheddar. Incluye Papas Fritas.", extras:EXTRAS_CHICKEN, sauces:{ ...salsas(["s-chick","s-street","s-ranch","s-bbq"]) }, sauceMsg:"Tus papas quedan mejor con una salsa", noSide:true }
+  { id:"chicken", name:"Chicken Sandwich", nav:"Chicken", note:"Pollo apanado o a la plancha. Todos incluyen Papas Fritas o Mac & Cheese (Picky solo con Papas Fritas).", items:[
+    { id:"slaw-chicken", name:"Slaw Chicken", price:8990, options:[{label:"Apanado",price:8990},{label:"Plancha",price:8990}], desc:"Pollo, Queso Cheddar, Cole Slaw, Salsa Sweet Chipotle y Pepinillo.", extras:EXTRAS_CHICKEN, sauces:salsas(["s-chick","s-ranch","s-chipotle","s-cheddar"]) },
+    { id:"classic-chicken", name:"Classic Chicken", price:8990, options:[{label:"Apanado",price:8990},{label:"Plancha",price:8990}], desc:"Pollo, Queso Cheddar, Salsa BBQ y Pepinillo.", extras:EXTRAS_CHICKEN, sauces:salsas(["s-bbq","s-chick","s-ranch","s-cheddar"]) },
+    { id:"crispy-chicken", name:"Crispy Chicken", price:9990, options:[{label:"Apanado",price:9990},{label:"Plancha",price:9990}], desc:"Pollo, Queso Cheddar, Cebolla Blanca, Ketchup y Mostaza.", extras:EXTRAS_CHICKEN, sauces:salsas(["s-chick","s-ranch","s-chipotle","s-cheddar"]) },
+    { id:"avocado-chicken", name:"Avocado Chicken", price:9990, options:[{label:"Apanado",price:9990},{label:"Plancha",price:9990}], desc:"Pollo, Queso Cheddar, Cebolla Blanca y Salsa Alioli.", extras:EXTRAS_CHICKEN, sauces:salsas(["s-chick","s-ranch","s-chipotle","s-cheddar"]) },
+    { id:"red-onion-chicken", name:"Red Onion Chicken", price:8990, options:[{label:"Apanado",price:8990},{label:"Plancha",price:8990}], desc:"Pollo, Queso Cheddar, Cebolla Morada en Brunoise, Salsa Honey Mustang y Pepinillo.", extras:EXTRAS_CHICKEN, sauces:salsas(["s-honey","s-chick","s-ranch","s-chipotle"]) },
+    { id:"bbq-bacon-chicken", name:"BBQ Bacon Chicken", price:8990, options:[{label:"Apanado",price:8990},{label:"Plancha",price:8990}], desc:"Pollo, Queso Cheddar, Tocino, Cebolla Crispy y Salsa BBQ.", extras:EXTRAS_CHICKEN, sauces:salsas(["s-bbq","s-chick","s-ranch","s-cheddar"]) },
+    { id:"cesar-chicken", name:"César Chicken", price:8990, options:[{label:"Apanado",price:8990},{label:"Plancha",price:8990}], desc:"Pollo, Queso Cheddar, Lechuga, Tomate, Salsa César y Queso Parmesano rallado.", extras:EXTRAS_CHICKEN, sauces:salsas(["s-chick","s-ranch","s-chipotle","s-cheddar"]) },
+    { id:"picky-chicken", name:"Picky Chicken", price:6990, options:[{label:"Apanado",price:6990},{label:"Plancha",price:6990}], desc:"Pollo y Queso Cheddar. Incluye Papas Fritas.", extras:EXTRAS_CHICKEN, sauces:{ ...salsas(["s-chick","s-street","s-ranch","s-bbq"]) }, sauceMsg:"Tus papas quedan mejor con una salsa", noSide:true }
   ]},
   { id:"papas", name:"Papas Fritas", note:"Para compartir.", items:[
-    { id:"chicken-fries", name:"Chicken Fries", price:7990, desc:"Papas Fritas con Pollo Frito, Salsa Cheddar, Tocino, Cebollín y Salsa Sweet Chipotle. Para 2 a 3 personas.", sauces:salsas(["s-chick","s-street","s-ranch","s-bbq"]) },
-    { id:"chorri-street", name:"Chorri Street", price:7990, desc:"Papas Fritas, Vienesas Bañadas en Salsa BBQ, Onion Crunch y Cebollín. Para 2 a 3 personas.", sauces:salsas(["s-chick","s-street","s-ranch","s-bbq"]) }
+    { id:"chicken-fries", name:"Chicken Fries", price:8990, desc:"Papas Fritas con Pollo Frito, Salsa Cheddar, Tocino, Cebollín y Salsa Sweet Chipotle. Para 2 a 3 personas.", sauces:salsas(["s-chick","s-street","s-ranch","s-bbq"]) },
+    { id:"chorri-street", name:"Chorri Street", price:8990, desc:"Papas Fritas, Vienesas Bañadas en Salsa BBQ, Onion Crunch y Cebollín. Para 2 a 3 personas.", sauces:salsas(["s-chick","s-street","s-ranch","s-bbq"]) }
   ]},
   { id:"sides", name:"Sides", items:[
-    { id:"mac-cheese", name:"Mac & Cheese", price:5490, desc:"Macarrones con Salsa de Queso Cheddar, Tocino y Cebolla Crispy." },
-    { id:"chicken-pop", name:"Chicken Pop", price:6490, desc:"Pollo Frito Acompañado de Mac & Cheese." },
-    { id:"pop-corn-8", name:"Pop Corn", price:3990, desc:"Pop Corn de Pollo con Salsa a Elección.", pick:SAUCE_PICK(NOMBRES_SALSAS), pickInSheet:true },
+    { id:"mac-cheese", name:"Mac & Cheese", price:6990, desc:"Macarrones con Salsa de Queso Cheddar, Tocino y Cebolla Crispy." },
+    { id:"chicken-pop", name:"Chicken Pop", price:7490, desc:"Pollo Frito Acompañado de Mac & Cheese." },
+    { id:"pop-corn-8", name:"Pop Corn", price:3990, desc:"12 unidades de Pop Corn de Pollo con Salsa a Elección.", pick:SAUCE_PICK(NOMBRES_SALSAS), pickInSheet:true },
     { id:"empanadas", name:"Empanadas de Queso", desc:"Empanadas de Queso Fritas.", options:[{label:"8 un",price:3490},{label:"16 un",price:4990}] },
     { id:"aros-8", name:"Aros de Cebolla", price:5490, desc:"8 Aros de Cebolla Fritos con Salsa a Elección.", pick:SAUCE_PICK(NOMBRES_SALSAS), pickInSheet:true },
     { id:"bubba-6", name:"Bubba Gump Shrimps", price:5490, desc:"6 Camarones Apanados con Salsa a Elección.", pick:SAUCE_PICK(NOMBRES_SALSAS), pickInSheet:true }
   ]},
   { id:"ensaladas", name:"Ensaladas", items:[
-    { id:"chicken-salad", name:"Chicken Salad", price:7490, desc:"Pollo Crispy, Lechuga, Repollo Blanco y Morado, Zanahoria Rallada, Crutones y Queso Parmesano. Incluye salsa César casera." },
+    { id:"chicken-salad", name:"Chicken Salad", price:8490, desc:"Pollo Crispy, Lechuga, Repollo Blanco y Morado, Zanahoria Rallada, Crutones y Queso Parmesano. Incluye salsa César casera." },
     { id:"shrimp-salad", name:"Shrimp Salad", price:8490, desc:"Camarones Ecuatorianos Apanados, Lechuga, Repollo Blanco y Morado, Zanahoria Rallada, Crutones y Queso Parmesano." }
   ]},
   { id:"salsas", name:"Salsas", note:"El complemento Street Flags.", items:[
@@ -1098,7 +1192,7 @@ const MENU = [
     { id:"drink-mini", hideInList:true, name:"Bebida Mini Promo", desc:"Coca-Cola, Sprite o Fanta, normal o zero. 1 por cada burger.", price:990, drinkChoice:{ label:"Elige tu bebida mini", list:MINI, suffix:"" } },
     { id:"drink-350", name:"Bebida 350 ml", desc:"Coca-Cola, Sprite, Fanta, Jugo o Agua.", price:2000, drinkChoice:{ label:"Elige tu bebida", list:["Coca-Cola Original","Coca-Cola Zero","Sprite","Fanta","Jugo de Naranja","Jugo de Durazno","Agua sin gas","Agua con gas"], suffix:"" } },
     { id:"drink-225", name:"Bebida Mini", desc:"Coca-Cola, Sprite, Fanta, Jugo o Agua.", price:1690, drinkChoice:{ label:"Elige tu bebida", list:["Coca-Cola Original","Coca-Cola Zero","Sprite","Fanta","Jugo de Naranja","Jugo de Durazno","Agua sin gas","Agua con gas"], suffix:"" } },
-    { id:"refill", name:"Bebida Refill", desc:"Refill de uso personal, solo para quienes compran alimentos en el local.", price:3990, localOnly:true }
+    { id:"refill", name:"Bebida Refill", desc:"Refill de uso personal, solo para quienes compran alimentos en el local.", price:2990, localOnly:true }
   ]},
   { id:"extras", name:"Extras", compact:true, items:[
     { id:"e-notmeat", name:"Cambio a Not Meat", price:1290 },
@@ -1122,8 +1216,7 @@ const MENU = [
 ["chicken"].forEach(cid => MENU.find(c => c.id === cid).items.forEach(i => { if (!i.pick && !i.noSide){ i.pick = SIDE; i.pickInSheet = true; } })); /*SIDE_EN*/
 
 /* Fotos en .jpg (las demás usan la extensión de CONFIG) */
-["combo-picky","crunchy-one","bacon-master","cheese-burger","fantastic","honey-mustang","picky-meat","tercio-libra","avocado-chicken","classic-chicken","notorius-big","picky-chicken","slaw-chicken","s-bbq","s-cheddar","s-ranch","s-chick","s-chipotle","s-street","s-honey","s-alioli","chorri-street","chicken-pop","bubba-6","mac-cheese","flaggy-box","meat-fries","chicken-fries","lord-rings","crispy-chicken","aros-8","fries-corn","empanadas","street-box","pop-corn-8","onion-crunchy","chicken-salad","shrimp-salad"].forEach(id => MENU.forEach(c => c.items.forEach(i => { if (i.id === id) i.foto = id + ".jpg"; })));
-["combo-familiar","street-classic","cheddar-melt","smoky-crunch","big-mick","red-onion-chicken","bbq-bacon-chicken","cesar-chicken"].forEach(id => MENU.forEach(c => c.items.forEach(i => { if (i.id === id) i.foto = "foto-pronto.jpg"; })));
+["combo-picky","combo-familiar","cheddar-melt","big-mick","street-classic","smoky-crunch","red-onion-chicken","bbq-bacon-chicken","cesar-chicken","crunchy-one","bacon-master","cheese-burger","fantastic","honey-mustang","picky-meat","tercio-libra","avocado-chicken","classic-chicken","notorius-big","picky-chicken","slaw-chicken","chorri-street","chicken-pop","bubba-6","mac-cheese","flaggy-box","meat-fries","chicken-fries","lord-rings","crispy-chicken","aros-8","fries-corn","empanadas","street-box","pop-corn-8","onion-crunchy","chicken-salad","shrimp-salad"].forEach(id => MENU.forEach(c => c.items.forEach(i => { if (i.id === id) i.foto = id + ".jpg"; })));
 
 // Etiquetas "Nuevo/Nueva" (se muestran en rojo junto al nombre). Quita un id para sacarla.
 const NUEVO = { "combo-picky":"Nuevo", "combo-familiar":"Nuevo", "street-classic":"Nueva", "cheddar-melt":"Nueva", "smoky-crunch":"Nueva", "big-mick":"Nueva", "red-onion-chicken":"Nueva", "bbq-bacon-chicken":"Nueva", "cesar-chicken":"Nueva" };
@@ -2245,6 +2338,7 @@ function openLb(btn){
   $("#lbi").src = img.currentSrc || img.src; $("#lbi").alt = it.name;
   const cat = MENU.find(c => c.id === CATOF[it.id]);
   $("#lbcat").textContent = cat ? cat.name : "";
+  $("#pd").classList.toggle("sauce", CATOF[it.id] === "salsas");
   const tag = it.badge ? [it.badge, ""] : it.nuevo ? [it.nuevo, "nw"] : it.vendida ? [it.vendida, ""] : null, ch = $("#lbchip");
   ch.hidden = !tag; if (tag){ ch.textContent = tag[0]; ch.className = "chip" + (tag[1] ? " " + tag[1] : ""); }
   $("#lbt").textContent = it.name; $("#lbd").textContent = it.desc || ""; $("#lbd").hidden = !it.desc;
@@ -2617,6 +2711,20 @@ if (CONFIG.opciones){
 showCheckoutStep(1, false);
 renderCart();
 
+</script>
+<button type="button" class="totop" id="toTop" aria-label="Volver arriba" tabindex="-1"><span class="tt-f"><img id="toTopImg" alt=""></span><svg class="tt-a" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 15l7-7 7 7"/></svg></button>
+<script>
+window.addEventListener("load", function(){
+  var b = document.getElementById("toTop"), im = document.getElementById("toTopImg");
+  if (!b) return;
+  try { im.src = assetPath("isotipo.png") || ""; } catch (e) {}
+  var tk = false;
+  function chk(){ tk = false; var fin = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 320 && window.scrollY > 600; b.classList.toggle("show", fin); b.tabIndex = fin ? 0 : -1; }
+  window.addEventListener("scroll", function(){ if (!tk) { tk = true; requestAnimationFrame(chk); } }, { passive: true });
+  window.addEventListener("resize", chk);
+  b.addEventListener("click", function(){ window.scrollTo({ top: 0, behavior: "smooth" }); });
+  chk();
+});
 </script>
 </body>
 </html>
