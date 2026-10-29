@@ -12,6 +12,10 @@ module.exports = {
   "chicken-salad": "980", "shrimp-salad": "990",
   "s-honey": "SF210", "s-street": "SS1", "s-chipotle": "SF280", "s-chick": "SF220",
   "s-bbq": "280", "s-cheddar": "330", "s-ranch": "SF250", "s-alioli": "SF260",
-  "refill": "SF200"
-  // Sin código aún: drink-350, drink-225 (dependen de la bebida elegida) y los extras e-*
+  "refill": "SF200",
+  "e-fries": "230",
+  // Extras (modificadores de Toteat, grupo BA.010)
+  "e-notmeat": "1230", "e-notchicken": "1240", "e-smash": "EX080", "e-chicken": "EX120", "e-cheddar": "EX010", "e-lettuce": "EX060", "e-tomato": "EX050",
+  "e-jalapeno": "EX020", "e-pickle": "EX030", "e-slaw": "290", "e-bacon": "EX040", "e-crispy-onion": "EX129"
+  // Bebidas: se resuelven por nombre en pedido.js. Sin código aún: e-onion (Onion Crunch)
 };
