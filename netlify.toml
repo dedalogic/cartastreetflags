@@ -1,5 +1,9 @@
 [build]
   publish = "."
 
+[build.environment]
+  # La llave de Google Maps/Places va en index.html a propósito (es pública y se restringe por dominio).
+  SECRETS_SCAN_OMIT_PATHS = "index.html"
+
 [functions]
   directory = "netlify/functions"
