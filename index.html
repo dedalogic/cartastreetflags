@@ -977,6 +977,8 @@ html[data-tema="claro"] #sides .item .add,html[data-tema="claro"] #sides .item .
   html[data-sl] .sl-dots{bottom:10px}
   html[data-sl] .hero{padding-bottom:0}
 }
+#ensaladas .media img{transform:scale(1.03)!important}
+#bebidas .media img{transform:scale(1.45)!important}
 </style>
 </head>
 <body>
@@ -1216,6 +1218,7 @@ const MENU = [
   ]},
   { id:"papas", name:"Papas Fritas", note:"Para compartir.", items:[
     { id:"chicken-fries", name:"Chicken Fries", price:8990, desc:"Papas Fritas con Pollo Frito, Salsa Cheddar, Tocino, Cebollín y Salsa Sweet Chipotle. Para 2 a 3 personas.", sauces:salsas(["s-chick","s-street","s-ranch","s-bbq"]) },
+    { id:"shrimp-fries", name:"Shrimp Fries", price:8990, desc:"Papas Fritas con Camarones Apanados, Salsa Cheddar, Salsa Alioli y Cebollín. Para 2 a 3 personas.", sauces:salsas(["s-chick","s-street","s-ranch","s-bbq"]) },
     { id:"chorri-street", name:"Chorri Street", price:8990, desc:"Papas Fritas, Vienesas Bañadas en Salsa BBQ, Onion Crunch y Cebollín. Para 2 a 3 personas.", sauces:salsas(["s-chick","s-street","s-ranch","s-bbq"]) }
   ]},
   { id:"sides", name:"Sides", items:[
@@ -1239,7 +1242,7 @@ const MENU = [
     { id:"s-ranch", name:"Jalapeño Ranch", price:1290, desc:"Mayonesa, Jalapeños y Jugo de Limón." },
     { id:"s-alioli", name:"Alioli", price:1290, desc:"Mayonesa, Ajo y Miel." }
   ]},
-  { id:"bebidas", name:"Bebidas", compact:true, items:[
+  { id:"bebidas", name:"Bebidas", items:[
     { id:"drink-mini", hideInList:true, name:"Bebida Mini Promo", desc:"Coca-Cola, Sprite o Fanta, normal o zero. 1 por cada burger.", price:990, drinkChoice:{ label:"Elige tu bebida mini", list:MINI, suffix:"" } },
     { id:"drink-350", name:"Bebida 350 ml", desc:"Coca-Cola, Sprite, Fanta, Jugo o Agua.", price:2000, drinkChoice:{ label:"Elige tu bebida", list:["Coca-Cola Original","Coca-Cola Zero","Sprite","Fanta","Jugo de Naranja","Jugo de Durazno","Agua sin gas","Agua con gas"], suffix:"" } },
     { id:"drink-225", name:"Bebida Mini", desc:"Coca-Cola, Sprite, Fanta, Jugo o Agua.", price:1690, drinkChoice:{ label:"Elige tu bebida", list:["Coca-Cola Original","Coca-Cola Zero","Sprite","Fanta","Jugo de Naranja","Jugo de Durazno","Agua sin gas","Agua con gas"], suffix:"" } },
@@ -1267,7 +1270,7 @@ const MENU = [
 ["chicken"].forEach(cid => MENU.find(c => c.id === cid).items.forEach(i => { if (!i.pick && !i.noSide){ i.pick = SIDE; i.pickInSheet = true; } })); /*SIDE_EN*/
 
 /* Fotos en .jpg (las demás usan la extensión de CONFIG) */
-["combo-picky","combo-familiar","cheddar-melt","big-mick","street-classic","smoky-crunch","red-onion-chicken","bbq-bacon-chicken","cesar-chicken","crunchy-one","bacon-master","cheese-burger","fantastic","honey-mustang","picky-meat","tercio-libra","avocado-chicken","classic-chicken","notorius-big","picky-chicken","slaw-chicken","chorri-street","chicken-pop","bubba-6","mac-cheese","flaggy-box","meat-fries","chicken-fries","lord-rings","crispy-chicken","aros-8","fries-corn","empanadas","street-box","pop-corn-8","onion-crunchy","chicken-salad","shrimp-salad"].forEach(id => MENU.forEach(c => c.items.forEach(i => { if (i.id === id) i.foto = id + ".jpg"; })));
+["combo-picky","combo-familiar","cheddar-melt","big-mick","street-classic","smoky-crunch","red-onion-chicken","bbq-bacon-chicken","cesar-chicken","crunchy-one","bacon-master","cheese-burger","fantastic","honey-mustang","picky-meat","tercio-libra","avocado-chicken","classic-chicken","notorius-big","picky-chicken","slaw-chicken","chorri-street","chicken-pop","bubba-6","mac-cheese","flaggy-box","meat-fries","chicken-fries","shrimp-fries","lord-rings","crispy-chicken","aros-8","fries-corn","empanadas","street-box","pop-corn-8","onion-crunchy","chicken-salad","shrimp-salad","drink-350","drink-225","refill"].forEach(id => MENU.forEach(c => c.items.forEach(i => { if (i.id === id) i.foto = id + ".jpg"; })));
 
 // Etiquetas "Nuevo/Nueva" (se muestran en rojo junto al nombre). Quita un id para sacarla.
 const NUEVO = { "combo-picky":"Nuevo", "combo-familiar":"Nuevo", "street-classic":"Nueva", "cheddar-melt":"Nueva", "smoky-crunch":"Nueva", "big-mick":"Nueva", "red-onion-chicken":"Nueva", "bbq-bacon-chicken":"Nueva", "cesar-chicken":"Nueva" };
