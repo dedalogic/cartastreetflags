@@ -925,6 +925,19 @@ html[data-cards] #chicken .cat:not(.compact) .fmt button{min-width:0;padding:0 1
 .pd.sauce .pd-ph{aspect-ratio:auto;height:min(44dvh,300px);padding:26px 0 16px}
 .pd.sauce .pd-ph img{object-fit:contain;filter:drop-shadow(0 8px 8px rgba(35,35,35,.3))}
 .pd.sauce .pd-ph::after{display:none}
+/* ---- v31 ---- */
+html[data-cards][data-layout] .cat:not(.compact) .media{background:#5BC8FD}
+html[data-cards][data-layout] .cat:not(.compact):not(#salsas) .media img,html[data-cards][data-layout] .cat:not(.compact):not(#salsas) .media .zoom img{object-fit:contain;object-position:center}
+/* ---- v31b: foto con aire pero grande ---- */
+html[data-cards][data-layout] .cat:not(.compact):not(#salsas) .media{overflow:hidden}
+html[data-cards][data-layout] .cat:not(.compact):not(#salsas) .media img{transform:scale(1.12);transform-origin:center}
+/* ---- v32 ---- */
+.online-label .acc::after{left:.08em;top:.1em;font-size:1em;transform:rotate(24deg)}
+.sl-arr{display:none;position:absolute;top:calc(50% - 14px);z-index:3;width:38px;height:38px;border-radius:50%;border:0;background:rgba(35,35,35,.72);color:#fff;font-size:22px;line-height:1;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.35);padding:0}
+.sl-arr:hover{background:#FF56A7}
+.sl-arr.l{left:10px}.sl-arr.r{right:10px}
+@media (hover:hover) and (pointer:fine){.sl-arr{display:flex}.sl-track{cursor:grab}.sl-track.drag{cursor:grabbing;scroll-snap-type:none;scroll-behavior:auto}.sl-track.drag *{pointer-events:none}.sl-dots i{cursor:pointer;pointer-events:auto}}
+.sl-dots{pointer-events:auto}
 </style>
 </head>
 <body>
@@ -1171,7 +1184,6 @@ const MENU = [
     { id:"chicken-pop", name:"Chicken Pop", price:7490, desc:"Pollo Frito Acompañado de Mac & Cheese." },
     { id:"pop-corn-8", name:"Pop Corn", price:3990, desc:"12 unidades de Pop Corn de Pollo con Salsa a Elección.", pick:SAUCE_PICK(NOMBRES_SALSAS), pickInSheet:true },
     { id:"empanadas", name:"Empanadas de Queso", desc:"Empanadas de Queso Fritas.", options:[{label:"8 un",price:3490},{label:"16 un",price:4990}] },
-    { id:"aros-8", name:"Aros de Cebolla", price:5490, desc:"8 Aros de Cebolla Fritos con Salsa a Elección.", pick:SAUCE_PICK(NOMBRES_SALSAS), pickInSheet:true },
     { id:"bubba-6", name:"Bubba Gump Shrimps", price:5490, desc:"6 Camarones Apanados con Salsa a Elección.", pick:SAUCE_PICK(NOMBRES_SALSAS), pickInSheet:true }
   ]},
   { id:"ensaladas", name:"Ensaladas", items:[
@@ -1221,9 +1233,9 @@ const MENU = [
 // Etiquetas "Nuevo/Nueva" (se muestran en rojo junto al nombre). Quita un id para sacarla.
 const NUEVO = { "combo-picky":"Nuevo", "combo-familiar":"Nuevo", "street-classic":"Nueva", "cheddar-melt":"Nueva", "smoky-crunch":"Nueva", "big-mick":"Nueva", "red-onion-chicken":"Nueva", "bbq-bacon-chicken":"Nueva", "cesar-chicken":"Nueva" };
 MENU.forEach(c => c.items.forEach(i => { if (NUEVO[i.id]) i.nuevo = NUEVO[i.id]; }));
-// Etiqueta rosada "La más vendida"
+// Etiqueta rosada "+ Vendida"
 const VENDIDA = ["bacon-master","classic-chicken"];
-MENU.forEach(c => c.items.forEach(i => { if (VENDIDA.includes(i.id)) i.vendida = "La más vendida"; }));
+MENU.forEach(c => c.items.forEach(i => { if (VENDIDA.includes(i.id)) i.vendida = "+ Vendida"; }));
 
 
 /* =====================================================================
@@ -2724,6 +2736,41 @@ window.addEventListener("load", function(){
   window.addEventListener("resize", chk);
   b.addEventListener("click", function(){ window.scrollTo({ top: 0, behavior: "smooth" }); });
   chk();
+});
+</script>
+<script>
+(function(){
+  function paint(im){
+    try {
+      var m = im.closest && im.closest(".media"); if (!m || m.closest("#salsas") || !im.naturalWidth) return;
+      var c = document.createElement("canvas"); c.width = 4; c.height = 40; var x = c.getContext("2d");
+      x.drawImage(im, 0, 0, 4, 40); var t = x.getImageData(0, 1, 4, 1).data, b = x.getImageData(0, 38, 4, 1).data;
+      var f = a => "rgb(" + [0,1,2].map(i => Math.round((a[i] + a[4+i] + a[8+i] + a[12+i]) / 4)).join(",") + ")";
+      m.style.background = "linear-gradient(" + f(t) + "," + f(b) + ")";
+    } catch (e) {}
+  }
+  document.addEventListener("load", function(e){ if (e.target && e.target.tagName === "IMG") paint(e.target); }, true);
+  window.addEventListener("load", function(){ document.querySelectorAll(".media img").forEach(function(i){ if (i.complete) paint(i); }); });
+})();
+</script>
+<script>
+window.addEventListener("load", function(){
+  var box = document.getElementById("slider"), tr = document.getElementById("slTrack"), dots = document.getElementById("slDots");
+  if (!box || !tr) return;
+  function n(){ return tr.children.length; }
+  function idx(){ return Math.round(tr.scrollLeft / tr.clientWidth); }
+  function to(i){ var k = n(); if (!k) return; i = (i % k + k) % k; tr.scrollTo({ left: i * tr.clientWidth, behavior: "smooth" }); }
+  ["l","r"].forEach(function(d){
+    var b = document.createElement("button"); b.type = "button"; b.className = "sl-arr " + d; b.setAttribute("aria-label", d === "l" ? "Anterior" : "Siguiente"); b.textContent = d === "l" ? "‹" : "›";
+    b.addEventListener("click", function(e){ e.stopPropagation(); to(idx() + (d === "l" ? -1 : 1)); });
+    box.appendChild(b);
+  });
+  if (dots) [].forEach.call(dots.children, function(el, i){ el.addEventListener("click", function(){ to(i); }); });
+  var down = false, x0 = 0, s0 = 0, moved = false;
+  tr.addEventListener("mousedown", function(e){ if (e.button) return; down = true; moved = false; x0 = e.clientX; s0 = tr.scrollLeft; });
+  window.addEventListener("mousemove", function(e){ if (!down) return; var dx = e.clientX - x0; if (Math.abs(dx) > 5 && !moved){ moved = true; tr.classList.add("drag"); } if (moved) tr.scrollLeft = s0 - dx; });
+  window.addEventListener("mouseup", function(e){ if (!down) return; down = false; if (moved){ var dx = e.clientX - x0; tr.classList.remove("drag"); var i = idx(); to(dx < -40 ? Math.ceil(s0 / tr.clientWidth + .01) : dx > 40 ? Math.floor(s0 / tr.clientWidth - .01) : Math.round(s0 / tr.clientWidth)); } });
+  tr.addEventListener("click", function(e){ if (moved){ e.stopPropagation(); e.preventDefault(); moved = false; } }, true);
 });
 </script>
 </body>
