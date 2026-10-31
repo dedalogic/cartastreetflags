@@ -1024,6 +1024,26 @@ html:not([data-modo="local"]) .home{display:none!important}
 .adm-lb .adm-btn{width:100%;padding:13px}
 .adm-le{color:#FF3B30;font-weight:700;font-size:14px;min-height:20px;margin:0 0 8px}
 body.adm-open{overflow:hidden}
+/* ---- v39 ---- */
+.adm-th{flex:none;width:46px;height:46px;border-radius:10px;background:#efe9de;overflow:hidden;display:block}
+.adm-th img{width:100%;height:100%;object-fit:cover;display:block}
+.adm-ed{border:0;background:none;padding:2px 0 0;font:inherit;font-size:12px;font-weight:700;color:#FF56A7;cursor:pointer;text-align:left}
+.adm-d{padding:0 14px 12px;background:#fff}
+.adm-d textarea{width:100%;box-sizing:border-box;border:2px solid #FF56A7;border-radius:10px;padding:10px;font:inherit;font-size:15px;line-height:1.35;min-height:84px;resize:vertical;background:#fff;color:#232323}
+.adm-dh{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:4px;font-size:12px;color:#8a8a8a}
+.adm-dh button{border:0;background:none;color:#FF56A7;font:inherit;font-weight:700;cursor:pointer}
+.adm-tabs{display:flex;gap:8px;margin:2px 0 12px}
+.adm-tabs button{flex:1;border:2px solid #232323;border-radius:12px;padding:10px;font:inherit;font-weight:800;font-size:15px;background:#fff;color:#232323;cursor:pointer}
+.adm-tabs button[aria-pressed="true"]{background:#232323;color:#fff}
+.adm-lg{background:#fff;border-radius:16px;overflow:hidden}
+.adm-le2{padding:11px 14px;border-top:1px solid #eee7dc;font-size:14px;line-height:1.35}
+.adm-le2:first-child{border-top:0}
+.adm-le2 small{display:block;color:#8a8a8a;font-size:12px;margin-bottom:2px}
+.adm-le2 em{display:block;font-style:normal;color:#6b6b6b;font-size:12px;margin-top:3px}
+.adm-lb input+input{margin-top:-2px}
+/* etiqueta roja Más vendido */
+.sh-top{background:#E5322D!important}
+.cat.compact .chip.nw{display:inline-block;margin-left:8px;padding:3px 7px;border-radius:99px;background:#E5322D;color:#fff;font-family:inherit;font-size:9.5px;font-weight:700;line-height:1.2;letter-spacing:.05em;text-transform:uppercase;vertical-align:middle;white-space:nowrap}
 
 </style>
 </head>
@@ -1193,11 +1213,11 @@ const CONFIG = {
 const SALSAS_TODAS = ["s-honey","s-street","s-chipotle","s-chick","s-bbq","s-cheddar","s-ranch","s-alioli"];
 const SIDE = { label:"Elige tu acompañamiento", sub:"Incluido en tu hamburguesa", short:"Acompañamiento", lab:"con ", msg:"", preselect:true,
   list:["Papas Fritas","Mac & Cheese"], notes:["Clásicas","Cremoso"] };
-const EXTRAS_COMUN = ["e-bacon","e-cheddar","e-jalapeno","e-fries","e-crispy-onion","e-onion","e-lettuce","e-tomato","e-pickle","e-slaw"];
+const EXTRAS_COMUN = ["e-bacon","e-palta","e-cheddar","e-jalapeno","e-fries","e-crispy-onion","e-lettuce","e-tomato","e-pickle","e-slaw"];
 const EXTRAS_ALL = ["e-notmeat","e-smash"].concat(EXTRAS_COMUN);
 const EXTRAS_ALL_CH = ["e-notchicken","e-chicken"].concat(EXTRAS_COMUN);
-const EXTRAS_BURGER  = { label:"Agrega extras", all:EXTRAS_ALL, ids:["e-bacon","e-cheddar","e-smash","e-notmeat"], top:["e-bacon","e-cheddar"] };
-const EXTRAS_CHICKEN = { label:"Agrega extras", all:EXTRAS_ALL_CH, ids:["e-bacon","e-cheddar","e-chicken","e-notchicken"], top:["e-bacon","e-cheddar"] };
+const EXTRAS_BURGER  = { label:"Agrega extras", all:EXTRAS_ALL, ids:["e-bacon","e-palta","e-cheddar","e-smash","e-notmeat"], top:["e-bacon","e-palta"] };
+const EXTRAS_CHICKEN = { label:"Agrega extras", all:EXTRAS_ALL_CH, ids:["e-bacon","e-palta","e-cheddar","e-chicken","e-notchicken"], top:["e-bacon","e-palta"] };
 const salsas = ids => ({ label:"Agrega salsas", ids, all:SALSAS_TODAS, max:15, multi:true });
 const SAUCE_PICK = list => ({ label:"Elige tu salsa", sub:"Incluida con tu pedido", short:"Salsa", list });
 const NOMBRES_SALSAS = ["Honey Mustard","Street Sauce","Sweet Chipotle","Chick Fil A","Salsa BBQ","Salsa Cheddar","Jalapeño Ranch","Alioli"];
@@ -1265,7 +1285,7 @@ const MENU = [
   { id:"papas", name:"Papas Fritas", note:"Para compartir.", items:[
     { id:"chicken-fries", name:"Chicken Fries", price:8990, desc:"Papas Fritas con Pollo Frito, Salsa Cheddar, Tocino, Cebollín y Salsa Sweet Chipotle. Para 2 a 3 personas.", sauces:salsas(["s-chick","s-street","s-ranch","s-bbq"]) },
     { id:"shrimp-fries", name:"Shrimp Fries", price:8990, desc:"Papas Fritas con Camarones Apanados, Salsa Cheddar, Salsa Alioli y Cebollín. Para 2 a 3 personas.", sauces:salsas(["s-chick","s-street","s-ranch","s-bbq"]) },
-    { id:"chorri-street", name:"Chorri Street", price:8990, desc:"Papas Fritas, Vienesas Bañadas en Salsa BBQ, Onion Crunch y Cebollín. Para 2 a 3 personas.", sauces:salsas(["s-chick","s-street","s-ranch","s-bbq"]) }
+    { id:"chorri-street", name:"Chorri Street", price:8990, desc:"Papas Fritas, Vienesas Bañadas en Salsa BBQ, Cebolla Crispy y Cebollín. Para 2 a 3 personas.", sauces:salsas(["s-chick","s-street","s-ranch","s-bbq"]) }
   ]},
   { id:"sides", name:"Sides", items:[
     { id:"mac-cheese", name:"Mac & Cheese", price:6990, desc:"Macarrones con Salsa de Queso Cheddar, Tocino y Cebolla Crispy." },
@@ -1295,20 +1315,20 @@ const MENU = [
     { id:"refill", name:"Bebida Refill", desc:"Refill de uso personal, solo para quienes compran alimentos en el local.", price:3490, localOnly:true }
   ]},
   { id:"extras", name:"Extras", compact:true, items:[
-    { id:"e-notmeat", name:"Cambio a Not Meat", price:1290 },
-    { id:"e-notchicken", name:"Cambio a Not Chicken", price:1290 },
+    { id:"e-bacon", name:"Tocino", price:1990 },
+    { id:"e-palta", name:"Palta", price:1990 },
+    { id:"e-cheddar", name:"Queso Cheddar", price:1290 },
     { id:"e-smash", name:"Smash Burger", price:1990 },
     { id:"e-chicken", name:"Pollo Crispy", price:1990 },
+    { id:"e-notmeat", name:"Cambio a Not Meat", price:1290 },
+    { id:"e-notchicken", name:"Cambio a Not Chicken", price:1290 },
     { id:"e-fries", name:"Papas Fritas", price:1990 },
-    { id:"e-cheddar", name:"Queso Cheddar", price:1290 },
-    { id:"e-lettuce", name:"Lechuga", price:690 },
-    { id:"e-tomato", name:"Tomate", price:690 },
+    { id:"e-crispy-onion", name:"Cebolla Crispy", price:1290 },
     { id:"e-jalapeno", name:"Jalapeños", price:990 },
     { id:"e-pickle", name:"Pepinillos", price:990 },
     { id:"e-slaw", name:"Cole Slaw", price:1490 },
-    { id:"e-bacon", name:"Tocino", price:1990 },
-    { id:"e-crispy-onion", name:"Cebolla Crispy", price:1290 },
-    { id:"e-onion", name:"Onion Crunch", price:1290 }
+    { id:"e-lettuce", name:"Lechuga", price:690 },
+    { id:"e-tomato", name:"Tomate", price:690 }
   ]}
 ];
 
@@ -1319,7 +1339,7 @@ const MENU = [
 ["combo-picky","combo-familiar","cheddar-melt","big-mick","street-classic","smoky-crunch","red-onion-chicken","bbq-bacon-chicken","cesar-chicken","crunchy-one","bacon-master","cheese-burger","fantastic","honey-mustang","picky-meat","tercio-libra","avocado-chicken","classic-chicken","notorius-big","picky-chicken","slaw-chicken","chorri-street","chicken-pop","bubba-6","mac-cheese","flaggy-box","meat-fries","chicken-fries","shrimp-fries","lord-rings","crispy-chicken","aros-8","fries-corn","empanadas","street-box","pop-corn-8","onion-crunchy","chicken-salad","shrimp-salad","drink-350","drink-225","refill"].forEach(id => MENU.forEach(c => c.items.forEach(i => { if (i.id === id) i.foto = id + ".jpg"; })));
 
 // Etiquetas "Nuevo/Nueva" (se muestran en rojo junto al nombre). Quita un id para sacarla.
-const NUEVO = { "combo-picky":"Nuevo", "combo-familiar":"Nuevo", "street-classic":"Nueva", "cheddar-melt":"Nueva", "smoky-crunch":"Nueva", "big-mick":"Nueva", "red-onion-chicken":"Nueva", "bbq-bacon-chicken":"Nueva", "cesar-chicken":"Nueva" };
+const NUEVO = { "combo-picky":"Nuevo", "combo-familiar":"Nuevo", "street-classic":"Nueva", "cheddar-melt":"Nueva", "smoky-crunch":"Nueva", "big-mick":"Nueva", "red-onion-chicken":"Nueva", "bbq-bacon-chicken":"Nueva", "cesar-chicken":"Nueva", "e-bacon":"Más vendido", "e-palta":"Más vendido" };
 MENU.forEach(c => c.items.forEach(i => { if (NUEVO[i.id]) i.nuevo = NUEVO[i.id]; }));
 // Etiqueta rosada "+ Vendida"
 const VENDIDA = ["bacon-master","classic-chicken"];
@@ -1627,7 +1647,9 @@ function pop(el){ if (!el) return; el.classList.remove("pop"); void el.offsetWid
 const ORIGP = {};
 MENU.forEach(c => c.items.forEach(i => { ORIGP[i.id] = { p: i.price, o: i.options ? i.options.map(x => x.price) : null }; }));
 const ORIGX = [EXTRAS_BURGER, EXTRAS_CHICKEN].map(x => ({ ids: x.ids.slice(), all: x.all.slice(), top: (x.top || []).slice() }));
-let ESTADO = { prices: {}, t: 0 };
+const ORIGD = {};
+MENU.forEach(c => c.items.forEach(i => { ORIGD[i.id] = i.desc || ""; }));
+let ESTADO = { prices: {}, descs: {}, t: 0 };
 const okNum = v => typeof v === "number" && isFinite(v) && v >= 0;
 function applyPrices(map){
   map = map || {};
@@ -1637,7 +1659,15 @@ function applyPrices(map){
     else if (o.p != null){ const v = map[i.id]; i.price = okNum(v) ? v : o.p; }
   }));
 }
-try { const c = JSON.parse(localStorage.getItem("sf_carta_estado") || "null"); if (c && c.prices) { ESTADO = c; applyPrices(c.prices); } } catch (e) {}
+function applyDescs(map){
+  map = map || {};
+  MENU.forEach(c => c.items.forEach(i => {
+    if (!ORIGD[i.id]) return;
+    i.desc = (typeof map[i.id] === "string" && map[i.id]) ? map[i.id] : ORIGD[i.id];
+    const d = document.querySelector('.item[data-id="' + i.id + '"] .desc'); if (d) d.textContent = i.desc;
+  }));
+}
+try { const c = JSON.parse(localStorage.getItem("sf_carta_estado") || "null"); if (c && c.prices) { ESTADO = c; applyPrices(c.prices); applyDescs(c.descs); } } catch (e) {}
 
 $("#nav").innerHTML = MENU.map(c => `<li><a href="#${c.id}">${esc(c.nav || c.name)}</a></li>`).join("");
 $("#menu").innerHTML = MENU.map((c, ci) => `<section class="cat${c.compact ? " compact" : ""}" id="${c.id}" aria-labelledby="h-${c.id}">
@@ -1679,12 +1709,13 @@ const sauceId = name => "salsa-" + String(name || "").normalize("NFD").replace(/
 function isSauceAvailable(name){ return isProductAvailable(sauceId(name)); }
 function applyEstado(d){
   if (!d || typeof d !== "object") return;
-  ESTADO = { prices: d.prices || {}, t: d.t || 0, disabledProducts: d.disabledProducts || [], disabledOptions: d.disabledOptions || {} };
-  try { localStorage.setItem("sf_carta_estado", JSON.stringify({ prices: ESTADO.prices, t: ESTADO.t })); } catch (e) {}
+  ESTADO = { prices: d.prices || {}, descs: d.descs || {}, t: d.t || 0, disabledProducts: d.disabledProducts || [], disabledOptions: d.disabledOptions || {} };
+  try { localStorage.setItem("sf_carta_estado", JSON.stringify({ prices: ESTADO.prices, descs: ESTADO.descs, t: ESTADO.t })); } catch (e) {}
   const dp = new Set(ESTADO.disabledProducts);
   ((MENU.find(c => c.id === "salsas") || { items: [] }).items).forEach(i => { if (dp.has(i.id)) dp.add(sauceId(i.name)); });
   setAvailabilityState({ disabledProducts: [...dp], disabledOptions: ESTADO.disabledOptions });
   applyPrices(ESTADO.prices);
+  applyDescs(ESTADO.descs);
   [EXTRAS_BURGER, EXTRAS_CHICKEN].forEach((x, n) => { const f = a => a.filter(id => !dp.has(id)); x.ids = f(ORIGX[n].ids); x.all = f(ORIGX[n].all); x.top = f(ORIGX[n].top); });
   applyAvailability();
   document.querySelectorAll(".item[data-id]").forEach(c => { try { syncCard(c); } catch (e) {} });
@@ -1851,7 +1882,7 @@ document.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === 
     if (CONFIG.soloLocal && mode !== "local" && !params.has("prueba")) mode = "local";
     root.dataset.modo = mode;
     const lbl = document.getElementById("modoLbl"); if (lbl) lbl.textContent = mode === "local" ? "LOCAL" : "ONLINE";
-    const done = () => { root.classList.remove("home-open"); home.classList.remove("out"); setInert(false); window.scrollTo(0, 0); if (mode === "local") setTimeout(showPop, 500); else closePop(); };
+    const done = () => { root.classList.remove("home-open"); home.classList.remove("out"); setInert(false); window.scrollTo(0, 0); if (mode === "local" && !/^\/admin\/?$/.test(location.pathname)) setTimeout(showPop, 500); else closePop(); };
     if (btn !== null && !reduce && home.offsetParent) { home.classList.add("out"); setTimeout(done, 350); } else done();
     if (push) { try { history.pushState({ sfmode: mode }, ""); } catch (e) {} }
   }
@@ -2312,12 +2343,12 @@ const sauceMsg = it => {
   return "Con una salsa, todo queda mejor";
 };
 const norm = t => (t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
-const EXTRA_KW = {"e-bacon":"bacon tocino","e-smash":"smash burger hamburguesa carne","e-chicken":"pollo crispy chicken","e-fries":"papas fritas","e-cheddar":"queso cheddar","e-lettuce":"lechuga","e-tomato":"tomate","e-jalapeno":"jalapeno jalapenos picante","e-pickle":"pepinillo pepinillos pickles","e-slaw":"cole slaw repollo ensalada","e-crispy-onion":"cebolla crispy","e-onion":"onion crunch cebolla","e-notmeat":"not meat notmeat vegano vegetariano cambio carne","e-notchicken":"not chicken notchicken vegano vegetariano cambio pollo"};
+const EXTRA_KW = {"e-bacon":"bacon tocino","e-smash":"smash burger hamburguesa carne","e-chicken":"pollo crispy chicken","e-fries":"papas fritas","e-cheddar":"queso cheddar","e-lettuce":"lechuga","e-tomato":"tomate","e-jalapeno":"jalapeno jalapenos picante","e-pickle":"pepinillo pepinillos pickles","e-slaw":"cole slaw repollo ensalada","e-crispy-onion":"cebolla crispy","e-palta":"palta aguacate avocado","e-notmeat":"not meat notmeat vegano vegetariano cambio carne","e-notchicken":"not chicken notchicken vegano vegetariano cambio pollo"};
 function extraRows(it, g, ids, tops){
   const full = !!(g.max && grpSel(g) >= g.max);
   return ids.map(id => {
     const on = !!shCtx.ex[id], blocked = full && !on, top = tops && g.top && g.top.indexOf(id) >= 0;
-    return `<button type="button" class="sh-opt sh-extra" data-sh-extra="${esc(id)}" data-selected="${on}" aria-pressed="${on}" aria-disabled="${blocked}"><span class="rd" aria-hidden="true"></span><span class="tx"><b>${esc(IDX[id].name)}</b>${top ? `<em class="sh-top">Más pedido</em>` : ""}</span><i>+ ${fmt(IDX[id].price)}</i></button>`;
+    return `<button type="button" class="sh-opt sh-extra" data-sh-extra="${esc(id)}" data-selected="${on}" aria-pressed="${on}" aria-disabled="${blocked}"><span class="rd" aria-hidden="true"></span><span class="tx"><b>${esc(IDX[id].name)}</b>${top ? `<em class="sh-top">Más vendido</em>` : ""}</span><i>+ ${fmt(IDX[id].price)}</i></button>`;
   }).join("");
 }
 function extraIds(g, q){
@@ -2895,7 +2926,7 @@ window.addEventListener("load", function(){
 });
 </script>
 <script>
-/* ---- v38: carga del estado en vivo + panel admin (/admin) ---- */
+/* ---- v39: carga del estado en vivo + panel admin (/admin) ---- */
 (function(){
   const API = "/api/carta";
   const isAdm = /^\/admin\/?$/.test(location.pathname) || new URLSearchParams(location.search).has("admin");
@@ -2905,31 +2936,36 @@ window.addEventListener("load", function(){
   document.addEventListener("visibilitychange", () => { if (!document.hidden && !admOpen) loadAvailability(); });
   if (!isAdm) return;
 
-  const E = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const E = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const money = n => "$" + new Intl.NumberFormat("es-CL").format(n);
-  let pin = ""; try { pin = localStorage.getItem("sf_adm_pin") || ""; } catch (e) {}
-  const st = { off: new Set(), offOpt: {}, prices: {} };
-  let lastState = null, pending = 0, q = Promise.resolve();
+  const when = t => new Date(t).toLocaleString("es-CL", { timeZone: "America/Santiago", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false });
+  let pin = "", who = "";
+  try { pin = localStorage.getItem("sf_adm_pin") || ""; who = localStorage.getItem("sf_adm_who") || ""; } catch (e) {}
+  const st = { off: new Set(), offOpt: {}, prices: {}, descs: {} };
+  let lastState = null, pending = 0, q = Promise.resolve(), view = "prod", logData = null;
+  const openDesc = new Set();
 
   const api = async body => {
-    const r = await fetch(API, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(Object.assign({ pin }, body)) });
+    const r = await fetch(API, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(Object.assign({ pin, who }, body)) });
     let j = {}; try { j = await r.json(); } catch (e) {}
     if (!r.ok) { const e = new Error(j.error || "Error " + r.status); e.status = r.status; throw e; }
     return j;
   };
+  const thumb = id => id === "drink-mini" ? assetPath("popup-bebida.png") : thumbOf(id);
 
   /* ---- login ---- */
   const login = document.createElement("div");
   login.className = "adm-login"; login.hidden = true;
-  login.innerHTML = '<form class="adm-lb"><h3>Panel Street Flags</h3><p>Ingresa la clave de administración.</p><input type="password" id="admPin" autocomplete="current-password" placeholder="Clave" required><div class="adm-le" id="admErr"></div><button class="adm-btn" type="submit">Entrar</button></form>';
+  login.innerHTML = '<form class="adm-lb"><h3>Panel Street Flags</h3><p>Ingresa tu nombre y la clave de administración.</p><input type="text" id="admWho" autocomplete="name" placeholder="Tu nombre" maxlength="30" required><input type="password" id="admPin" autocomplete="current-password" placeholder="Clave" required><div class="adm-le" id="admErr"></div><button class="adm-btn" type="submit">Entrar</button></form>';
   document.body.appendChild(login);
   const err = login.querySelector("#admErr");
   login.querySelector("form").addEventListener("submit", async e => {
     e.preventDefault();
-    pin = login.querySelector("#admPin").value; err.textContent = "";
-    try { await api({ op: "login" }); try { localStorage.setItem("sf_adm_pin", pin); } catch (_) {} login.hidden = true; openPanel(); }
+    who = login.querySelector("#admWho").value.trim(); pin = login.querySelector("#admPin").value; err.textContent = "";
+    try { await api({ op: "login" }); try { localStorage.setItem("sf_adm_pin", pin); localStorage.setItem("sf_adm_who", who); } catch (_) {} login.hidden = true; openPanel(); }
     catch (x) { err.textContent = x.status === 401 ? "Clave incorrecta." : (x.message || "No se pudo conectar."); }
   });
+  const showLogin = msg => { login.hidden = false; err.textContent = msg || ""; login.querySelector("#admWho").value = who; setTimeout(() => { const i = login.querySelector(who ? "#admPin" : "#admWho"); i && i.focus(); }, 50); };
 
   /* ---- panel ---- */
   const panel = document.createElement("div");
@@ -2947,39 +2983,59 @@ window.addEventListener("load", function(){
   };
   const queue = (body, rollback) => {
     pending++; setStatus("sav");
-    q = q.then(() => api(body)).then(r => { lastState = r.state || lastState; pending--; if (!pending) { setStatus("ok"); if (lastState) applyEstado(lastState); } })
-      .catch(x => { pending--; rollback(); render(); setStatus("err"); if (x.status === 401) { try { localStorage.removeItem("sf_adm_pin"); } catch (_) {} panel.hidden = true; login.hidden = false; err.textContent = "Clave incorrecta."; } });
+    q = q.then(() => api(body)).then(r => { lastState = r.state || lastState; pending--; logData = null; if (!pending) { setStatus("ok"); if (lastState) applyEstado(lastState); } })
+      .catch(x => { pending--; rollback(); render(); setStatus("err"); if (x.status === 401) { try { localStorage.removeItem("sf_adm_pin"); } catch (_) {} panel.hidden = true; showLogin("Clave incorrecta."); } });
   };
 
+  const merged = id => !!(IDX[id].options && CATOF[id] === "chicken");   /* Apanado/Plancha: en la carta es solo texto, un solo precio */
   const priceOf = (id, k) => {
+    if (k === null && merged(id)){ const ps = IDX[id].options.map((_, i) => priceOf(id, i)); return { cur: ps[0].cur, orig: ps[0].orig, edited: ps.some(x => x.edited) }; }
     const key = k === null ? id : id + "|" + k, o = ORIGP[id];
     const orig = k === null ? o.p : o.o[k];
     return { cur: okNum(st.prices[key]) ? st.prices[key] : orig, orig, edited: okNum(st.prices[key]) && st.prices[key] !== orig, key };
   };
+  const descOf = id => (typeof st.descs[id] === "string" && st.descs[id]) ? st.descs[id] : ORIGD[id];
   const row = (it, k, sub) => {
     const id = it.id, optLabel = k === null ? null : it.options[k].label;
     const on = k === null ? !st.off.has(id) : !((st.offOpt[id] || []).includes(String(k)));
-    const showPrice = k !== null || (!it.options && ORIGP[id].p != null && !it.priceByPick);
+    const showPrice = k !== null || merged(id) || (!it.options && ORIGP[id].p != null && !it.priceByPick);
     const p = showPrice ? priceOf(id, k) : null;
     const name = k === null ? it.name : optLabel;
-    return '<div class="adm-r' + (sub ? " sub" : "") + (on ? "" : " off") + (p && p.edited ? " ed" : "") + '" data-id="' + E(id) + '"' + (k !== null ? ' data-opt="' + k + '"' : "") + '>' +
-      '<div class="adm-n"><b>' + E(name) + '</b>' + (p && p.edited ? '<small>Antes ' + money(p.orig) + '</small>' : (it.priceByPick && k === null ? '<small>Precio según salsa</small>' : "")) + '</div>' +
+    const canDesc = k === null && !!ORIGD[id];
+    const th = k === null ? '<span class="adm-th">' + (thumb(id) ? '<img src="' + E(thumb(id)) + '" alt="" loading="lazy" onerror="this.remove()">' : "") + '</span>' : "";
+    const dEdited = canDesc && descOf(id) !== ORIGD[id];
+    return '<div class="adm-r' + (sub ? " sub" : "") + (on ? "" : " off") + (p && p.edited ? " ed" : "") + '" data-id="' + E(id) + '"' + (k !== null ? ' data-opt="' + k + '"' : "") + '>' + th +
+      '<div class="adm-n"><b>' + E(name) + '</b>' + (p && p.edited ? '<small>Antes ' + money(p.orig) + '</small>' : (it.priceByPick && k === null ? '<small>Precio según salsa</small>' : "")) +
+      (canDesc ? '<button class="adm-ed" type="button" data-ed>✎ Descripción' + (dEdited ? " (editada)" : "") + '</button>' : "") + '</div>' +
       (p ? '<label class="adm-p' + (p.edited ? " ed" : "") + '"><span>$</span><input inputmode="numeric" data-pr value="' + new Intl.NumberFormat("es-CL").format(p.cur) + '" aria-label="Precio de ' + E(name) + '"></label><button class="adm-rs" type="button" data-rs title="Volver al precio original">↺</button>' : "") +
-      '<button class="adm-sw" role="switch" type="button" data-sw aria-checked="' + on + '" aria-label="' + E(name) + '"></button></div>';
+      '<button class="adm-sw" role="switch" type="button" data-sw aria-checked="' + on + '" aria-label="' + E(name) + '"></button></div>' +
+      (canDesc && openDesc.has(id) ? '<div class="adm-d" data-did="' + E(id) + '"><textarea maxlength="400" data-dt aria-label="Descripción de ' + E(it.name) + '">' + E(descOf(id)) + '</textarea><div class="adm-dh"><span>Se guarda al salir del cuadro</span>' + (dEdited ? '<button type="button" data-drs>Restaurar original</button>' : "") + '</div></div>' : "");
   };
+  const topBar = () => '<div class="adm-top"><h2>Panel <span>SF</span></h2><span class="adm-st">Guardado ✓</span><button class="adm-btn g" data-act="ver" type="button">Ver carta</button><button class="adm-btn g" data-act="salir" type="button">Salir</button></div>';
+  const tabs = () => '<div class="adm-tabs"><button type="button" data-tab="prod" aria-pressed="' + (view === "prod") + '">Productos</button><button type="button" data-tab="log" aria-pressed="' + (view === "log") + '">Historial</button></div>';
   const render = () => {
-    const top = panel.querySelector(".adm-sc") ? panel.scrollTop : 0, qv = (panel.querySelector(".adm-q") || {}).value || "";
-    const focusId = document.activeElement && document.activeElement.matches && document.activeElement.matches("[data-pr]") ? null : 0;
-    panel.innerHTML = '<div class="adm-top"><h2>Panel <span>SF</span></h2><span class="adm-st">Guardado ✓</span><button class="adm-btn g" data-act="ver" type="button">Ver carta</button><button class="adm-btn g" data-act="salir" type="button">Salir</button></div>' +
-      '<div class="adm-body adm-sc"><input class="adm-q" type="search" placeholder="Buscar producto…" value="' + E(qv) + '">' +
+    const top = panel.scrollTop, qv = (panel.querySelector(".adm-q") || {}).value || "";
+    if (view === "log") { renderLog(top); return; }
+    panel.innerHTML = topBar() + '<div class="adm-body adm-sc">' + tabs() + '<input class="adm-q" type="search" placeholder="Buscar producto…" value="' + E(qv) + '">' +
       MENU.map(c => {
         const its = c.items, act = its.filter(i => !st.off.has(i.id)).length;
         return '<section class="adm-cat" data-cat="' + E(c.id) + '"><div class="adm-ch"><b>' + E(c.name) + '</b><small>' + act + '/' + its.length + ' activos</small><button class="adm-sw" role="switch" type="button" data-catsw aria-checked="' + (act > 0) + '" aria-label="Activar o apagar toda la categoría ' + E(c.name) + '"></button></div>' +
-          its.map(i => row(i, null, false) + (i.options ? i.options.map((o, k) => row(i, k, true)).join("") : "")).join("") + '</section>';
+          its.map(i => row(i, null, false) + (i.options && !merged(i.id) ? i.options.map((o, k) => row(i, k, true)).join("") : "")).join("") + '</section>';
       }).join("") + '</div>';
     if (qv) filter(qv);
     panel.scrollTop = top;
     if (pending) setStatus("sav");
+  };
+  const renderLog = async top => {
+    panel.innerHTML = topBar() + '<div class="adm-body adm-sc">' + tabs() + '<div class="adm-lg" id="admLg"><div class="adm-le2">Cargando historial…</div></div></div>';
+    if (pending) setStatus("sav");
+    try {
+      if (!logData) logData = (await api({ op: "log" })).log || [];
+      if (view !== "log") return;
+      const el = panel.querySelector("#admLg");
+      el.innerHTML = logData.length ? logData.map(e => '<div class="adm-le2"><small>' + when(e.t) + ' · ' + E(e.who) + '</small>' + E(e.text) + (e.to ? '<em>Antes: ' + E(e.from || "—") + '<br>Ahora: ' + E(e.to) + '</em>' : "") + '</div>').join("") : '<div class="adm-le2">Aún no hay cambios.</div>';
+    } catch (x) { const el = panel.querySelector("#admLg"); if (el) el.innerHTML = '<div class="adm-le2">No se pudo cargar el historial.</div>'; }
+    panel.scrollTop = top || 0;
   };
   const filter = v => {
     v = v.trim().toLowerCase();
@@ -2989,23 +3045,37 @@ window.addEventListener("load", function(){
       sec.hidden = !any;
     });
   };
-  const setProd = (id, off) => { const had = st.off.has(id); off ? st.off.add(id) : st.off.delete(id); queue({ op: "off", id, off }, () => { had ? st.off.add(id) : st.off.delete(id); }); };
+  const setProd = (id, off) => { const had = st.off.has(id); off ? st.off.add(id) : st.off.delete(id); queue({ op: "off", id, off, label: IDX[id].name }, () => { had ? st.off.add(id) : st.off.delete(id); }); };
   const setOpt = (id, k, off) => {
     const prev = (st.offOpt[id] || []).slice(), set = new Set(prev); off ? set.add(String(k)) : set.delete(String(k));
     set.size ? (st.offOpt[id] = [...set]) : delete st.offOpt[id];
-    queue({ op: "offOpt", id, opt: k, off }, () => { prev.length ? (st.offOpt[id] = prev) : delete st.offOpt[id]; });
+    queue({ op: "offOpt", id, opt: k, off, label: IDX[id].name + " · " + IDX[id].options[k].label }, () => { prev.length ? (st.offOpt[id] = prev) : delete st.offOpt[id]; });
   };
   const setPrice = (id, k, price) => {
+    if (k === null && merged(id)){
+      const ks = IDX[id].options.map((_, i) => i), orig = ORIGP[id].o[0], before = priceOf(id, null).cur, val = price === orig ? null : price;
+      const had = ks.map(i => st.prices[id + "|" + i]);
+      ks.forEach(i => { val === null ? delete st.prices[id + "|" + i] : (st.prices[id + "|" + i] = val); });
+      queue({ op: "price", id, opts: ks, price: val, from: before, label: IDX[id].name }, () => { ks.forEach((i, n) => { had[n] === undefined ? delete st.prices[id + "|" + i] : (st.prices[id + "|" + i] = had[n]); }); });
+      return;
+    }
     const key = k === null ? id : id + "|" + k, had = st.prices[key], orig = k === null ? ORIGP[id].p : ORIGP[id].o[k];
-    const val = price === orig ? null : price;
+    const before = okNum(had) ? had : orig, val = price === orig ? null : price;
     val === null ? delete st.prices[key] : (st.prices[key] = val);
-    queue({ op: "price", id, opt: k, price: val }, () => { had === undefined ? delete st.prices[key] : (st.prices[key] = had); });
+    queue({ op: "price", id, opt: k, price: val, from: before, label: IDX[id].name + (k === null ? "" : " · " + IDX[id].options[k].label) }, () => { had === undefined ? delete st.prices[key] : (st.prices[key] = had); });
+  };
+  const setDesc = (id, text) => {
+    const had = st.descs[id], before = descOf(id), val = (text === null || text === ORIGD[id]) ? null : text;
+    val === null ? delete st.descs[id] : (st.descs[id] = val);
+    queue({ op: "desc", id, text: val, from: before, label: IDX[id].name }, () => { had === undefined ? delete st.descs[id] : (st.descs[id] = had); });
   };
 
   panel.addEventListener("input", e => { if (e.target.classList.contains("adm-q")) filter(e.target.value); });
   panel.addEventListener("focusin", e => { if (e.target.matches("[data-pr]")) { e.target.value = e.target.value.replace(/\D/g, ""); e.target.select(); } });
   panel.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.matches("[data-pr]")) e.target.blur(); });
   panel.addEventListener("change", e => {
+    const dt = e.target.closest("[data-dt]");
+    if (dt) { const id = dt.closest(".adm-d").dataset.did, v = dt.value.replace(/\s+/g, " ").trim(); if (!v || v === descOf(id)) { render(); return; } setDesc(id, v); render(); return; }
     const inp = e.target.closest("[data-pr]"); if (!inp) return;
     const r = inp.closest(".adm-r"), id = r.dataset.id, k = r.dataset.opt === undefined ? null : +r.dataset.opt;
     const n = parseInt(inp.value.replace(/\D/g, ""), 10);
@@ -3014,15 +3084,21 @@ window.addEventListener("load", function(){
   });
   panel.addEventListener("click", e => {
     const t = e.target;
+    const tab = t.closest("[data-tab]");
+    if (tab) { view = tab.dataset.tab; if (view === "log") logData = null; render(); return; }
     const act = t.closest("[data-act]");
     if (act) { if (act.dataset.act === "ver") { closePanel(); } else { try { localStorage.removeItem("sf_adm_pin"); } catch (_) {} pin = ""; closePanel(true); location.href = "/carta"; } return; }
+    const ed = t.closest("[data-ed]");
+    if (ed) { const id = ed.closest(".adm-r").dataset.id; openDesc.has(id) ? openDesc.delete(id) : openDesc.add(id); render(); const ta = panel.querySelector('.adm-d[data-did="' + id + '"] textarea'); if (ta) ta.focus(); return; }
+    const drs = t.closest("[data-drs]");
+    if (drs) { const id = drs.closest(".adm-d").dataset.did; setDesc(id, null); render(); return; }
     const rs = t.closest("[data-rs]");
-    if (rs) { const r = rs.closest(".adm-r"); setPrice(r.dataset.id, r.dataset.opt === undefined ? null : +r.dataset.opt, (r.dataset.opt === undefined ? ORIGP[r.dataset.id].p : ORIGP[r.dataset.id].o[+r.dataset.opt])); render(); return; }
+    if (rs) { const r = rs.closest(".adm-r"); const rid = r.dataset.id, ro = r.dataset.opt === undefined ? null : +r.dataset.opt; setPrice(rid, ro, ro === null ? (merged(rid) ? ORIGP[rid].o[0] : ORIGP[rid].p) : ORIGP[rid].o[ro]); render(); return; }
     const cs = t.closest("[data-catsw]");
     if (cs) {
       const c = MENU.find(x => x.id === cs.closest(".adm-cat").dataset.cat), ids = c.items.map(i => i.id), off = cs.getAttribute("aria-checked") === "true";
       const prev = ids.filter(i => st.off.has(i)); ids.forEach(i => off ? st.off.add(i) : st.off.delete(i));
-      for (let i = 0; i < ids.length; i += 80) queue({ op: "offMany", ids: ids.slice(i, i + 80), off }, () => { ids.forEach(x => st.off.delete(x)); prev.forEach(x => st.off.add(x)); });
+      for (let i = 0; i < ids.length; i += 80) queue({ op: "offMany", ids: ids.slice(i, i + 80), off, label: "toda la categoría " + c.name + " (" + ids.length + " productos)" }, () => { ids.forEach(x => st.off.delete(x)); prev.forEach(x => st.off.add(x)); });
       render(); return;
     }
     const sw = t.closest("[data-sw]");
@@ -3038,16 +3114,16 @@ window.addEventListener("load", function(){
     login.hidden = true;
     try {
       const r = await fetch(API + "?t=" + Date.now(), { cache: "no-store" }); const d = await r.json();
-      lastState = d; st.off = new Set(d.disabledProducts || []); st.offOpt = {}; Object.keys(d.disabledOptions || {}).forEach(k => { st.offOpt[k] = (d.disabledOptions[k] || []).map(String); }); st.prices = Object.assign({}, d.prices || {});
+      lastState = d; st.off = new Set(d.disabledProducts || []); st.offOpt = {}; Object.keys(d.disabledOptions || {}).forEach(k => { st.offOpt[k] = (d.disabledOptions[k] || []).map(String); }); st.prices = Object.assign({}, d.prices || {}); st.descs = Object.assign({}, d.descs || {});
     } catch (e) {}
     admOpen = true; fab.hidden = true; document.body.classList.add("adm-open");
-    render(); panel.hidden = false; panel.scrollTop = 0;
+    view = "prod"; render(); panel.hidden = false; panel.scrollTop = 0;
   }
   window.addEventListener("online", () => { if (admOpen && pending === 0) setStatus("ok"); });
 
   (async () => {
-    if (pin) { try { await api({ op: "login" }); openPanel(); return; } catch (x) { if (x.status !== 401) { openPanel(); return; } } }
-    login.hidden = false; setTimeout(() => { const i = login.querySelector("#admPin"); i && i.focus(); }, 50);
+    if (pin && who) { try { await api({ op: "login" }); openPanel(); return; } catch (x) { if (x.status !== 401) { openPanel(); return; } } }
+    showLogin();
   })();
 })();
 
