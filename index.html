@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es" data-sl="b">
 <head>
+<script>if(/^\/(carta|delivery|admin)\//.test(location.pathname))document.write('<base href="/">')</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Menú · Street Flags</title>
@@ -979,11 +980,56 @@ html[data-tema="claro"] #sides .item .add,html[data-tema="claro"] #sides .item .
 }
 #ensaladas .media img{transform:scale(1.03)!important}
 #bebidas .media img{transform:scale(1.45)!important}
+/* ---- v36: solo local ---- */
+html:not([data-modo="local"]) .home{display:none!important}
+.home{display:none!important}
+/* ---- v38: panel admin ---- */
+.adm{position:fixed;inset:0;z-index:400;background:#FAF7F2;color:#232323;overflow:auto;-webkit-overflow-scrolling:touch;font-family:inherit}
+.adm[hidden],.adm-login[hidden],.adm-fab[hidden]{display:none}
+.adm-top{position:sticky;top:0;z-index:5;background:#232323;color:#fff;padding:10px 12px;display:flex;align-items:center;gap:8px}
+.adm-top h2{margin:0;font-size:16px;letter-spacing:.02em;flex:1;min-width:0;white-space:nowrap;color:#fff}
+.adm-top h2 span{color:#FF56A7}
+.adm-st{font-size:12px;font-weight:700;padding:6px 10px;border-radius:99px;background:#34C759;color:#fff;white-space:nowrap}
+.adm-st.sav{background:#8e8e93}.adm-st.err{background:#FF3B30}
+.adm-btn{border:0;border-radius:10px;padding:8px 11px;font:inherit;font-weight:700;font-size:13px;background:#FF56A7;color:#232323;cursor:pointer}
+.adm-btn.g{background:#3a3a3a;color:#fff}
+.adm-body{max-width:760px;margin:0 auto;padding:14px 14px 80px}
+.adm-q{width:100%;box-sizing:border-box;border:2px solid #232323;border-radius:12px;padding:12px 14px;font:inherit;font-size:16px;background:#fff;margin:4px 0 14px}
+.adm-cat{margin:0 0 18px;background:#fff;border-radius:16px;box-shadow:0 1px 0 rgba(0,0,0,.08);overflow:hidden}
+.adm-ch{display:flex;align-items:center;gap:10px;padding:12px 14px;background:#f1ece4}
+.adm-ch b{flex:1;font-size:17px}
+.adm-ch small{color:#6b6b6b;font-size:13px}
+.adm-r{display:flex;align-items:center;gap:10px;padding:11px 14px;border-top:1px solid #eee7dc}
+.adm-r.sub{padding-left:34px;background:#fcfaf6}
+.adm-n{flex:1;min-width:0;line-height:1.2}
+.adm-n b{display:block;font-size:16px;font-weight:700;overflow:hidden;text-overflow:ellipsis}
+.adm-n small{color:#8a8a8a;font-size:12px}
+.adm-r.off .adm-n b{color:#9a9a9a;text-decoration:line-through}
+.adm-p{display:flex;align-items:center;gap:2px;border:2px solid #e3dccf;border-radius:10px;padding:0 8px;background:#fff;height:40px}
+.adm-p.ed{border-color:#FF56A7}
+.adm-p span{color:#8a8a8a;font-weight:700}
+.adm-p input{width:68px;border:0;outline:0;font:inherit;font-size:16px;font-weight:700;text-align:right;background:transparent;color:#232323}
+.adm-rs{border:0;background:none;font-size:18px;cursor:pointer;color:#FF56A7;padding:4px;display:none}
+.adm-r.ed .adm-rs{display:block}
+.adm-sw{flex:none;width:51px;height:31px;border-radius:99px;border:0;background:#d1d1d6;position:relative;cursor:pointer;transition:background .2s;padding:0}
+.adm-sw::after{content:"";position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.3);transition:transform .2s}
+.adm-sw[aria-checked="true"]{background:#34C759}
+.adm-sw[aria-checked="true"]::after{transform:translateX(20px)}
+.adm-fab{position:fixed;left:14px;bottom:14px;z-index:390;border:0;border-radius:99px;padding:12px 18px;font:inherit;font-weight:800;background:#232323;color:#fff;box-shadow:0 6px 18px rgba(0,0,0,.35);cursor:pointer}
+.adm-login{position:fixed;inset:0;z-index:410;background:rgba(35,35,35,.88);display:grid;place-items:center;padding:20px;font-family:inherit}
+.adm-lb{background:#FAF7F2;color:#232323;border-radius:18px;padding:24px;width:min(92vw,360px)}
+.adm-lb h3{margin:0 0 4px;font-size:22px}
+.adm-lb p{margin:0 0 14px;color:#6b6b6b;font-size:14px}
+.adm-lb input{width:100%;box-sizing:border-box;border:2px solid #232323;border-radius:12px;padding:13px;font-size:18px;font:inherit;background:#fff;margin-bottom:10px}
+.adm-lb .adm-btn{width:100%;padding:13px}
+.adm-le{color:#FF3B30;font-weight:700;font-size:14px;min-height:20px;margin:0 0 8px}
+body.adm-open{overflow:hidden}
+
 </style>
 </head>
 <body>
 
-<script>if(!/[?&](modo|prueba)=/.test(location.search))document.documentElement.classList.add("home-open")</script>
+
 <section id="home" class="home" role="dialog" aria-modal="true" aria-label="Elige cómo quieres pedir">
   <div class="hm-art hm-m">
     <img class="hm-img" id="hmImg" alt="">
@@ -1131,7 +1177,7 @@ const CONFIG = {
   transferencia: { titular:"", rut:"", banco:"", tipoCuenta:"", numeroCuenta:"", email:"" },
 
   /* --- Imagen y tipografía: deja los archivos junto a este HTML (sin carpetas) --- */
-  tarjetas: true,                 // true = tarjetas horizontales (prueba v20)
+  tarjetas:true, soloLocal:true,                 // true = tarjetas horizontales (prueba v20)
   tema: "claro",                       // "claro" = tema claro (prueba)
   logo: "logo.png",                // logo de Street Flags (png, svg o webp). Si no existe, se muestra el nombre en texto
   fotosCarpeta: "",                // fotos junto a este archivo: <id del producto>.<extensión> (ej: cheese-burger.png)
@@ -1577,6 +1623,22 @@ function setOffer(id, k){
 }
 function pop(el){ if (!el) return; el.classList.remove("pop"); void el.offsetWidth; el.classList.add("pop"); }
 
+/* ---------- v38: estado en vivo (apagados + precios) ---------- */
+const ORIGP = {};
+MENU.forEach(c => c.items.forEach(i => { ORIGP[i.id] = { p: i.price, o: i.options ? i.options.map(x => x.price) : null }; }));
+const ORIGX = [EXTRAS_BURGER, EXTRAS_CHICKEN].map(x => ({ ids: x.ids.slice(), all: x.all.slice(), top: (x.top || []).slice() }));
+let ESTADO = { prices: {}, t: 0 };
+const okNum = v => typeof v === "number" && isFinite(v) && v >= 0;
+function applyPrices(map){
+  map = map || {};
+  MENU.forEach(c => c.items.forEach(i => {
+    const o = ORIGP[i.id]; if (!o) return;
+    if (o.o){ i.options.forEach((op, k) => { const v = map[i.id + "|" + k]; op.price = okNum(v) ? v : o.o[k]; }); i.price = i.options[0].price; }
+    else if (o.p != null){ const v = map[i.id]; i.price = okNum(v) ? v : o.p; }
+  }));
+}
+try { const c = JSON.parse(localStorage.getItem("sf_carta_estado") || "null"); if (c && c.prices) { ESTADO = c; applyPrices(c.prices); } } catch (e) {}
+
 $("#nav").innerHTML = MENU.map(c => `<li><a href="#${c.id}">${esc(c.nav || c.name)}</a></li>`).join("");
 $("#menu").innerHTML = MENU.map((c, ci) => `<section class="cat${c.compact ? " compact" : ""}" id="${c.id}" aria-labelledby="h-${c.id}">
   <h2 id="h-${c.id}">${esc(c.name)}</h2>
@@ -1604,7 +1666,7 @@ if ("IntersectionObserver" in window){
 
 
 /* ---------- Disponibilidad pública ---------- */
-const AVAILABILITY_ENDPOINT = "";
+const AVAILABILITY_ENDPOINT = "/api/carta";
 let UNAVAILABLE_PRODUCTS = new Set();
 let UNAVAILABLE_OPTIONS = {};
 
@@ -1615,6 +1677,20 @@ function isOptionAvailable(id, optionIndex){
 }
 const sauceId = name => "salsa-" + String(name || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 function isSauceAvailable(name){ return isProductAvailable(sauceId(name)); }
+function applyEstado(d){
+  if (!d || typeof d !== "object") return;
+  ESTADO = { prices: d.prices || {}, t: d.t || 0, disabledProducts: d.disabledProducts || [], disabledOptions: d.disabledOptions || {} };
+  try { localStorage.setItem("sf_carta_estado", JSON.stringify({ prices: ESTADO.prices, t: ESTADO.t })); } catch (e) {}
+  const dp = new Set(ESTADO.disabledProducts);
+  ((MENU.find(c => c.id === "salsas") || { items: [] }).items).forEach(i => { if (dp.has(i.id)) dp.add(sauceId(i.name)); });
+  setAvailabilityState({ disabledProducts: [...dp], disabledOptions: ESTADO.disabledOptions });
+  applyPrices(ESTADO.prices);
+  [EXTRAS_BURGER, EXTRAS_CHICKEN].forEach((x, n) => { const f = a => a.filter(id => !dp.has(id)); x.ids = f(ORIGX[n].ids); x.all = f(ORIGX[n].all); x.top = f(ORIGX[n].top); });
+  applyAvailability();
+  document.querySelectorAll(".item[data-id]").forEach(c => { try { syncCard(c); } catch (e) {} });
+  try { renderCart(); } catch (e) {}
+}
+
 function setAvailabilityState(data){
   UNAVAILABLE_PRODUCTS = new Set(Array.isArray(data?.disabledProducts) ? data.disabledProducts : []);
   UNAVAILABLE_OPTIONS = {};
@@ -1673,8 +1749,7 @@ async function loadAvailability(){
   try{
     const r = await fetch(AVAILABILITY_ENDPOINT + "?t=" + Date.now(), { headers:{"Accept":"application/json"}, cache:"no-store" });
     if (!r.ok) return;
-    setAvailabilityState(await r.json());
-    applyAvailability();
+    applyEstado(await r.json());
   }catch(e){}
 }
 
@@ -1773,6 +1848,7 @@ document.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === 
   const params = new URLSearchParams(location.search);
   function showHome(){ root.classList.add("home-open"); home.classList.remove("out"); home.querySelectorAll(".pick").forEach(c => c.classList.remove("pick")); setInert(true); home.scrollTop = 0; }
   function enter(mode, btn, push){
+    if (CONFIG.soloLocal && mode !== "local" && !params.has("prueba")) mode = "local";
     root.dataset.modo = mode;
     const lbl = document.getElementById("modoLbl"); if (lbl) lbl.textContent = mode === "local" ? "LOCAL" : "ONLINE";
     const done = () => { root.classList.remove("home-open"); home.classList.remove("out"); setInert(false); window.scrollTo(0, 0); if (mode === "local") setTimeout(showPop, 500); else closePop(); };
@@ -1780,12 +1856,15 @@ document.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === 
     if (push) { try { history.pushState({ sfmode: mode }, ""); } catch (e) {} }
   }
   home.querySelectorAll("[data-modo]").forEach(c => c.addEventListener("click", () => enter(c.dataset.modo, home, true)));
-  document.getElementById("brand").addEventListener("click", showHome);
-  window.addEventListener("popstate", e => { if (e.state && e.state.sfmode) enter(e.state.sfmode, null, false); else showHome(); });
+  document.getElementById("brand").addEventListener("click", () => { if (CONFIG.soloLocal && !params.has("prueba")) { if (root.dataset.modo !== "local") enter("local", null, false); window.scrollTo({ top: 0, behavior: "smooth" }); } else showHome(); });
+  window.addEventListener("popstate", e => { if (e.state && e.state.sfmode) enter(e.state.sfmode, null, false); else if (CONFIG.soloLocal && !params.has("prueba")) enter("local", null, false); else showHome(); });
   document.addEventListener("click", e => { if (root.dataset.modo === "local" && e.target.closest("[data-add]")) { e.stopPropagation(); e.preventDefault(); } }, true);
-  const m = params.get("modo");
+  const pm = /^\/delivery\/?$/.test(location.pathname) ? "online" : /^\/(carta|admin)\/?$/.test(location.pathname) ? "local" : null;
+  if (pm === "online" && CONFIG.soloLocal && !params.has("prueba")) { try { history.replaceState(null, "", "/carta" + location.hash); } catch (e) {} }
+  const m = params.get("modo") || pm;
   if (m === "local" || m === "online") enter(m, null, false);
   else if (params.has("prueba")) enter("online", null, false);
+  else if (CONFIG.soloLocal) enter("local", null, false);
   else { root.dataset.modo = "online"; showHome(); }
 })();
 /* Bebida mini: 1 por cada burger */
@@ -2814,6 +2893,164 @@ window.addEventListener("load", function(){
   window.addEventListener("mouseup", function(e){ if (!down) return; down = false; if (moved){ var dx = e.clientX - x0; tr.classList.remove("drag"); var i = idx(); to(dx < -40 ? Math.ceil(s0 / tr.clientWidth + .01) : dx > 40 ? Math.floor(s0 / tr.clientWidth - .01) : Math.round(s0 / tr.clientWidth)); } });
   tr.addEventListener("click", function(e){ if (moved){ e.stopPropagation(); e.preventDefault(); moved = false; } }, true);
 });
+</script>
+<script>
+/* ---- v38: carga del estado en vivo + panel admin (/admin) ---- */
+(function(){
+  const API = "/api/carta";
+  const isAdm = /^\/admin\/?$/.test(location.pathname) || new URLSearchParams(location.search).has("admin");
+  let admOpen = false;
+  loadAvailability();
+  setInterval(() => { if (!admOpen && !document.hidden) loadAvailability(); }, 45000);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden && !admOpen) loadAvailability(); });
+  if (!isAdm) return;
+
+  const E = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const money = n => "$" + new Intl.NumberFormat("es-CL").format(n);
+  let pin = ""; try { pin = localStorage.getItem("sf_adm_pin") || ""; } catch (e) {}
+  const st = { off: new Set(), offOpt: {}, prices: {} };
+  let lastState = null, pending = 0, q = Promise.resolve();
+
+  const api = async body => {
+    const r = await fetch(API, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(Object.assign({ pin }, body)) });
+    let j = {}; try { j = await r.json(); } catch (e) {}
+    if (!r.ok) { const e = new Error(j.error || "Error " + r.status); e.status = r.status; throw e; }
+    return j;
+  };
+
+  /* ---- login ---- */
+  const login = document.createElement("div");
+  login.className = "adm-login"; login.hidden = true;
+  login.innerHTML = '<form class="adm-lb"><h3>Panel Street Flags</h3><p>Ingresa la clave de administración.</p><input type="password" id="admPin" autocomplete="current-password" placeholder="Clave" required><div class="adm-le" id="admErr"></div><button class="adm-btn" type="submit">Entrar</button></form>';
+  document.body.appendChild(login);
+  const err = login.querySelector("#admErr");
+  login.querySelector("form").addEventListener("submit", async e => {
+    e.preventDefault();
+    pin = login.querySelector("#admPin").value; err.textContent = "";
+    try { await api({ op: "login" }); try { localStorage.setItem("sf_adm_pin", pin); } catch (_) {} login.hidden = true; openPanel(); }
+    catch (x) { err.textContent = x.status === 401 ? "Clave incorrecta." : (x.message || "No se pudo conectar."); }
+  });
+
+  /* ---- panel ---- */
+  const panel = document.createElement("div");
+  panel.className = "adm"; panel.hidden = true;
+  document.body.appendChild(panel);
+  const fab = document.createElement("button");
+  fab.className = "adm-fab"; fab.type = "button"; fab.textContent = "⚙ Panel"; fab.hidden = true;
+  document.body.appendChild(fab);
+  fab.addEventListener("click", () => openPanel());
+
+  const setStatus = k => {
+    const el = panel.querySelector(".adm-st"); if (!el) return;
+    el.className = "adm-st" + (k === "sav" ? " sav" : k === "err" ? " err" : "");
+    el.textContent = k === "sav" ? "Guardando…" : k === "err" ? "Sin guardar. Revisa tu conexión" : "Guardado ✓";
+  };
+  const queue = (body, rollback) => {
+    pending++; setStatus("sav");
+    q = q.then(() => api(body)).then(r => { lastState = r.state || lastState; pending--; if (!pending) { setStatus("ok"); if (lastState) applyEstado(lastState); } })
+      .catch(x => { pending--; rollback(); render(); setStatus("err"); if (x.status === 401) { try { localStorage.removeItem("sf_adm_pin"); } catch (_) {} panel.hidden = true; login.hidden = false; err.textContent = "Clave incorrecta."; } });
+  };
+
+  const priceOf = (id, k) => {
+    const key = k === null ? id : id + "|" + k, o = ORIGP[id];
+    const orig = k === null ? o.p : o.o[k];
+    return { cur: okNum(st.prices[key]) ? st.prices[key] : orig, orig, edited: okNum(st.prices[key]) && st.prices[key] !== orig, key };
+  };
+  const row = (it, k, sub) => {
+    const id = it.id, optLabel = k === null ? null : it.options[k].label;
+    const on = k === null ? !st.off.has(id) : !((st.offOpt[id] || []).includes(String(k)));
+    const showPrice = k !== null || (!it.options && ORIGP[id].p != null && !it.priceByPick);
+    const p = showPrice ? priceOf(id, k) : null;
+    const name = k === null ? it.name : optLabel;
+    return '<div class="adm-r' + (sub ? " sub" : "") + (on ? "" : " off") + (p && p.edited ? " ed" : "") + '" data-id="' + E(id) + '"' + (k !== null ? ' data-opt="' + k + '"' : "") + '>' +
+      '<div class="adm-n"><b>' + E(name) + '</b>' + (p && p.edited ? '<small>Antes ' + money(p.orig) + '</small>' : (it.priceByPick && k === null ? '<small>Precio según salsa</small>' : "")) + '</div>' +
+      (p ? '<label class="adm-p' + (p.edited ? " ed" : "") + '"><span>$</span><input inputmode="numeric" data-pr value="' + new Intl.NumberFormat("es-CL").format(p.cur) + '" aria-label="Precio de ' + E(name) + '"></label><button class="adm-rs" type="button" data-rs title="Volver al precio original">↺</button>' : "") +
+      '<button class="adm-sw" role="switch" type="button" data-sw aria-checked="' + on + '" aria-label="' + E(name) + '"></button></div>';
+  };
+  const render = () => {
+    const top = panel.querySelector(".adm-sc") ? panel.scrollTop : 0, qv = (panel.querySelector(".adm-q") || {}).value || "";
+    const focusId = document.activeElement && document.activeElement.matches && document.activeElement.matches("[data-pr]") ? null : 0;
+    panel.innerHTML = '<div class="adm-top"><h2>Panel <span>SF</span></h2><span class="adm-st">Guardado ✓</span><button class="adm-btn g" data-act="ver" type="button">Ver carta</button><button class="adm-btn g" data-act="salir" type="button">Salir</button></div>' +
+      '<div class="adm-body adm-sc"><input class="adm-q" type="search" placeholder="Buscar producto…" value="' + E(qv) + '">' +
+      MENU.map(c => {
+        const its = c.items, act = its.filter(i => !st.off.has(i.id)).length;
+        return '<section class="adm-cat" data-cat="' + E(c.id) + '"><div class="adm-ch"><b>' + E(c.name) + '</b><small>' + act + '/' + its.length + ' activos</small><button class="adm-sw" role="switch" type="button" data-catsw aria-checked="' + (act > 0) + '" aria-label="Activar o apagar toda la categoría ' + E(c.name) + '"></button></div>' +
+          its.map(i => row(i, null, false) + (i.options ? i.options.map((o, k) => row(i, k, true)).join("") : "")).join("") + '</section>';
+      }).join("") + '</div>';
+    if (qv) filter(qv);
+    panel.scrollTop = top;
+    if (pending) setStatus("sav");
+  };
+  const filter = v => {
+    v = v.trim().toLowerCase();
+    panel.querySelectorAll(".adm-cat").forEach(sec => {
+      let any = false;
+      sec.querySelectorAll(".adm-r").forEach(r => { const hit = !v || r.textContent.toLowerCase().includes(v) || sec.querySelector(".adm-ch b").textContent.toLowerCase().includes(v); r.hidden = !hit; if (hit) any = true; });
+      sec.hidden = !any;
+    });
+  };
+  const setProd = (id, off) => { const had = st.off.has(id); off ? st.off.add(id) : st.off.delete(id); queue({ op: "off", id, off }, () => { had ? st.off.add(id) : st.off.delete(id); }); };
+  const setOpt = (id, k, off) => {
+    const prev = (st.offOpt[id] || []).slice(), set = new Set(prev); off ? set.add(String(k)) : set.delete(String(k));
+    set.size ? (st.offOpt[id] = [...set]) : delete st.offOpt[id];
+    queue({ op: "offOpt", id, opt: k, off }, () => { prev.length ? (st.offOpt[id] = prev) : delete st.offOpt[id]; });
+  };
+  const setPrice = (id, k, price) => {
+    const key = k === null ? id : id + "|" + k, had = st.prices[key], orig = k === null ? ORIGP[id].p : ORIGP[id].o[k];
+    const val = price === orig ? null : price;
+    val === null ? delete st.prices[key] : (st.prices[key] = val);
+    queue({ op: "price", id, opt: k, price: val }, () => { had === undefined ? delete st.prices[key] : (st.prices[key] = had); });
+  };
+
+  panel.addEventListener("input", e => { if (e.target.classList.contains("adm-q")) filter(e.target.value); });
+  panel.addEventListener("focusin", e => { if (e.target.matches("[data-pr]")) { e.target.value = e.target.value.replace(/\D/g, ""); e.target.select(); } });
+  panel.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.matches("[data-pr]")) e.target.blur(); });
+  panel.addEventListener("change", e => {
+    const inp = e.target.closest("[data-pr]"); if (!inp) return;
+    const r = inp.closest(".adm-r"), id = r.dataset.id, k = r.dataset.opt === undefined ? null : +r.dataset.opt;
+    const n = parseInt(inp.value.replace(/\D/g, ""), 10);
+    if (!isFinite(n) || n > 200000) { render(); return; }
+    setPrice(id, k, n); render();
+  });
+  panel.addEventListener("click", e => {
+    const t = e.target;
+    const act = t.closest("[data-act]");
+    if (act) { if (act.dataset.act === "ver") { closePanel(); } else { try { localStorage.removeItem("sf_adm_pin"); } catch (_) {} pin = ""; closePanel(true); location.href = "/carta"; } return; }
+    const rs = t.closest("[data-rs]");
+    if (rs) { const r = rs.closest(".adm-r"); setPrice(r.dataset.id, r.dataset.opt === undefined ? null : +r.dataset.opt, (r.dataset.opt === undefined ? ORIGP[r.dataset.id].p : ORIGP[r.dataset.id].o[+r.dataset.opt])); render(); return; }
+    const cs = t.closest("[data-catsw]");
+    if (cs) {
+      const c = MENU.find(x => x.id === cs.closest(".adm-cat").dataset.cat), ids = c.items.map(i => i.id), off = cs.getAttribute("aria-checked") === "true";
+      const prev = ids.filter(i => st.off.has(i)); ids.forEach(i => off ? st.off.add(i) : st.off.delete(i));
+      for (let i = 0; i < ids.length; i += 80) queue({ op: "offMany", ids: ids.slice(i, i + 80), off }, () => { ids.forEach(x => st.off.delete(x)); prev.forEach(x => st.off.add(x)); });
+      render(); return;
+    }
+    const sw = t.closest("[data-sw]");
+    if (sw) {
+      const r = sw.closest(".adm-r"), id = r.dataset.id, off = sw.getAttribute("aria-checked") === "true";
+      r.dataset.opt === undefined ? setProd(id, off) : setOpt(id, +r.dataset.opt, off);
+      render();
+    }
+  });
+
+  const closePanel = quiet => { panel.hidden = true; admOpen = false; document.body.classList.remove("adm-open"); if (!quiet) { fab.hidden = false; if (lastState) applyEstado(lastState); } };
+  async function openPanel(){
+    login.hidden = true;
+    try {
+      const r = await fetch(API + "?t=" + Date.now(), { cache: "no-store" }); const d = await r.json();
+      lastState = d; st.off = new Set(d.disabledProducts || []); st.offOpt = {}; Object.keys(d.disabledOptions || {}).forEach(k => { st.offOpt[k] = (d.disabledOptions[k] || []).map(String); }); st.prices = Object.assign({}, d.prices || {});
+    } catch (e) {}
+    admOpen = true; fab.hidden = true; document.body.classList.add("adm-open");
+    render(); panel.hidden = false; panel.scrollTop = 0;
+  }
+  window.addEventListener("online", () => { if (admOpen && pending === 0) setStatus("ok"); });
+
+  (async () => {
+    if (pin) { try { await api({ op: "login" }); openPanel(); return; } catch (x) { if (x.status !== 401) { openPanel(); return; } } }
+    login.hidden = false; setTimeout(() => { const i = login.querySelector("#admPin"); i && i.focus(); }, 50);
+  })();
+})();
+
 </script>
 </body>
 </html>

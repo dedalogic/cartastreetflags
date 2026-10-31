@@ -7,3 +7,41 @@
 
 [functions]
   directory = "netlify/functions"
+
+# Rutas: la raíz manda a la carta local; /delivery queda bloqueado (CONFIG.soloLocal) y vuelve a /carta
+[[redirects]]
+  from = "/"
+  to = "/carta"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/carta"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/carta/"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/delivery"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/delivery/"
+  to = "/index.html"
+  status = 200
+
+# Panel de administración (cajeras): apagar productos y cambiar precios
+[[redirects]]
+  from = "/admin"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/"
+  to = "/index.html"
+  status = 200
