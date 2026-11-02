@@ -1046,6 +1046,19 @@ body.adm-open{overflow:hidden}
 .cat.compact .chip.nw{display:inline-block;margin-left:8px;padding:3px 7px;border-radius:99px;background:#E5322D;color:#fff;font-family:inherit;font-size:9.5px;font-weight:700;line-height:1.2;letter-spacing:.05em;text-transform:uppercase;vertical-align:middle;white-space:nowrap}
 
 </style>
+<script src="analytics-config.js"></script>
+<script>
+(function(){
+  try{
+    var C = window.SF_POSTHOG || {};
+    var skip = /^\/admin\/?$/.test(location.pathname) || /[?&](prueba|admin|notrack)\b/.test(location.search);
+    try { if (/[?&]notrack\b/.test(location.search)) localStorage.setItem("sf_notrack", "1"); if (localStorage.getItem("sf_notrack") || localStorage.getItem("sf_adm_pin")) skip = true; } catch (e) {}
+    if (!C.key || skip) return;
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init(C.key, { api_host: C.host || "https://us.i.posthog.com", person_profiles: "identified_only", autocapture: false, capture_pageview: true, capture_pageleave: true });
+  }catch(e){}
+})();
+</script>
 </head>
 <body>
 
@@ -1367,7 +1380,7 @@ function track(event, props={}){
   try{
     if (!window.posthog || typeof window.posthog.capture !== "function") return;
     window.posthog.capture(event, Object.assign({
-      site:"Street Flags",
+      site:"Street Flags", mode:document.documentElement.dataset.modo || "",
       path:location.pathname,
       device:window.matchMedia("(max-width: 700px)").matches ? "mobile" : "desktop"
     }, props));
@@ -1668,6 +1681,7 @@ function applyDescs(map){
   }));
 }
 try { const c = JSON.parse(localStorage.getItem("sf_carta_estado") || "null"); if (c && c.prices) { ESTADO = c; applyPrices(c.prices); applyDescs(c.descs); } } catch (e) {}
+function sfTrack(e, p){ track(e, p); }
 
 $("#nav").innerHTML = MENU.map(c => `<li><a href="#${c.id}">${esc(c.nav || c.name)}</a></li>`).join("");
 $("#menu").innerHTML = MENU.map((c, ci) => `<section class="cat${c.compact ? " compact" : ""}" id="${c.id}" aria-labelledby="h-${c.id}">
@@ -1871,7 +1885,7 @@ document.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === 
   const openPop = () => { pop.hidden = false; document.body.style.overflow = "hidden"; };
   if (popUrl) { popImg.onload = () => { popReady = true; if (popWant) openPop(); }; popImg.onerror = () => { popReady = false; popWant = false; }; popImg.src = popUrl; }
   const closePop = () => { popWant = false; pop.hidden = true; document.body.style.overflow = ""; };
-  function showPop(){ if (!popUrl) return; popWant = true; if (popReady || popImg.complete && popImg.naturalWidth) { popReady = true; openPop(); } }
+  function showPop(){ if (!popUrl) return; trackOnce("popup_view", "popup_view", {}); popWant = true; if (popReady || popImg.complete && popImg.naturalWidth) { popReady = true; openPop(); } }
   popImg.addEventListener("click", e => e.stopPropagation());
   document.getElementById("popX").addEventListener("click", closePop);
   pop.addEventListener("click", e => { if (e.target === pop) closePop(); });
@@ -1926,7 +1940,7 @@ function miniBlock(){ const it = IDX["drink-mini"], dl = drinkChoices(it, 0, 0),
       `<span class="sl-t">${[["t1", f.t1, (f.c||[])[0]], ["t2", f.t2, (f.c||[])[1]], ["t3", f.sub, (f.c||[])[2]]].filter(x => x[1]).map(x => `<span class="${x[0]} c-${x[2] || "w"}">${esc(x[1])}</span>`).join("")}</span>` +
       (art ? `<img class="sl-art" src="${esc(art)}" alt="" onerror="this.remove()">` : "") +
       (iso ? `<img class="sl-iso" src="${esc(iso)}" alt="" onerror="this.remove()">` : "");
-    b.addEventListener("click", () => go(sl.go));
+    b.addEventListener("click", () => { sfTrack("banner_click", { target: sl.go }); go(sl.go); });
     track.appendChild(b);
     const u = sl.img && assetPath((document.documentElement.dataset.sl === "b" && sl.imgB) ? sl.imgB : sl.img);
     if (u) { const im = new Image(); im.className = "sl-img"; im.alt = ""; im.onload = () => { b.innerHTML = ""; b.style.background = "none"; b.appendChild(im); b.classList.remove("has-ph"); }; im.src = u; }
