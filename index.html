@@ -7,6 +7,11 @@
 <title>Menú · Street Flags</title>
 <meta name="description" content="Menú online de Street Flags. Hamburguesas, chicken, papas fritas, boxes y más.">
 <meta name="theme-color" content="#232323">
+<link rel="preload" as="image" href="logo.png" fetchpriority="high">
+<link rel="preload" as="image" href="slide-1.jpg" fetchpriority="high">
+<link rel="preload" as="font" type="font/woff2" href="LilitaOne.woff2" crossorigin>
+<link rel="preload" as="font" type="font/ttf" href="Comicy.ttf" crossorigin>
+<link rel="preload" as="font" type="font/ttf" href="Bluetea.ttf" crossorigin>
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="shortcut icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
@@ -740,7 +745,7 @@ html[data-layout="grid"] #combos .hd{min-height:0!important}
 @keyframes slflash{0%{box-shadow:0 0 0 0 rgba(255,86,167,.9)}60%{box-shadow:0 0 0 14px rgba(255,86,167,0)}100%{box-shadow:0 0 0 0 rgba(255,86,167,0)}}
 @media (prefers-reduced-motion:reduce){.sl-s .sl-iso{animation:none}.item.flash{animation:none}}
 
-@font-face{font-family:"Comicy";src:url("Comicy.ttf") format("truetype");font-display:swap}
+@font-face{font-family:"Comicy";src:url("Comicy.ttf") format("truetype");font-display:block}
 /* ---- v20: tarjetas ---- */
 html[data-cards][data-layout] .cat:not(.compact) .list{grid-template-columns:1fr;gap:12px;margin-top:18px}
 @media(min-width:700px){html[data-cards][data-layout] .cat:not(.compact) .list{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}}
@@ -863,7 +868,7 @@ html[data-tema="claro"] main{padding-top:6px}
 html[data-tema="claro"] .cat{padding-bottom:44px}
 html[data-tema="claro"] .cat:nth-child(even){background:#F3EDE3;box-shadow:0 0 0 100vmax #F3EDE3;clip-path:inset(0 -100vmax)}
 /* ---- v26 ---- */
-@font-face{font-family:"Bluetea";src:url("Bluetea.ttf") format("truetype");font-display:swap}
+@font-face{font-family:"Bluetea";src:url("Bluetea.ttf") format("truetype");font-display:block}
 .online-label{font-family:"Bluetea",var(--display);font-weight:400;font-size:clamp(17px,4.6vw,21px);line-height:1;letter-spacing:.02em;margin-top:10px;text-transform:lowercase}
 .online-label .p{color:var(--pink)}
 .online-label .b{color:#1FB5DA}
@@ -1045,6 +1050,7 @@ body.adm-open{overflow:hidden}
 .sh-top{background:#E5322D!important}
 .cat.compact .chip.nw{display:inline-block;margin-left:8px;padding:3px 7px;border-radius:99px;background:#E5322D;color:#fff;font-family:inherit;font-size:9.5px;font-weight:700;line-height:1.2;letter-spacing:.05em;text-transform:uppercase;vertical-align:middle;white-space:nowrap}
 
+#brand{min-height:clamp(56px,16vw,92px);display:flex;align-items:center;justify-content:center}
 </style>
 <script src="analytics-config.js"></script>
 <script>
@@ -1079,7 +1085,7 @@ body.adm-open{overflow:hidden}
   <div class="pop-box"><button type="button" class="pop-x" id="popX" aria-label="Cerrar">&times;</button><img id="popImg" alt="Bebida mini $990 con tu burger"></div>
 </div>
 <div class="herobg"><div class="hero"><header class="top">
-  <h1 class="brand" id="brand">STREET FLAGS</h1>
+  <h1 class="brand" id="brand"><img class="logo" src="logo.png" alt="Street Flags" width="1200" height="241" fetchpriority="high"></h1>
   <p class="online-label"><span class="p">men<span class="acc">u</span></span> <span class="b" id="modoLbl">ONLINE</span></p>
 </header>
 
@@ -1420,13 +1426,13 @@ $("#foot").innerHTML = "<p><b>Street Flags</b> · Iquique</p><p>Pedido online ·
 
 /* Logo: si el archivo no existe, vuelve al nombre en texto */
 (function(){
-  const h = $("#brand");
-  h.textContent = CONFIG.nombre;
-  if (!CONFIG.logo) return;
-  const img = new Image();
-  img.className = "logo"; img.alt = CONFIG.nombre;
-  img.onload = () => { h.textContent = ""; h.appendChild(img); };
-  img.src = CONFIG.logo;
+  const h = $("#brand"), im = h.querySelector("img.logo");
+  const txt = () => { h.textContent = CONFIG.nombre; };
+  if (!CONFIG.logo || !im) { txt(); return; }
+  im.alt = CONFIG.nombre;
+  if (im.getAttribute("src") !== CONFIG.logo) im.src = CONFIG.logo;
+  if (im.complete && !im.naturalWidth) txt();
+  im.addEventListener("error", txt);
 })();
 
 /* Tipografías propias: si el archivo no existe, se usan Playfair Display / Inter */
@@ -1438,7 +1444,7 @@ function loadFont(family, file, varName, fallback){
     const l = document.createElement("link"); l.rel = "preload"; l.as = "font"; l.type = "font/" + ext; l.crossOrigin = ""; l.href = file; document.head.appendChild(l);
   }
   const st = document.createElement("style");
-  st.textContent = `@font-face{font-family:"${family}";src:url("${file}")${fmt ? ` format("${fmt}")` : ""};font-style:normal;font-weight:400;font-display:swap}`;
+  st.textContent = `@font-face{font-family:"${family}";src:url("${file}")${fmt ? ` format("${fmt}")` : ""};font-style:normal;font-weight:400;font-display:block}`;
   document.head.appendChild(st);
   document.documentElement.style.setProperty(varName, `"${family}",${fallback}`);
 }
@@ -1936,14 +1942,21 @@ function miniBlock(){ const it = IDX["drink-mini"], dl = drinkChoices(it, 0, 0),
     const f = sl.fb || {}; b.style.background = f.bg || "#6FC9FB";
     const photo = f.foto && assetPath(f.foto), art = f.art && assetPath(f.art), iso = !photo && !art && assetPath("isotipo.png");
     b.classList.toggle("has-ph", !!photo); b.classList.toggle("art", !!art); b.style.setProperty("--k", f.k || 1); b.style.setProperty("--k1", f.k1 || 1);
-    b.innerHTML = (photo ? `<img class="sl-ph" src="${esc(photo)}" alt="" onerror="this.remove()">` : "") +
+    const fbHtml = (photo ? `<img class="sl-ph" src="${esc(photo)}" alt="" onerror="this.remove()">` : "") +
       `<span class="sl-t">${[["t1", f.t1, (f.c||[])[0]], ["t2", f.t2, (f.c||[])[1]], ["t3", f.sub, (f.c||[])[2]]].filter(x => x[1]).map(x => `<span class="${x[0]} c-${x[2] || "w"}">${esc(x[1])}</span>`).join("")}</span>` +
       (art ? `<img class="sl-art" src="${esc(art)}" alt="" onerror="this.remove()">` : "") +
       (iso ? `<img class="sl-iso" src="${esc(iso)}" alt="" onerror="this.remove()">` : "");
     b.addEventListener("click", () => { sfTrack("banner_click", { target: sl.go }); go(sl.go); });
     track.appendChild(b);
     const u = sl.img && assetPath((document.documentElement.dataset.sl === "b" && sl.imgB) ? sl.imgB : sl.img);
-    if (u) { const im = new Image(); im.className = "sl-img"; im.alt = ""; im.onload = () => { b.innerHTML = ""; b.style.background = "none"; b.appendChild(im); b.classList.remove("has-ph"); }; im.src = u; }
+    if (u) {
+      const im = new Image(); im.className = "sl-img"; im.alt = "";
+      im.onload = () => { b.innerHTML = ""; b.style.background = "none"; b.appendChild(im); b.classList.remove("has-ph"); };
+      im.onerror = () => { b.innerHTML = fbHtml; };
+      /* el primer banner carga ya; los demas esperan a que termine la pagina para no competir */
+      const start = () => { im.src = u; };
+      if (i === 0) start(); else if (document.readyState === "complete") start(); else window.addEventListener("load", start, { once: true });
+    } else b.innerHTML = fbHtml;
     const d = document.createElement("i"); dots.appendChild(d);
   });
   box.hidden = false;
